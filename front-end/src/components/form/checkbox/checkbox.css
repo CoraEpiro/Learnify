@@ -1,0 +1,11 @@
+/*
+  Based on TailwindCSS recommendations,
+  consider using classes instead of the `@apply` directive
+  @see https://tailwindcss.com/docs/reusing-styles#avoiding-premature-abstraction
+*/
+.cyberpunk-checkbox {
+    @apply appearance-none w-4 h-4 bg-transparent inline-block relative cursor-pointer mr-2.5 rounded-[5px] border-2 border-solid border-accent before:content-[""] before:bg-accent before:block before:absolute before:-translate-x-2/4 before:-translate-y-2/4 before:w-2.5 before:h-2.5 before:transition-all before:duration-[0.3s] before:ease-[ease-in-out] before:rounded-[3px] before:scale-0 before:left-2/4 before:top-2/4 checked:before:-translate-x-2/4 checked:before:-translate-y-2/4 checked:before:scale-100;
+}
+.cyberpunk-checkbox-label {
+    @apply text-base cursor-pointer select-none flex items-center hover:bg-hover-blue-clr w-fit py-1 px-2 rounded-lg transition-all duration-150 ease-in;
+}
