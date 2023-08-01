@@ -10,10 +10,6 @@ const ResetPasswordCard = ({ title, description, backUrlTitle, backUrl }) => {
     setStep(step + 1);
   };
 
-  const handleOnStepBack = () => {
-    setStep(step - 1);
-  };
-
   return (
     <div className={"bg-white rounded-lg flex flex-col gap-4 p-4"}>
       {step === 1 && (
@@ -27,7 +23,7 @@ const ResetPasswordCard = ({ title, description, backUrlTitle, backUrl }) => {
       )}
       {step === 2 && (
         <ResetPasswordOtpStep
-          onStepBack={handleOnStepBack}
+            onStepForward={handleOnStepForward}
           email={"kenanysbv@gmail.com"}
         />
       )}
