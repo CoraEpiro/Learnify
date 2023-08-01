@@ -4,17 +4,17 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:10138",
-      "sslPort": 44313
+      "applicationUrl": "http://localhost:39979",
+      "sslPort": 44371
     }
   },
   "profiles": {
-    "Learnify": {
+    "Api": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
       "launchUrl": "swagger",
-      "applicationUrl": "https://localhost:7042;http://localhost:5042",
+      "applicationUrl": "https://localhost:7280;http://localhost:5168",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
