@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "Ws8sjLm7oz6dC0p+TtN1eXkA24DwyJP2kchVvlGsC/awoR3AbizjcsxrfuZs4IgcjY4PaBqG+g/KSXdPYN1C2A==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\ASUS\\source\\repos\\Learnify\\back-end\\ProjectApi\\Infrastructure\\Infrastructure.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\ASUS\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\7.0.0\\microsoft.extensions.configuration.abstractions.7.0.0.nupkg.sha512",
+    "C:\\Users\\ASUS\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\7.0.0\\microsoft.extensions.dependencyinjection.abstractions.7.0.0.nupkg.sha512",
+    "C:\\Users\\ASUS\\.nuget\\packages\\microsoft.extensions.primitives\\7.0.0\\microsoft.extensions.primitives.7.0.0.nupkg.sha512",
+    "C:\\Users\\ASUS\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

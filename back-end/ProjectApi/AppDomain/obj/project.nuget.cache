@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "s1RONK9rmgl/MPbpB9+xkgTDU9SUcUOavc39gWQb10XzPffgdPzP9bg83BfY9hWvJOqZpjBdwzZ9RyVGj0qhVA==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\ASUS\\source\\repos\\Learnify\\back-end\\ProjectApi\\AppDomain\\AppDomain.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\ASUS\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\7.0.0\\microsoft.extensions.dependencyinjection.abstractions.7.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
