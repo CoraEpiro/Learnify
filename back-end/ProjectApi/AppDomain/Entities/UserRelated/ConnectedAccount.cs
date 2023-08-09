@@ -5,6 +5,6 @@ namespace AppDomain.Entities.UserRelated;
 
 public class ConnectedAccount : EntityBase
 {
-    public string Url { get; set; }
+    public string Url { get; set; } = String.Empty;
     public ConnectedAccountType Type { get; set; }
 }

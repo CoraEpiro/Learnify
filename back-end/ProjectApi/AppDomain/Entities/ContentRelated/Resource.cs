@@ -7,8 +7,10 @@ public class Resource : ContentBase
 {
     public string? Title { get; set; }
     public string? Url { get; set; }
+
     [Column(TypeName = "jsonb")]
     public Category Category { get; set; }
+
     [Column(TypeName = "jsonb")]
     public ResourceFlag Flag { get; set; }
 }

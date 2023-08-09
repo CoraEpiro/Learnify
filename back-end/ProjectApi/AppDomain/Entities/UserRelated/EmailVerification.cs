@@ -4,7 +4,7 @@ namespace AppDomain.Entities.UserRelated;
 
 public class EmailVerification : EntityBase
 {
-    public string Email { get; set; }
-    public string OTP { get; set; }
+    public string Email { get; set; } = String.Empty;
+    public string OTP { get; set; } = String.Empty;
     public DateTime ExpireUntil { get; set; }
 }
