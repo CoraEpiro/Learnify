@@ -12,9 +12,15 @@
 
   <ItemGroup>
     <Folder Include="Mappings\" />
-    <Folder Include="DTOs\" />
     <Folder Include="Tasks\Commands\" />
     <Folder Include="Tasks\Queries\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+    <PackageReference Include="FluentValidation" Version="11.6.0" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.6.0" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,15 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\back-end",
+    "\\back-end\\ProjectApi",
+    "\\back-end\\ProjectApi\\Application",
+    "\\back-end\\ProjectApi\\Application\\DTOs",
+    "\\back-end\\ProjectApi\\Application\\DTOs\\Article",
+    "\\back-end\\ProjectApi\\Infrastructure",
+    "\\back-end\\ProjectApi\\Infrastructure\\Persistence",
+    "\\back-end\\ProjectApi\\WebApi"
+  ],
+  "SelectedNode": "\\back-end\\ProjectApi\\Application\\DTOs\\Article\\ArticleResponse.cs",
+  "PreviewInSolutionExplorer": false
+}

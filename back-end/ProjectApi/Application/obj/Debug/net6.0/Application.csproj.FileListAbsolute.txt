@@ -13,3 +13,11 @@ C:\Users\ASUS\source\repos\Learnify\back-end\ProjectApi\Application\obj\Debug\ne
 C:\Users\ASUS\source\repos\Learnify\back-end\ProjectApi\Application\obj\Debug\net6.0\refint\Application.dll
 C:\Users\ASUS\source\repos\Learnify\back-end\ProjectApi\Application\obj\Debug\net6.0\Application.pdb
 C:\Users\ASUS\source\repos\Learnify\back-end\ProjectApi\Application\obj\Debug\net6.0\ref\Application.dll
+C:\Users\chess\Source\Repos\CoraEpiro\Learnify\back-end\ProjectApi\Application\obj\Debug\net6.0\Application.csproj.AssemblyReference.cache
+C:\Users\chess\Source\Repos\CoraEpiro\Learnify\back-end\ProjectApi\Application\obj\Debug\net6.0\Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\chess\Source\Repos\CoraEpiro\Learnify\back-end\ProjectApi\Application\obj\Debug\net6.0\Application.AssemblyInfoInputs.cache
+C:\Users\chess\Source\Repos\CoraEpiro\Learnify\back-end\ProjectApi\Application\obj\Debug\net6.0\Application.AssemblyInfo.cs
+C:\Users\chess\Source\Repos\CoraEpiro\Learnify\back-end\ProjectApi\Application\obj\Debug\net6.0\Application.csproj.CoreCompileInputs.cache
+C:\Users\chess\Source\Repos\CoraEpiro\Learnify\back-end\ProjectApi\Application\obj\Debug\net6.0\Application.dll
+C:\Users\chess\Source\Repos\CoraEpiro\Learnify\back-end\ProjectApi\Application\obj\Debug\net6.0\refint\Application.dll
+C:\Users\chess\Source\Repos\CoraEpiro\Learnify\back-end\ProjectApi\Application\obj\Debug\net6.0\Application.pdb

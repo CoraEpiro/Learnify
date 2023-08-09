@@ -1,10 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "VLeDP2CTnuqWajh3/g95T/bs8mz8IRsB24yyawK0ucAVitBsbDja4cKXGFzZQiMdFwtH/4ADyRJ2Yx5OugOd8Q==",
+  "dgSpecHash": "aIVmzdI3I+hgSbC5A1vr5vPzgg2ItWAlwkEf8pNmBbm6a4cPYRVJ/jh9rX3cfWbyBDnpnkGU6VJyDkpmG00f+A==",
   "success": true,
-  "projectFilePath": "C:\\Users\\ASUS\\source\\repos\\Learnify\\back-end\\ProjectApi\\Application\\Application.csproj",
+  "projectFilePath": "C:\\Users\\chess\\Source\\Repos\\CoraEpiro\\Learnify\\back-end\\ProjectApi\\Application\\Application.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\ASUS\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\7.0.0\\microsoft.extensions.dependencyinjection.abstractions.7.0.0.nupkg.sha512"
+    "C:\\Users\\chess\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
+    "C:\\Users\\chess\\.nuget\\packages\\fluentvalidation\\11.6.0\\fluentvalidation.11.6.0.nupkg.sha512",
+    "C:\\Users\\chess\\.nuget\\packages\\fluentvalidation.aspnetcore\\11.3.0\\fluentvalidation.aspnetcore.11.3.0.nupkg.sha512",
+    "C:\\Users\\chess\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\11.6.0\\fluentvalidation.dependencyinjectionextensions.11.6.0.nupkg.sha512",
+    "C:\\Users\\chess\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\7.0.0\\microsoft.extensions.dependencyinjection.abstractions.7.0.0.nupkg.sha512"
   ],
   "logs": []
 }
