@@ -2,5 +2,5 @@
 
 public class Entry : ContentBase
 {
-    public string Body { get; set; } // Markdown    
+    public string Body { get; set; } = String.Empty; // Markdown    
 }

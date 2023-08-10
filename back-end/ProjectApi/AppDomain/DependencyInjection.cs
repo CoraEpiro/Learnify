@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using AppDomain.Services;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,8 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddDomain(this IServiceCollection services)
     {
+        services.AddScoped<ICryptService, CryptService>();
+
         return services;
     }
 }

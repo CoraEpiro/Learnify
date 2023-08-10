@@ -102,23 +102,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\chess\\.nuget\\packages\\": {},
+    "C:\\Users\\ASUS\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\chess\\Source\\Repos\\CoraEpiro\\Learnify\\back-end\\ProjectApi\\AppDomain\\AppDomain.csproj",
+      "projectUniqueName": "C:\\Users\\ASUS\\Desktop\\New folder\\Learnify\\back-end\\ProjectApi\\AppDomain\\AppDomain.csproj",
       "projectName": "AppDomain",
-      "projectPath": "C:\\Users\\chess\\Source\\Repos\\CoraEpiro\\Learnify\\back-end\\ProjectApi\\AppDomain\\AppDomain.csproj",
-      "packagesPath": "C:\\Users\\chess\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\chess\\Source\\Repos\\CoraEpiro\\Learnify\\back-end\\ProjectApi\\AppDomain\\obj\\",
+      "projectPath": "C:\\Users\\ASUS\\Desktop\\New folder\\Learnify\\back-end\\ProjectApi\\AppDomain\\AppDomain.csproj",
+      "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\ASUS\\Desktop\\New folder\\Learnify\\back-end\\ProjectApi\\AppDomain\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\chess\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\ASUS\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -170,7 +170,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
       }
     }
   }

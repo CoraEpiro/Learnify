@@ -12,15 +12,20 @@
 
   <ItemGroup>
     <Folder Include="Mappings\" />
-    <Folder Include="Tasks\Commands\" />
+    <Folder Include="Services\" />
+    <Folder Include="Tasks\Commands\Delete\" />
+    <Folder Include="Tasks\Commands\Update\" />
     <Folder Include="Tasks\Queries\" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
     <PackageReference Include="FluentValidation" Version="11.6.0" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.6.0" />
+    <PackageReference Include="MediatR" Version="12.1.1" />
   </ItemGroup>
 
 </Project>

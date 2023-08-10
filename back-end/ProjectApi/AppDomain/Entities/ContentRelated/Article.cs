@@ -7,6 +7,7 @@ public class Article : Post
 {
     [Column(TypeName = "jsonb")]
     public Comment? Comment { get; set; }
+
     [Column(TypeName = "jsonb")]
     public ArticleFlag Flag { get; set; }
 }
