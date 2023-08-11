@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "sCtZnsubZj2N85BjilJaBCtOPfAlINPw5mSv66CB316tWD+xteTgLNwwSu9BjX4zrMXHP3mkDO5a7KuqZiIDFA==",
+  "dgSpecHash": "0UdGhlnG88fEN9tg0VT6hiNmJ+yrhLU5e3UiCt031Ee2+rSVX8z8wakJHtnQ4GjtTI5AnZifn8NOlJs3Vvq22A==",
   "success": true,
-  "projectFilePath": "C:\\Users\\ASUS\\Desktop\\New folder\\Learnify\\back-end\\ProjectApi\\AppDomain\\AppDomain.csproj",
+  "projectFilePath": "C:\\Users\\chess\\Source\\Repos\\CoraEpiro\\Learnify\\back-end\\ProjectApi\\AppDomain\\AppDomain.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\ASUS\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
-    "C:\\Users\\ASUS\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\7.0.0\\microsoft.extensions.dependencyinjection.abstractions.7.0.0.nupkg.sha512"
+    "C:\\Users\\chess\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
+    "C:\\Users\\chess\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\7.0.0\\microsoft.extensions.dependencyinjection.abstractions.7.0.0.nupkg.sha512"
   ],
   "logs": []
 }

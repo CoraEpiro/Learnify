@@ -1,6 +1,12 @@
 using AppDomain;
 using Application;
 using Application.Tasks.Commands.Insert.InsertUser;
+using Application.Tasks.Commands.Update.UpdateUsername;
+using Application.Tasks.Queries.GetPendingUserById;
+using Application.Tasks.Queries.GetUserByEmail;
+using Application.Tasks.Queries.GetUserById;
+using Application.Tasks.Queries.GetUserByUsername;
+using Application.Tasks.Queries.GetUserByUsersecret;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Infrastructure;
@@ -20,12 +26,14 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
-
-
 builder.Services.AddFluentValidation();
 builder.Services.AddValidatorsFromAssemblyContaining<InsertUserCommandValidator>();
-
+builder.Services.AddValidatorsFromAssemblyContaining<UpdateUsernameCommandValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<GetPendingUserByIdCommandValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<GetUserByEmailCommandValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<GetUserByIdCommandValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<GetUserByUsernameCommandValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<GetUserByUsersecretCommandValidator>();
 
 
 var app = builder.Build();

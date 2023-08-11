@@ -1,11 +1,21 @@
-﻿using AppDomain.DTOs.User;
-using Application.DTOs.User;
+﻿using AppDomain.DTO;
+using AppDomain.DTOs.User;
+using AppDomain.Entities.UserRelated;
+using Application.DTO;
 
 namespace AppDomain.Interfaces;
 public interface IUserRepository
 {
-    Task<UserDTO> GetUserByIdAsync(string? id);
-    Task<UserDTO> GetUserByEmailAsync(string? email);
-    Task<UserDTO> GetUserByUsersecretAsync(string? userSecret);
-    Task<UserDTO> GetUserByUsernameAsync(string? userName);
+    Task<Task> RegisterUserAsync(InsertPendingUserDTO user);
+    Task<Task> LogInAsync(string email, string password);
+    Task<PendingUser> GetPendingUserByIdAsync(string? id);
+    Task<User> GetUserByIdAsync(string? id);
+    Task<User> GetUserByEmailAsync(string? email);
+    Task<User> GetUserByUsersecretAsync(string? userSecret);
+    Task<User> GetUserByUsernameAsync(string? userName);
+    Task<User> UpdateUsernameAsync(string id, string newUsername);
+    Task<User> UpdatePasswordAsync(string id, string newPassword);
+    Task<Task> DeleteUserAsync(string id);
+    Task<bool> IsUsernameExistAsync(string username);
+    Task<bool> IsEmailExistAsync(string email);
 }

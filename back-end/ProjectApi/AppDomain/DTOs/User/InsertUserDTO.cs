@@ -1,5 +1,5 @@
-﻿namespace Application.DTOs.User;
-public class InsertUserDTO
+﻿namespace Application.DTO;
+public class InsertPendingUserDTO
 {
     public string Name { get; set; } = String.Empty;
     public string Email { get; set; } = String.Empty;

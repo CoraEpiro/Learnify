@@ -36,3 +36,10 @@ C:\Users\ASUS\Desktop\New folder\Learnify\back-end\ProjectApi\Application\obj\De
 C:\Users\ASUS\Desktop\New folder\Learnify\back-end\ProjectApi\Application\obj\Debug\net6.0\refint\Application.dll
 C:\Users\ASUS\Desktop\New folder\Learnify\back-end\ProjectApi\Application\obj\Debug\net6.0\Application.pdb
 C:\Users\ASUS\Desktop\New folder\Learnify\back-end\ProjectApi\Application\obj\Debug\net6.0\ref\Application.dll
+C:\Users\chess\Source\Repos\CoraEpiro\Learnify\back-end\ProjectApi\Application\bin\Debug\net6.0\Application.deps.json
+C:\Users\chess\Source\Repos\CoraEpiro\Learnify\back-end\ProjectApi\Application\bin\Debug\net6.0\Application.dll
+C:\Users\chess\Source\Repos\CoraEpiro\Learnify\back-end\ProjectApi\Application\bin\Debug\net6.0\Application.pdb
+C:\Users\chess\Source\Repos\CoraEpiro\Learnify\back-end\ProjectApi\Application\bin\Debug\net6.0\AppDomain.dll
+C:\Users\chess\Source\Repos\CoraEpiro\Learnify\back-end\ProjectApi\Application\bin\Debug\net6.0\AppDomain.pdb
+C:\Users\chess\Source\Repos\CoraEpiro\Learnify\back-end\ProjectApi\Application\obj\Debug\net6.0\Application.csproj.CopyComplete
+C:\Users\chess\Source\Repos\CoraEpiro\Learnify\back-end\ProjectApi\Application\obj\Debug\net6.0\ref\Application.dll

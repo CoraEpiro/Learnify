@@ -1,23 +1,21 @@
-﻿using AppDomain.DTOs.User;
+﻿using AppDomain.DTO;
 using AppDomain.Interfaces;
+using Application.DTO;
 using MediatR;
 
-namespace Application.Tasks.Commands.Insert.InsertUser
+namespace Application.Tasks.Commands.Insert.InsertUser;
+
+public class InsertUserCommandHandler : IRequestHandler<InsertUserCommand, Task>
 {
-    public class InsertUserCommandHandler : IRequestHandler<InsertUserCommand, UserDTO>
+    private readonly IUserRepository _userRepository;
+
+    public InsertUserCommandHandler(IUserRepository userRepository)
     {
-        private readonly IUserRepository _userRepository;
+        _userRepository = userRepository;
+    }
 
-        public InsertUserCommandHandler(IUserRepository userRepository)
-        {
-            _userRepository = userRepository;
-        }
-
-        public async Task<UserDTO> Handle(InsertUserCommand request, CancellationToken cancellationToken)
-        {
-            var result = await _userRepository.GetUserByIdAsync("example");
-
-            return result;
-        }
+    public async Task<Task> Handle(InsertUserCommand request, CancellationToken cancellationToken)
+    {
+        return await _userRepository.RegisterUserAsync(request.User);
     }
 }

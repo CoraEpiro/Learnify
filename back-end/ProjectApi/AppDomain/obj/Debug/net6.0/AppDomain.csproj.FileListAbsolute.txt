@@ -30,3 +30,7 @@ C:\Users\ASUS\Desktop\New folder\Learnify\back-end\ProjectApi\AppDomain\obj\Debu
 C:\Users\ASUS\Desktop\New folder\Learnify\back-end\ProjectApi\AppDomain\obj\Debug\net6.0\refint\AppDomain.dll
 C:\Users\ASUS\Desktop\New folder\Learnify\back-end\ProjectApi\AppDomain\obj\Debug\net6.0\AppDomain.pdb
 C:\Users\ASUS\Desktop\New folder\Learnify\back-end\ProjectApi\AppDomain\obj\Debug\net6.0\ref\AppDomain.dll
+C:\Users\chess\Source\Repos\CoraEpiro\Learnify\back-end\ProjectApi\AppDomain\bin\Debug\net6.0\AppDomain.deps.json
+C:\Users\chess\Source\Repos\CoraEpiro\Learnify\back-end\ProjectApi\AppDomain\bin\Debug\net6.0\AppDomain.dll
+C:\Users\chess\Source\Repos\CoraEpiro\Learnify\back-end\ProjectApi\AppDomain\bin\Debug\net6.0\AppDomain.pdb
+C:\Users\chess\Source\Repos\CoraEpiro\Learnify\back-end\ProjectApi\AppDomain\obj\Debug\net6.0\ref\AppDomain.dll

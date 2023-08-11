@@ -42,3 +42,14 @@ C:\Users\ASUS\Desktop\New folder\Learnify\back-end\ProjectApi\Infrastructure\obj
 C:\Users\ASUS\Desktop\New folder\Learnify\back-end\ProjectApi\Infrastructure\obj\Debug\net6.0\Infrastructure.pdb
 C:\Users\ASUS\Desktop\New folder\Learnify\back-end\ProjectApi\Infrastructure\obj\Debug\net6.0\Infrastructure.genruntimeconfig.cache
 C:\Users\ASUS\Desktop\New folder\Learnify\back-end\ProjectApi\Infrastructure\obj\Debug\net6.0\ref\Infrastructure.dll
+C:\Users\chess\Source\Repos\CoraEpiro\Learnify\back-end\ProjectApi\Infrastructure\bin\Debug\net6.0\Infrastructure.deps.json
+C:\Users\chess\Source\Repos\CoraEpiro\Learnify\back-end\ProjectApi\Infrastructure\bin\Debug\net6.0\Infrastructure.runtimeconfig.json
+C:\Users\chess\Source\Repos\CoraEpiro\Learnify\back-end\ProjectApi\Infrastructure\bin\Debug\net6.0\Infrastructure.dll
+C:\Users\chess\Source\Repos\CoraEpiro\Learnify\back-end\ProjectApi\Infrastructure\bin\Debug\net6.0\Infrastructure.pdb
+C:\Users\chess\Source\Repos\CoraEpiro\Learnify\back-end\ProjectApi\Infrastructure\bin\Debug\net6.0\AppDomain.dll
+C:\Users\chess\Source\Repos\CoraEpiro\Learnify\back-end\ProjectApi\Infrastructure\bin\Debug\net6.0\Application.dll
+C:\Users\chess\Source\Repos\CoraEpiro\Learnify\back-end\ProjectApi\Infrastructure\bin\Debug\net6.0\Application.pdb
+C:\Users\chess\Source\Repos\CoraEpiro\Learnify\back-end\ProjectApi\Infrastructure\bin\Debug\net6.0\AppDomain.pdb
+C:\Users\chess\Source\Repos\CoraEpiro\Learnify\back-end\ProjectApi\Infrastructure\obj\Debug\net6.0\Infrastructure.csproj.CopyComplete
+C:\Users\chess\Source\Repos\CoraEpiro\Learnify\back-end\ProjectApi\Infrastructure\obj\Debug\net6.0\Infrastructure.genruntimeconfig.cache
+C:\Users\chess\Source\Repos\CoraEpiro\Learnify\back-end\ProjectApi\Infrastructure\obj\Debug\net6.0\ref\Infrastructure.dll

@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.Eventing.Reader;
-using BCrypt.Net;
+﻿using BCrypt.Net;
 
 namespace AppDomain.Common.Config;
 

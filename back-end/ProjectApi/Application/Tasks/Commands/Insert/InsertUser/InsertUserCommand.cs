@@ -1,15 +1,10 @@
-﻿using AppDomain.DTOs.User;
+﻿using AppDomain.DTO;
+using Application.DTO;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Application.Tasks.Commands.Insert.InsertUser
+namespace Application.Tasks.Commands.Insert.InsertUser;
+
+public class InsertUserCommand : IRequest<Task>
 {
-    public class InsertUserCommand : IRequest<UserDTO>
-    {
-        public UserDTO User { get; set;}
-    }
+    public InsertPendingUserDTO User { get; set;}
 }

@@ -13,9 +13,6 @@
   <ItemGroup>
     <Folder Include="Mappings\" />
     <Folder Include="Services\" />
-    <Folder Include="Tasks\Commands\Delete\" />
-    <Folder Include="Tasks\Commands\Update\" />
-    <Folder Include="Tasks\Queries\" />
   </ItemGroup>
 
   <ItemGroup>

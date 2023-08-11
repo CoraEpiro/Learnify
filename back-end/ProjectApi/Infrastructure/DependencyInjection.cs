@@ -1,5 +1,4 @@
 ﻿using AppDomain.Interfaces;
-using AppDomain.Services;
 using Infrastructure.Persistence;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,6 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Infrastructure.Services;
+using AppDomain.Common.Config;
 
 namespace Infrastructure;
 
@@ -20,9 +21,11 @@ public static class DependencyInjection
         services.AddDbContext<LearnifyDbContext>(
             options => options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
 
+        var bcryptConfig = new BCryptConfig();
+        configuration.GetSection("BCrypt").Bind(bcryptConfig);
+        services.AddSingleton(bcryptConfig);
+        services.AddSingleton<ICryptService,CryptService>();
         services.AddScoped<IUserRepository,UserRepository>();
-        services.AddScoped<IAuthenticationRepository, AuthenticationRepository>();
-        services.AddScoped<ICryptService, CryptService>();
 
         return services;
     }
