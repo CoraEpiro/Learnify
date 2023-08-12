@@ -1,28 +1,29 @@
 import { useField } from "formik";
 import PropTypes from "prop-types";
 import "./checkbox.css";
+import { nanoid } from "nanoid";
 
-// eslint-disable-next-line no-unused-vars
-const Checkbox = ({ title, ...props }) => {
+const Checkbox = ({ renderTitle, title, ...props }) => {
   const [field] = useField(props);
 
+  const _id = nanoid();
   return (
-    <label htmlFor="checkbox" className="cyberpunk-checkbox-label">
+    <label htmlFor={_id} className="cyberpunk-checkbox-label">
       <input
         {...field}
         checked={field.value}
-        id="checkbox"
+        id={_id}
         type="checkbox"
         className="cyberpunk-checkbox"
       />
-      {title}
+      {renderTitle ? renderTitle : title}
     </label>
   );
 };
 
 Checkbox.propTypes = {
-  checked: PropTypes.bool,
   title: PropTypes.string,
+  renderTitle: PropTypes.any,
 };
 
 export default Checkbox;

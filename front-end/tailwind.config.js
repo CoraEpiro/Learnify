@@ -1,5 +1,7 @@
 /** @type {import('tailwindcss').Config} */
-export default {
+import withMT from "@material-tailwind/react/utils/withMT";
+
+export default withMT({
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
@@ -15,8 +17,9 @@ export default {
         "github-hover-bg": "#000000",
         "google-bg": "#24292e",
         "google-hover-bg": "#000000",
+        "build-selected-category-bg": "#ebedfc",
       },
     },
   },
   plugins: [],
-};
+});

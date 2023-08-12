@@ -4,7 +4,7 @@ const Container = ({ children }) => {
   return (
     <div>
       <div className={"w-full h-full flex justify-center"}>
-        <div className={"max-w-[1100px] h-full box-border px-4 w-full"}>
+        <div className={"max-w-[1170px] h-full box-border px-4 w-full"}>
           {children}
         </div>
       </div>

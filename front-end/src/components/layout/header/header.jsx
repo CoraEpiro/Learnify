@@ -9,11 +9,11 @@ const Header = () => {
     <div className={"w-full h-14 bg-white drop-shadow-sm"}>
       <Container>
         <div className={"w-full h-14 flex items-center "}>
-          <div className={"w-fit flex gap-4"}>
+          <div className={"w-fit flex items-center gap-4"}>
             <Brand />
             <Search />
           </div>
-          <div className={"w-full  flex justify-end gap-4"}>
+          <div className={"w-full  flex items-center justify-end gap-4"}>
             <div className={"w-20"}>
               <LoginButton />
             </div>

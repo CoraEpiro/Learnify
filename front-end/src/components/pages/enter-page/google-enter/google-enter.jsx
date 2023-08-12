@@ -14,7 +14,7 @@ const GoogleEnter = ({ state }) => {
   );
 };
 GoogleEnter.propTypes = {
-  state: PropTypes.object,
+  state: PropTypes.string,
 };
 
 export default GoogleEnter;

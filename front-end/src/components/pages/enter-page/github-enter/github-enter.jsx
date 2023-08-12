@@ -15,7 +15,7 @@ const GithubEnter = ({ state }) => {
 };
 
 GithubEnter.propTypes = {
-  state: PropTypes.object,
+  state: PropTypes.string,
 };
 
 export default GithubEnter;

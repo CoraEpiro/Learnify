@@ -8,8 +8,9 @@ import SignupForm from "../../../form/signup-form/index.js";
 import SignupTitleDivider from "../../../title-dividers/signup-title-divider/index.js";
 import LoginTitleDivider from "../../../title-dividers/login-title-divider/index.js";
 
-const EnterActionCard = ({ state }) => {
+const EnterActionCard = ({ state, openSignupOtp, openLoginOtp }) => {
   const [animationParent] = useAutoAnimate();
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -32,13 +33,19 @@ const EnterActionCard = ({ state }) => {
       {/*Info Divider*/}
       {state ? <SignupTitleDivider /> : <LoginTitleDivider />}
       {/*Form*/}
-      {state ? <SignupForm /> : <LoginForm />}
+      {state ? (
+        <SignupForm openSignupOtp={openSignupOtp} />
+      ) : (
+        <LoginForm openLoginOtp={openLoginOtp} />
+      )}
     </motion.div>
   );
 };
 
 EnterActionCard.propTypes = {
   state: PropTypes.string,
+  openSignupOtp: PropTypes.func,
+  openLoginOtp: PropTypes.func,
 };
 
 export default EnterActionCard;

@@ -38,7 +38,7 @@ const NotFoundPage = () => {
           {" "}
           maybe you want to go{" "}
           <Link to="/" className={"nt-link"}>
-            back?{" "}
+            home?{" "}
           </Link>
         </p>
       </div>
