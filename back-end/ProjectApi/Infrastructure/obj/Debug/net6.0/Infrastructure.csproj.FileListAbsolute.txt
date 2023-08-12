@@ -53,3 +53,5 @@ C:\Users\chess\Source\Repos\CoraEpiro\Learnify\back-end\ProjectApi\Infrastructur
 C:\Users\chess\Source\Repos\CoraEpiro\Learnify\back-end\ProjectApi\Infrastructure\obj\Debug\net6.0\Infrastructure.csproj.CopyComplete
 C:\Users\chess\Source\Repos\CoraEpiro\Learnify\back-end\ProjectApi\Infrastructure\obj\Debug\net6.0\Infrastructure.genruntimeconfig.cache
 C:\Users\chess\Source\Repos\CoraEpiro\Learnify\back-end\ProjectApi\Infrastructure\obj\Debug\net6.0\ref\Infrastructure.dll
+C:\Users\chess\Source\Repos\CoraEpiro\Learnify\back-end\ProjectApi\Infrastructure\bin\Debug\net6.0\Infrastructure.xml
+C:\Users\chess\Source\Repos\CoraEpiro\Learnify\back-end\ProjectApi\Infrastructure\obj\Debug\net6.0\Infrastructure.xml

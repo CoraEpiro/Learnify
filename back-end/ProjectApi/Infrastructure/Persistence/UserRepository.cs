@@ -4,6 +4,7 @@ using AppDomain.Entities.UserRelated;
 using AppDomain.Interfaces;
 using Application.DTO;
 using Infrastructure.Services;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence;
@@ -11,11 +12,13 @@ public class UserRepository : IUserRepository
 {
     private readonly LearnifyDbContext _context;
     private readonly ICryptService _cryptService;
+    private readonly IJwtService _jwtService;
 
-    public UserRepository(LearnifyDbContext context, ICryptService cryptService)
+    public UserRepository(LearnifyDbContext context, ICryptService cryptService, IJwtService jwtService)
     {
         _context = context;
         _cryptService = cryptService;
+        _jwtService = jwtService;
     }
 
     public async Task<PendingUser> GetPendingUserByIdAsync(string? id)
@@ -60,25 +63,39 @@ public class UserRepository : IUserRepository
 
         return user is not null;
     }
-    public Task<Task> LogInAsync(string email, string password)
+    public async Task<string> LogInAsync(string email, string password)
     {
-        throw new NotImplementedException();
+        var user = await _context.PendingUsers.FirstOrDefaultAsync(x => x.Email == email);
+
+        if(user is null)
+            throw new Exception("User not found");
+
+        var isPasswordValid = _cryptService.CheckPassword(password, user.Password);
+
+        if(!isPasswordValid)
+            throw new Exception("Password is not valid");
+
+        var token = _jwtService.GenerateSecurityToken(user.Id, user.Email);
+
+        return token;
     }
-    public async Task<Task> RegisterUserAsync(InsertPendingUserDTO user)
+    public async Task<string> RegisterUserAsync(InsertPendingUserDTO insertUser)
     {
-        _context.PendingUsers.Add(new PendingUser
+        var user = _context.PendingUsers.Add(new PendingUser
         {
             Id = IDGeneratorService.GetShortUniqueId(),
-            Email = user.Email,
-            Name = user.Name,
-            Password = _cryptService.CryptPassword(user.Password),
-            UserSecret = user.UserSecret,
+            Email = insertUser.Email,
+            Name = insertUser.Name,
+            Password = _cryptService.CryptPassword(insertUser.Password),
+            UserSecret = insertUser.UserSecret,
             JoinedTime = DateTime.UtcNow
-        });
+        }).Entity;
 
         await _context.SaveChangesAsync();
 
-        return Task.CompletedTask;
+        var token = _jwtService.GenerateSecurityToken(user.Id, user.Email);
+
+        return token;
     }
     public async Task<Task> DeleteUserAsync(string id)
     {

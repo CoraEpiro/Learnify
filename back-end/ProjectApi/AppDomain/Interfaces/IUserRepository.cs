@@ -6,8 +6,8 @@ using Application.DTO;
 namespace AppDomain.Interfaces;
 public interface IUserRepository
 {
-    Task<Task> RegisterUserAsync(InsertPendingUserDTO user);
-    Task<Task> LogInAsync(string email, string password);
+    Task<string> RegisterUserAsync(InsertPendingUserDTO user);
+    Task<string> LogInAsync(string email, string password);
     Task<PendingUser> GetPendingUserByIdAsync(string? id);
     Task<User> GetUserByIdAsync(string? id);
     Task<User> GetUserByEmailAsync(string? email);

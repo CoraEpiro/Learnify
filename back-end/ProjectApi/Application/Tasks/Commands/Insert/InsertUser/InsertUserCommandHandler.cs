@@ -5,7 +5,7 @@ using MediatR;
 
 namespace Application.Tasks.Commands.Insert.InsertUser;
 
-public class InsertUserCommandHandler : IRequestHandler<InsertUserCommand, Task>
+public class InsertUserCommandHandler : IRequestHandler<InsertUserCommand, string>
 {
     private readonly IUserRepository _userRepository;
 
@@ -14,7 +14,7 @@ public class InsertUserCommandHandler : IRequestHandler<InsertUserCommand, Task>
         _userRepository = userRepository;
     }
 
-    public async Task<Task> Handle(InsertUserCommand request, CancellationToken cancellationToken)
+    public async Task<string> Handle(InsertUserCommand request, CancellationToken cancellationToken)
     {
         return await _userRepository.RegisterUserAsync(request.User);
     }

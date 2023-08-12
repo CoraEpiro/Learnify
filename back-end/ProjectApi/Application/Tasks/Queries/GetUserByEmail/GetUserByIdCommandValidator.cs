@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using Application.Tasks.Queries.GetUserById;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ public class GetUserByEmailCommandValidator : AbstractValidator<GetUserByEmailCo
     {
         RuleFor(u => u.Email)
             .NotEmpty()
+            .NotNull()
             .EmailAddress();
     }
 }

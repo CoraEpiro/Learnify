@@ -12,6 +12,8 @@ using Application.Tasks.Queries.GetUserByUsersecret;
 using Application.Tasks.Commands.Update.UpdateUsername;
 using Application.Tasks.Commands.Update.UpdatePassword;
 using Application.Tasks.Queries.GetUserByEmail;
+using Microsoft.AspNetCore.Authorization;
+using Application.Tasks.Queries.GetUser;
 
 namespace WebApi.Controllers;
 
@@ -28,13 +30,20 @@ public class UserController : ControllerBase
         //_context = context;
     }
 
-
-    [HttpPost]
-    public async Task<ActionResult> PostUser(InsertUserCommand insertCommand)
+    [HttpPost("Register")]
+    public async Task<ActionResult<string>> RegisterUser(InsertUserCommand insertCommand)
     {
-        var result = await _mediator.Send(insertCommand);
+        var token = await _mediator.Send(insertCommand);
 
-        return Ok();
+        return token;
+    }
+
+    [HttpGet("LogIn")]
+    public async Task<ActionResult<string>> LogInUser([FromQuery]GetUserCommand loginCommand)
+    {
+        var token = await _mediator.Send(loginCommand);
+
+        return token;
     }
 
     [HttpPatch("Username")]
@@ -70,6 +79,7 @@ public class UserController : ControllerBase
     }
 
     [HttpGet("PendingUserById")]
+    [Authorize]
     public async Task<PendingUserDTO> GetPendingUserById([FromQuery] GetPendingUserByIdCommand getCommand)
     {
         var pendingUser = await _mediator.Send(getCommand);
