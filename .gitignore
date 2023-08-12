@@ -1,0 +1,6 @@
+
+back-end/ProjectApi/Infrastructure/bin/Debug/net6.0/Infrastructure.deps.json
+back-end/ProjectApi/WebApi/obj/project.assets.json
+*.cache
+back-end/ProjectApi/WebApi/obj/WebApi.csproj.nuget.dgspec.json
+back-end/ProjectApi/WebApi/obj/WebApi.csproj.nuget.g.props

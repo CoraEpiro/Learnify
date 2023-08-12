@@ -14,17 +14,20 @@ namespace Infrastructure;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddInfrastructure(
+        this IServiceCollection services,
+        IConfiguration configuration
+    )
     {
-
         services.AddDbContext<LearnifyDbContext>(
-            options => options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+            options => options.UseNpgsql(configuration.GetConnectionString("DefaultConnection"))
+        );
 
         var bcryptConfig = new BCryptConfig();
         configuration.GetSection("BCrypt").Bind(bcryptConfig);
         services.AddSingleton(bcryptConfig);
-        services.AddSingleton<ICryptService,CryptService>();
-        services.AddScoped<IUserRepository,UserRepository>();
+        services.AddSingleton<ICryptService, CryptService>();
+        services.AddScoped<IUserRepository, UserRepository>();
 
         var jwtConfig = new JwtConfig();
         configuration.GetSection("JWT").Bind(jwtConfig);
@@ -43,7 +46,7 @@ public static class DependencyInjection
     {
         _ = services.AddSwaggerGen(setup =>
         {
-            setup.SwaggerDoc("v1", new OpenApiInfo { Title = "Api", Version = "v1", });
+            //setup.SwaggerDoc("v1", new OpenApiInfo { Title = "Api", Version = "v1", });
 
             setup.AddSecurityDefinition(
                 "Bearer",
@@ -75,8 +78,8 @@ public static class DependencyInjection
                 }
             );
 
-            var filePath = Path.Combine(AppContext.BaseDirectory, "Infrastructure.xml");
-            setup.IncludeXmlComments(filePath);
+            //var filePath = Path.Combine(AppContext.BaseDirectory, "Infrastructure.xml");
+            //setup.IncludeXmlComments(filePath);
         });
 
         return services;
@@ -114,30 +117,38 @@ public static class DependencyInjection
     /// <returns>The updated <see cref="IServiceCollection"/> instance.</returns>
     public static IServiceCollection AuthenticationAndAuthorization(
         this IServiceCollection services,
-        IConfiguration configuration)
+        IConfiguration configuration
+    )
     {
         var jwtConfig = new JwtConfig();
         configuration.GetSection("JWT").Bind(jwtConfig);
 
-        services.AddAuthentication(options =>
-        {
-            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-        }).AddJwtBearer("Bearer", options =>
-        {
-            options.TokenValidationParameters = new TokenValidationParameters
+        services
+            .AddAuthentication(options =>
             {
-                ValidateIssuer = true,
-                ValidateAudience = true,
-                ValidateLifetime = true,
-                ValidateIssuerSigningKey = true,
-                ClockSkew = TimeSpan.Zero,
-                ValidIssuer = jwtConfig.Issuer,
-                ValidAudience = jwtConfig.Audience,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtConfig.Secret)),
-            };
-        });
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(
+                "Bearer",
+                options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ClockSkew = TimeSpan.Zero,
+                        ValidIssuer = jwtConfig.Issuer,
+                        ValidAudience = jwtConfig.Audience,
+                        IssuerSigningKey = new SymmetricSecurityKey(
+                            Encoding.UTF8.GetBytes(jwtConfig.Secret)
+                        ),
+                    };
+                }
+            );
         services.AddAuthorization();
 
         return services;
