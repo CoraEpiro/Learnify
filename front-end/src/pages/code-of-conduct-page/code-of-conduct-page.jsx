@@ -79,8 +79,8 @@ const CodeOfConductPage = () => {
       <p className="text">
         By being part of Learnify, you agree to abide by this Code of Conduct
         and contribute to creating a positive, inclusive, and supportive
-        learning environment for all participants. Let's learn from each other
-        and grow together as a community.
+        learning environment for all participants. Let&apos;s learn from each
+        other and grow together as a community.
       </p>
     </motion.div>
   );

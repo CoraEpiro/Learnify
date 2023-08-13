@@ -1,6 +1,11 @@
 import PropTypes from "prop-types";
+import { useEffect } from "react";
 
 const Container = ({ children }) => {
+  useEffect(() => {
+    document.body.scrollTo({ top: 0, behavior: "smooth" });
+  });
+
   return (
     <div>
       <div className={"w-full h-full flex justify-center"}>

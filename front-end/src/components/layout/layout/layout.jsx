@@ -5,6 +5,8 @@ import LoginCard from "../../pages/enter-page/login-card/index.js";
 import SideBar from "../../side-bar/index.js";
 
 const Layout = () => {
+  document.title = "Learnify";
+
   return (
     <div>
       <Header />
