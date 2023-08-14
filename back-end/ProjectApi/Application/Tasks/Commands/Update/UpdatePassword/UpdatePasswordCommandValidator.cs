@@ -24,7 +24,5 @@ public class UpdatePasswordCommandValidator : AbstractValidator<UpdatePasswordCo
             .Matches("[a-z]") // At least one lowercase letter
             .Matches("[0-9]") // At least one digit
             .Matches("[^a-zA-Z0-9]"); // At least one special character
-
-        RuleFor(u => u.Password == u.RePassword);
     }
 }

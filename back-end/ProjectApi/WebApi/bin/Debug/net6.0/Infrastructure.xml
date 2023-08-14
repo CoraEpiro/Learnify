@@ -27,56 +27,5 @@
             <param name="configuration">for Jwt Token</param>
             <returns>The updated <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> instance.</returns>
         </member>
-        <member name="T:Infrastructure.Services.CryptService">
-            <inheritdoc/>
-        </member>
-        <member name="M:Infrastructure.Services.CryptService.#ctor(AppDomain.Common.Config.BCryptConfig)">
-            <summary>
-            Initialize object
-            </summary>
-            <param name="config"></param>
-            <exception cref="T:System.ArgumentNullException"></exception>
-        </member>
-        <member name="M:Infrastructure.Services.CryptService.CheckPassword(System.String,System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Infrastructure.Services.CryptService.CryptPassword(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Infrastructure.Services.CryptService.GenerateSalt">
-            <inheritdoc/>
-        </member>
-        <member name="T:Infrastructure.Services.IDGeneratorService">
-            <summary>
-            Service for generating unique identifiers.
-            </summary>
-        </member>
-        <member name="M:Infrastructure.Services.IDGeneratorService.GetUniqueId">
-            <summary>
-            Generates a new unique identifier.
-            </summary>
-            <returns>A string representing the new unique identifier.</returns>
-        </member>
-        <member name="M:Infrastructure.Services.IDGeneratorService.GetShortUniqueId">
-            <summary>
-            Generates a news short (length 8) unique identifier.
-            </summary>
-            <returns>A string representing the new unique identifier.</returns>
-        </member>
-        <member name="T:Infrastructure.Services.JwtService">
-            <summary>
-            A JWT service responsible for generating a security token for a given email address.
-            </summary>
-        </member>
-        <member name="M:Infrastructure.Services.JwtService.#ctor(AppDomain.Common.Config.JwtConfig)">
-            <summary>
-            A constructor
-            </summary>
-            <param name="config"></param>
-            <exception cref="T:System.ArgumentNullException"></exception>
-        </member>
-        <member name="M:Infrastructure.Services.JwtService.GenerateSecurityToken(System.String,System.String)">
-            <inheritdoc/>
-        </member>
     </members>
 </doc>

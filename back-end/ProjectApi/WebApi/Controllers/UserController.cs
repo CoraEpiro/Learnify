@@ -2,18 +2,19 @@
 using MediatR;
 using Application.Tasks.Commands.Delete.DeleteUser;
 using Application.Tasks.Commands.Insert.InsertUser;
-using Infrastructure.Services;
+using Application.Services;
 using AppDomain.DTOs.User;
 using AppDomain.DTO;
-using Application.Tasks.Queries.GetUserById;
-using Application.Tasks.Queries.GetPendingUserById;
-using Application.Tasks.Queries.GetUserByUsername;
-using Application.Tasks.Queries.GetUserByUsersecret;
 using Application.Tasks.Commands.Update.UpdateUsername;
 using Application.Tasks.Commands.Update.UpdatePassword;
-using Application.Tasks.Queries.GetUserByEmail;
 using Microsoft.AspNetCore.Authorization;
+using Application.Tasks.Commands.Update.BuildUser;
 using Application.Tasks.Queries.GetUser;
+using Application.Tasks.Queries.GetUserByUsername;
+using Application.Tasks.Queries.GetUserByUsersecret;
+using Application.Tasks.Queries.GetUserById;
+using Application.Tasks.Queries.GetUserByEmail;
+using Application.Tasks.Queries.GetPendingUserById;
 
 namespace WebApi.Controllers;
 
@@ -39,7 +40,7 @@ public class UserController : ControllerBase
     }
 
     [HttpGet("LogIn")]
-    public async Task<ActionResult<string>> LogInUser([FromQuery]GetUserCommand loginCommand)
+    public async Task<ActionResult<string>> LogInUser([FromQuery]GetUserQuery loginCommand)
     {
         var token = await _mediator.Send(loginCommand);
 
@@ -62,13 +63,13 @@ public class UserController : ControllerBase
         return DtoAndModelConvertors.ToUserDTO(user);
     }
 
-    /*[HttpPatch("Password")]
-    public async Task<UserDTO> BuildUser(UpdatePasswordCommand updateCommand)
+    [HttpPost("UserBuild")]
+    public async Task<UserDTO> BuildUser(BuildUserCommand buildCommand)
     {
-        var user = await _mediator.Send(updateCommand);
+        var user = await _mediator.Send(buildCommand);
 
         return DtoAndModelConvertors.ToUserDTO(user);
-    }*/
+    }
 
     [HttpDelete]
     public async Task<ActionResult> DeleteUser(DeleteUserCommand deleteCommand)
@@ -80,7 +81,7 @@ public class UserController : ControllerBase
 
     [HttpGet("PendingUserById")]
     [Authorize]
-    public async Task<PendingUserDTO> GetPendingUserById([FromQuery] GetPendingUserByIdCommand getCommand)
+    public async Task<PendingUserDTO> GetPendingUserById([FromQuery] GetPendingUserByIdQuery getCommand)
     {
         var pendingUser = await _mediator.Send(getCommand);
 
@@ -88,7 +89,7 @@ public class UserController : ControllerBase
     }
 
     [HttpGet("Id")]
-    public async Task<UserDTO> GetUserById([FromQuery] GetUserByIdCommand getCommand)
+    public async Task<UserDTO> GetUserById([FromQuery] GetUserByIdQuery getCommand)
     {
         var user = await _mediator.Send(getCommand);
 
@@ -96,7 +97,7 @@ public class UserController : ControllerBase
     }
 
     [HttpGet("Email")]
-    public async Task<UserDTO> GetUserByEmail([FromQuery] GetUserByEmailCommand getCommand)
+    public async Task<UserDTO> GetUserByEmail([FromQuery] GetUserByEmailQuery getCommand)
     {
         var user = await _mediator.Send(getCommand);
 
@@ -104,7 +105,7 @@ public class UserController : ControllerBase
     }
 
     [HttpGet("Username")]
-    public async Task<UserDTO> GetUserByUsername([FromQuery] GetUserByUsernameCommand getCommand)
+    public async Task<UserDTO> GetUserByUsername([FromQuery] GetUserByUsernameQuery getCommand)
     {
         var user = await _mediator.Send(getCommand);
 
@@ -112,7 +113,7 @@ public class UserController : ControllerBase
     }
 
     [HttpGet("Usersecret")]
-    public async Task<UserDTO> GetUserByUsersecret([FromQuery] GetUserByUsersecretCommand getCommand)
+    public async Task<UserDTO> GetUserByUsersecret([FromQuery] GetUserByUsersecretQuery getCommand)
     {
         var user = await _mediator.Send(getCommand);
 

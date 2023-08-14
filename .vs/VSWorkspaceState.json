@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\back-end",
+    "\\back-end\\ProjectApi",
+    "\\back-end\\ProjectApi\\AppDomain",
+    "\\back-end\\ProjectApi\\AppDomain\\Entities",
+    "\\back-end\\ProjectApi\\AppDomain\\Entities\\UserRelated",
+    "\\back-end\\ProjectApi\\Infrastructure",
+    "\\back-end\\ProjectApi\\Infrastructure\\Persistence",
+    "\\back-end\\ProjectApi\\WebApi",
+    "\\back-end\\ProjectApi\\WebApi\\Controllers"
+  ],
+  "SelectedNode": "\\back-end\\ProjectApi\\AppDomain\\Entities\\UserRelated\\User.cs",
+  "PreviewInSolutionExplorer": false
+}

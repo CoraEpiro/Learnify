@@ -2,9 +2,10 @@
 using AppDomain.Entities.UserRelated;
 using AppDomain.Interfaces;
 using Application.DTO;
+using Application.Tasks.Commands.Update.UpdatePassword;
 using MediatR;
 
-namespace Application.Tasks.Commands.Update.UpdatePassword;
+namespace Application.Tasks.Commands.Update.BuildUser;
 
 public class UpdatePasswordCommandHandler : IRequestHandler<UpdatePasswordCommand, User>
 {

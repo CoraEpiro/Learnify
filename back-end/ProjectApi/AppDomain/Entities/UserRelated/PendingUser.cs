@@ -9,4 +9,5 @@ public class PendingUser : EntityBase
     public string Password { get; set; } = String.Empty;
     public string? UserSecret { get; set; }
     public DateTime JoinedTime { get; set; }
+    public bool ProfileBuilded { get; set; } = false;
 }
