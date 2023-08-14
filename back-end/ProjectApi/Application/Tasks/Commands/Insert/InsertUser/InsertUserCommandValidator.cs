@@ -6,7 +6,7 @@ namespace Application.Tasks.Commands.Insert.InsertUser;
 public class InsertUserCommandValidator : AbstractValidator<InsertUserCommand>
 {
     private readonly IUserRepository _userRepository;
-/*    public InsertUserCommandValidator(IUserRepository userRepository)
+    public InsertUserCommandValidator(IUserRepository userRepository)
     {
         _userRepository = userRepository;
 
@@ -28,7 +28,7 @@ public class InsertUserCommandValidator : AbstractValidator<InsertUserCommand>
             .Matches("[a-z]")
             .Matches("[0-9]");
     }
-*/
+
     private bool BeEmailUnique(string email)
     {
         var isEmailExist = _userRepository.IsEmailExistAsync(email).GetAwaiter().GetResult();

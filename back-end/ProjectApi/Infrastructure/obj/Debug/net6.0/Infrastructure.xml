@@ -27,5 +27,39 @@
             <param name="configuration">for Jwt Token</param>
             <returns>The updated <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> instance.</returns>
         </member>
+        <member name="T:CryptService">
+            <inheritdoc/>
+        </member>
+        <member name="M:CryptService.#ctor(AppDomain.Common.Config.BCryptConfig)">
+            <summary>
+            Initialize object
+            </summary>
+            <param name="config"></param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:CryptService.CheckPassword(System.String,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:CryptService.CryptPassword(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:CryptService.GenerateSalt">
+            <inheritdoc/>
+        </member>
+        <member name="T:JwtService">
+            <summary>
+            A JWT service responsible for generating a security token for a given email address.
+            </summary>
+        </member>
+        <member name="M:JwtService.#ctor(AppDomain.Common.Config.JwtConfig)">
+            <summary>
+            A constructor
+            </summary>
+            <param name="config"></param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:JwtService.GenerateSecurityToken(System.String,System.String)">
+            <inheritdoc/>
+        </member>
     </members>
 </doc>

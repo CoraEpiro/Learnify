@@ -28,6 +28,10 @@ public static class DependencyInjection
         services.AddSingleton(bcryptConfig);
         services.AddSingleton<ICryptService, CryptService>();
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<ICategoryRepository, CategoryRepository>();
+
+
+
 
         var jwtConfig = new JwtConfig();
         configuration.GetSection("JWT").Bind(jwtConfig);

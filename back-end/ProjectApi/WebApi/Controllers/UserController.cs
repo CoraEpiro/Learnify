@@ -5,16 +5,16 @@ using Application.Tasks.Commands.Insert.InsertUser;
 using Application.Services;
 using AppDomain.DTOs.User;
 using AppDomain.DTO;
-using Application.Tasks.Commands.Update.UpdateUsername;
-using Application.Tasks.Commands.Update.UpdatePassword;
 using Microsoft.AspNetCore.Authorization;
-using Application.Tasks.Commands.Update.BuildUser;
-using Application.Tasks.Queries.GetUser;
-using Application.Tasks.Queries.GetUserByUsername;
-using Application.Tasks.Queries.GetUserByUsersecret;
-using Application.Tasks.Queries.GetUserById;
-using Application.Tasks.Queries.GetUserByEmail;
-using Application.Tasks.Queries.GetPendingUserById;
+using Application.Tasks.Commands.Update.UpdateUser.BuildUser;
+using Application.Tasks.Commands.Update.UpdateUser.UpdatePassword;
+using Application.Tasks.Commands.Update.UpdateUser.UpdateUsername;
+using Application.Tasks.Queries.UserQueries.GetUserByUsersecret;
+using Application.Tasks.Queries.UserQueries.GetUserByUsername;
+using Application.Tasks.Queries.UserQueries.GetUserById;
+using Application.Tasks.Queries.UserQueries.GetUserByEmail;
+using Application.Tasks.Queries.UserQueries.GetUser;
+using Application.Tasks.Queries.UserQueries.GetPendingUserById;
 
 namespace WebApi.Controllers;
 
@@ -88,8 +88,8 @@ public class UserController : ControllerBase
         return DtoAndModelConvertors.ToPendingUserDTO(pendingUser);
     }
 
-    [HttpGet("Id")]
-    public async Task<UserDTO> GetUserById([FromQuery] GetUserByIdQuery getCommand)
+    [HttpGet("GetUserById/{Id}")]
+    public async Task<UserDTO> GetUserById(GetUserByIdQuery getCommand)
     {
         var user = await _mediator.Send(getCommand);
 

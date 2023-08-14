@@ -1,12 +1,5 @@
 using AppDomain;
 using Application;
-using Application.Tasks.Commands.Update.UpdateUsername;
-using Application.Tasks.Queries.GetPendingUserById;
-using Application.Tasks.Queries.GetUserByEmail;
-using Application.Tasks.Queries.GetUserById;
-using Application.Tasks.Queries.GetUserByUsername;
-using Application.Tasks.Queries.GetUserByUsersecret;
-using FluentValidation;
 using FluentValidation.AspNetCore;
 using Infrastructure;
 
@@ -17,8 +10,6 @@ builder.Services.AddDomain();
 
 builder.Services.AddApplication();
 
-builder.Services.AddValidations();
-
 builder.Services.AddInfrastructure(builder.Configuration);
 
 builder.Services.AddControllers();
@@ -28,9 +19,19 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddFluentValidation();
 
+
 builder.Services.AddConfigs(builder.Configuration);
 builder.Services.AuthenticationAndAuthorization(builder.Configuration);
 builder.Services.AddSwagger();
+
+
+
+builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
+{
+    options.SuppressInferBindingSourcesForParameters = true;
+});
+
+
 
 var app = builder.Build();
 
