@@ -5,8 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>disable</Nullable>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <DocumentationFile>C:\Users\chess\source\repos\CoraEpiro\Learnify\back-end\ProjectApi\Infrastructure\obj\Debug\net6.0\Infrastructure.xml</DocumentationFile>
-  </PropertyGroup>
+    </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <Optimize>False</Optimize>
