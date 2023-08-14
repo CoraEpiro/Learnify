@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import "./terms-page.css";
 import { Link } from "react-router-dom";
 
 const TermsPage = () => {
@@ -37,7 +36,7 @@ const TermsPage = () => {
       <ol className={"ol ls-alpha"}>
         <li className="li">
           Permission is granted to temporarily download one copy of the
-          materials (information or software) on Learnify's web site for
+          materials (information or software) on Learnify&apos;s web site for
           personal, non-commercial transitory viewing only. This is the grant of
           a license, not a transfer of title, and under this license you may
           not:
@@ -49,15 +48,15 @@ const TermsPage = () => {
             </li>
             <li className="li">
               attempt to decompile or reverse engineer any software contained on
-              Learnify's web site;
+              Learnify&apos;s web site;
             </li>
             <li className="li">
               remove any copyright or other proprietary notations from the
               materials; or
             </li>
             <li className="li">
-              transfer the materials to another person or "mirror" the materials
-              on any other server.
+              transfer the materials to another person or &quot;mirror&quot; the
+              materials on any other server.
             </li>
           </ol>
         </li>
@@ -76,9 +75,9 @@ const TermsPage = () => {
 
       <ol className={"ol ls-alpha"}>
         <li className="li">
-          The materials on Learnify's web site are provided "as is". DEV
-          Community makes no warranties, expressed or implied, and hereby
-          disclaims and negates all other warranties, including without
+          The materials on Learnify&apos;s web site are provided &quot;as
+          is&quot;. DEV Community makes no warranties, expressed or implied, and
+          hereby disclaims and negates all other warranties, including without
           limitation, implied warranties or conditions of merchantability,
           fitness for a particular purpose, or non-infringement of intellectual
           property or other violation of rights. Further, Learnify does not
@@ -97,9 +96,9 @@ const TermsPage = () => {
         In no event shall Learnify or its suppliers be liable for any damages
         (including, without limitation, damages for loss of data or profit, or
         due to business interruption,) arising out of the use or inability to
-        use the materials on Learnify's Internet site, even if Learnify or an
-        authorized representative has been notified orally or in writing of the
-        possibility of such damage. Because some jurisdictions do not allow
+        use the materials on Learnify&apos;s Internet site, even if Learnify or
+        an authorized representative has been notified orally or in writing of
+        the possibility of such damage. Because some jurisdictions do not allow
         limitations on implied warranties, or limitations of liability for
         consequential or incidental damages, these limitations may not apply to
         you.
@@ -110,12 +109,12 @@ const TermsPage = () => {
       </h3>
 
       <p className="text">
-        The materials appearing on Learnify's web site could include technical,
-        typographical, or photographic errors. Learnify does not warrant that
-        any of the materials on its web site are accurate, complete, or current.
-        Learnify may make changes to the materials contained on its web site at
-        any time without notice. Learnify does not, however, make any commitment
-        to update the materials.
+        The materials appearing on Learnify&apos;s web site could include
+        technical, typographical, or photographic errors. Learnify does not
+        warrant that any of the materials on its web site are accurate,
+        complete, or current. Learnify may make changes to the materials
+        contained on its web site at any time without notice. Learnify does not,
+        however, make any commitment to update the materials.
       </p>
 
       <h3 className="header" id="links">
@@ -126,7 +125,8 @@ const TermsPage = () => {
         Learnify has not reviewed all of the sites linked to its Internet web
         site and is not responsible for the contents of any such linked site.
         The inclusion of any link does not imply endorsement by DEV Community of
-        the site. Use of any such linked web site is at the user's own risk.
+        the site. Use of any such linked web site is at the user&apos;s own
+        risk.
       </p>
 
       <h3 className="header" id="copyright-takedown">
@@ -140,7 +140,7 @@ const TermsPage = () => {
         prose, code snippets, collections of links, etc. Regardless of citation,
         users may not post copy and pasted content that does not belong to them.
         Users assume all risk for the content they post, including someone
-        else's reliance on its accuracy, claims relating to intellectual
+        else&apos;s reliance on its accuracy, claims relating to intellectual
         property, or other legal rights. If you believe that a user has
         plagiarized content, misrepresented their identity, misappropriated
         work, or otherwise run afoul of DMCA regulations, please email{" "}
@@ -233,8 +233,8 @@ const TermsPage = () => {
       </h3>
 
       <p className="text">
-        Any claim relating to Learnify's web site shall be governed by the laws
-        of the State of New York without regard to its conflict of law
+        Any claim relating to Learnify&apos;s web site shall be governed by the
+        laws of the State of New York without regard to its conflict of law
         provisions.
       </p>
 

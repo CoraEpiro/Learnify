@@ -67,6 +67,7 @@ const SideBar = () => {
           startFlex={true}
         />
         <BaseLinkButton
+          redirectUrl={"/contact"}
           renderTitle={
             <SideBarNavTitle title={"Contact"} iconName={"contact"} />
           }

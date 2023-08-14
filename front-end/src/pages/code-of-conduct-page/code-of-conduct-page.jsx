@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import "./code-of-conduct-page.css";
 
 const CodeOfConductPage = () => {
   document.title = "Code of Conduct for Learnify";

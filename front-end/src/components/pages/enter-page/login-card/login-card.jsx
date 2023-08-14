@@ -3,7 +3,7 @@ import LoginButton from "../login-button/index.js";
 
 const LoginCard = () => {
   return (
-    <div className={"w-fit p-4 flex flex-col gap-3 bg-white rounded-lg"}>
+    <div className={"w-52 p-4 flex flex-col gap-3 bg-white rounded-lg"}>
       <p className={"text-xl font-bold"}>
         Learnify Community is a community of 1,110,244 amazing developers
       </p>

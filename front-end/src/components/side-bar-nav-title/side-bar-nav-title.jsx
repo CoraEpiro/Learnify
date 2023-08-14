@@ -6,9 +6,9 @@ const SideBarNavTitle = ({ title, iconName }) => {
       <img
         src={`../../public/${iconName}.png`}
         alt={title}
-        className={"h-[20px]"}
+        className={"h-[16px]"}
       />
-      <span className={"font-sans text-lg "}>{title}</span>
+      <span className={"font-sans text-sm "}>{title}</span>
     </div>
   );
 };

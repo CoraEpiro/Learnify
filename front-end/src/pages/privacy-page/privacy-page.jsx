@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import "./privacy-page.css";
 
 const PrivacyPage = () => {
   document.title = "Privacy and Policy for Learnify";
