@@ -1,11 +1,11 @@
-﻿using AppDomain.DTO;
-using AppDomain.DTOs.User;
+﻿using AppDomain.DTOs.User;
 using AppDomain.Entities.UserRelated;
 using AppDomain.Interfaces;
 using Application.DTO;
-using Infrastructure.Services;
-using Microsoft.AspNetCore.Mvc;
+using Application.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace Infrastructure.Persistence;
 public class UserRepository : IUserRepository
@@ -13,12 +13,15 @@ public class UserRepository : IUserRepository
     private readonly LearnifyDbContext _context;
     private readonly ICryptService _cryptService;
     private readonly IJwtService _jwtService;
+    private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public UserRepository(LearnifyDbContext context, ICryptService cryptService, IJwtService jwtService)
+    public UserRepository(LearnifyDbContext context, ICryptService cryptService,
+                            IJwtService jwtService, IHttpContextAccessor httpContextAccessor)
     {
         _context = context;
         _cryptService = cryptService;
         _jwtService = jwtService;
+        _httpContextAccessor = httpContextAccessor;
     }
 
     public async Task<PendingUser> GetPendingUserByIdAsync(string? id)
@@ -53,7 +56,10 @@ public class UserRepository : IUserRepository
     }
     public async Task<bool> IsEmailExistAsync(string email)
     {
-        var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == email);
+        var user = await _context.PendingUsers.FirstOrDefaultAsync(x => x.Email == email);
+
+        if (user is not null)
+            user = await _context.Users.FirstOrDefaultAsync(x => x.Email == email);
 
         return user is not null;
     }
@@ -68,16 +74,71 @@ public class UserRepository : IUserRepository
         var user = await _context.PendingUsers.FirstOrDefaultAsync(x => x.Email == email);
 
         if(user is null)
-            throw new Exception("User not found");
+        {
+            user = await _context.Users.FirstOrDefaultAsync(x => x.Email == email);
+            if (user is null)
+                throw new Exception("User not found");
+        }
 
         var isPasswordValid = _cryptService.CheckPassword(password, user.Password);
 
         if(!isPasswordValid)
             throw new Exception("Password is not valid");
 
+        /*if(user is PendingUser)
+            await BuildUserAsync(new User(user));*/
+
         var token = _jwtService.GenerateSecurityToken(user.Id, user.Email);
 
         return token;
+    }
+    private JwtSecurityToken GetTokenFromRequest()
+    {
+        var authHeader = _httpContextAccessor.HttpContext.Request.Headers["Authorization"].FirstOrDefault();
+
+        if (!string.IsNullOrEmpty(authHeader) && authHeader.StartsWith("Bearer "))
+        {
+            var token = authHeader.Substring("Bearer ".Length);
+            var tokenHandler = new JwtSecurityTokenHandler();
+
+            if (tokenHandler.CanReadToken(token))
+            {
+                return tokenHandler.ReadJwtToken(token);
+            }
+        }
+
+        return null;
+    }
+    private string GetClaimValue(string claimType)
+    {
+        var token = GetTokenFromRequest();
+
+        if (token is not null)
+        {
+            var claim = token.Claims.FirstOrDefault(c => c.Type == claimType);
+            return claim?.Value;
+        }
+
+        return null;
+    }
+    public async Task<User> BuildUserAsync(BuildUserDTO buildUser)
+    {
+        var userEmail = GetClaimValue("userEmail");
+        var pendingUser = _context.PendingUsers.FirstOrDefault(x => x.Email == userEmail);
+
+        var user = new User(pendingUser);
+        user.BuildUser(buildUser);
+        user.Id = IDGeneratorService.GetUniqueId();
+        user.ProfileBuilded = true;
+
+        var newUser = _context.Users.Add(user).Entity;
+
+        if (newUser is not null)
+            _context.PendingUsers.Remove(pendingUser);
+
+        await _context.SaveChangesAsync();
+
+        return newUser;
     }
     public async Task<string> RegisterUserAsync(InsertPendingUserDTO insertUser)
     {
@@ -87,7 +148,6 @@ public class UserRepository : IUserRepository
             Email = insertUser.Email,
             Name = insertUser.Name,
             Password = _cryptService.CryptPassword(insertUser.Password),
-            UserSecret = insertUser.UserSecret,
             JoinedTime = DateTime.UtcNow
         }).Entity;
 

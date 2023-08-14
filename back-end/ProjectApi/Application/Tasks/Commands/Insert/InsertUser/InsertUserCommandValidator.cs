@@ -1,16 +1,15 @@
-﻿using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AppDomain.Interfaces;
+using FluentValidation;
 
 namespace Application.Tasks.Commands.Insert.InsertUser;
 
 public class InsertUserCommandValidator : AbstractValidator<InsertUserCommand>
 {
-    public InsertUserCommandValidator()
+    private readonly IUserRepository _userRepository;
+/*    public InsertUserCommandValidator(IUserRepository userRepository)
     {
+        _userRepository = userRepository;
+
         RuleFor(dto => dto.User.Name)
             .NotEmpty()
             .MaximumLength(50);
@@ -18,7 +17,8 @@ public class InsertUserCommandValidator : AbstractValidator<InsertUserCommand>
         RuleFor(dto => dto.User.Email)
             .NotEmpty()
             .EmailAddress()
-            .MaximumLength(100);
+            .MaximumLength(100)
+            .Must(BeEmailUnique);
 
         RuleFor(dto => dto.User.Password)
             .NotEmpty()
@@ -26,10 +26,13 @@ public class InsertUserCommandValidator : AbstractValidator<InsertUserCommand>
             .MaximumLength(16)
             .Matches("[A-Z]")
             .Matches("[a-z]")
-            .Matches("[0-9]")
-            .Must((dto, password) => !string.IsNullOrWhiteSpace(dto.User.UserSecret) || !string.IsNullOrWhiteSpace(password));
+            .Matches("[0-9]");
+    }
+*/
+    private bool BeEmailUnique(string email)
+    {
+        var isEmailExist = _userRepository.IsEmailExistAsync(email).GetAwaiter().GetResult();
 
-        RuleFor(dto => dto.User.UserSecret)
-            .MaximumLength(100);
+        return !isEmailExist;
     }
 }

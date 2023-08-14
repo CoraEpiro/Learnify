@@ -10,6 +10,7 @@ public class PersonalInfo
     public string? Location { get; set; }
     public string? DisplayEmail { get; set; }
     public string? WebsiteUrl { get; set; }
+    [Column(TypeName = "jsonb")]
     public IEnumerable<PinnedRepository>? PinnedRepositories { get; set; }
     [Column(TypeName = "jsonb")]
     public IEnumerable<string>? PinnedArticles { get; set; }

@@ -1,17 +1,41 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
-using AppDomain.Common.Entities;
 using AppDomain.Entities.NotificationRelated;
 using AppDomain.ValueObjects;
+using AppDomain.DTOs.User;
 
 namespace AppDomain.Entities.UserRelated;
 
-public class User : EntityBase
+public class User : PendingUser
 {
-    public string Name { get; set; } = String.Empty;
+    // Name is in PendingUser
+    // Email is in PendingUser
+    // Password is in PendingUser
+    // UserSecret is in PendingUser
+    // JoinedTime is in PendingUser
+    public User()
+    {
+
+    }
+    public User(PendingUser pendingUser)
+    {
+        Name = pendingUser.Name;
+        Email = pendingUser.Email;
+        Password = pendingUser.Password;
+        UserSecret = pendingUser.UserSecret;
+        JoinedTime = pendingUser.JoinedTime;
+    }
+    public void BuildUser(BuildUserDTO buildUser)
+    {
+        UserName = buildUser.Username;
+        ProfilePhoto = buildUser.ProfilePhoto;
+        PersonalInfo = new PersonalInfo();
+        PersonalInfo.Bio = buildUser.Bio;
+        PersonalInfo.WebsiteUrl = buildUser.WebsiteURL;
+        PersonalInfo.Work = buildUser.Work;
+        PersonalInfo.Education = buildUser.Education;
+        CategoryFollowedList = buildUser.CategoryFollowedList;
+    }
     public string UserName { get; set; } = String.Empty;
-    public string Email { get; set; } = String.Empty;
-    public string? UserSecret { get; set; }
-    public string? Password { get; set; }
     public string ProfilePhoto { get; set; } = String.Empty;
 
     [Column(TypeName = "jsonb")]
@@ -25,7 +49,6 @@ public class User : EntityBase
 
     [Column(TypeName = "jsonb")]
     public Settings Settings { get; set; }
-    public DateTime JoinedTime { get; set; }
 
     [Column(TypeName = "jsonb")]
     public IEnumerable<ConnectedAccount>? ConnectedAccountList { get; set; }
@@ -49,10 +72,10 @@ public class User : EntityBase
     public IEnumerable<VoteState>? ArticleVoteList { get; set; }
 
     [Column(TypeName = "jsonb")]
-    public IEnumerable<string>? QuestionSavedList { get; set; }
+    public IEnumerable<string>? QuestionViewedList { get; set; }
 
     [Column(TypeName = "jsonb")]
-    public IEnumerable<string>? QuestionViewedList { get; set; }
+    public IEnumerable<string>? QuestionSavedList { get; set; }
 
     [Column(TypeName = "jsonb")]
     public IEnumerable<VoteState>? QuestionVoteList { get; set; }
@@ -75,5 +98,4 @@ public class User : EntityBase
     [Column(TypeName = "jsonb")]
     public IEnumerable<VoteState>? CommentVoteList { get; set; }
     public string RefreshToken { get; set; } = String.Empty;
-    public bool ProfileBuilded { get; set; }
 }
