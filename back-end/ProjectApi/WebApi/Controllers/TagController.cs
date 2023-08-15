@@ -1,7 +1,9 @@
 ﻿using AppDomain.Common.Entities;
 using AppDomain.DTOs.Category;
 using AppDomain.Entities.TagBaseRelated;
+using Application.Tasks.Commands.Delete.DeleteCategory;
 using Application.Tasks.Commands.Insert.InsertCategory;
+using Application.Tasks.Commands.Update.UpdateCategory;
 using Application.Tasks.Queries.CategoryQueries.GetAllCategory;
 using Application.Tasks.Queries.CategoryQueries.GetAllCategoryBuild;
 using Application.Tasks.Queries.CategoryQueries.GetCategoryById;
@@ -13,11 +15,11 @@ namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CategoryController : ControllerBase
+    public class TagController : ControllerBase
     {
         private readonly IMediator _mediator;
 
-        public CategoryController(IMediator mediator)
+        public TagController(IMediator mediator)
         {
             _mediator = mediator;
         }
@@ -72,9 +74,55 @@ namespace WebApi.Controllers
         }
 
         [HttpPut("UpdateCategory")]
-        public async Task<ActionResult> UpdateCategory()
+        public async Task<ActionResult> UpdateCategory([FromBody] UpdateCategoryCommand command)
         {
-            return Ok();
+            var updatedId = await _mediator.Send(command);
+
+            if(updatedId is null)
+            {
+                GeneralResponce responce = new() { Result = 0, Message = $"Category Id: {command.updateCategoryDTO.Id} is not exist, Update process failed" };
+                return NotFound(responce);
+            }
+            else
+            {
+                GeneralResponce responce = new() { Result = updatedId, Message = $"Category Id: {updatedId}, Update process successfully" };
+                return Ok(responce);
+            }
+                
+        }
+
+        [HttpDelete("DeleteCategory/{CategoryId}")]
+        public async Task<ActionResult> DeleteCategory(DeleteCategoryCommand command)
+        {
+            var deleted = await _mediator.Send(command);
+
+            if (deleted is null)
+            {
+                GeneralResponce responce = new() { Result = 0, Message = $"Category Id: {command.CategoryId} is not exist, Delete process failed" };
+                return NotFound(responce);
+            }
+            else
+            {
+                GeneralResponce responce = new() { Result = deleted, Message = $"Category Id: {deleted}, Delete process successfully" };
+                return Ok(responce);
+            }
+        }
+
+        [HttpPatch("UpdateCategoryUseCount/{CategoryId}")]
+        public async Task<ActionResult> UpdateCategoryUseCount(UpdateCategoryUseCountCommand command)
+        {
+            var updatedUseCount = await _mediator.Send(command);
+
+            if (updatedUseCount is 0)
+            {
+                GeneralResponce responce = new() { Result = 0, Message = $"Category Id: {command.CategoryId} is not exist, UpdateUseCount process failed" };
+                return NotFound(responce);
+            }
+            else
+            {
+                GeneralResponce responce = new() { Result = updatedUseCount, Message = $"UpdateUseCount process successfully, UseCount: {updatedUseCount}" };
+                return Ok(responce);
+            }
         }
     }
 }

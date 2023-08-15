@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "BjWTWfuiuSiBvUij2nBdxhzCzEstpLTEz77hBFkTeLJi+0FJi9m2WMVGglZv5bMIAVepLDY2zKqh06HBht8UxQ==",
+  "dgSpecHash": "usUb8vIk0fho5/nRaO+eCRg4WPBIeIWlBVUMLuG7MBHjJFJIIdWOkX4Z8yhbqboWjzTiRKsuW8GAS8FSDjMS2Q==",
   "success": true,
-  "projectFilePath": "C:\\Users\\ASUS\\Desktop\\new\\Learnify\\back-end\\ProjectApi\\AppDomain\\AppDomain.csproj",
+  "projectFilePath": "C:\\Users\\ASUS\\Desktop\\Final-Project\\Learnify\\back-end\\ProjectApi\\AppDomain\\AppDomain.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ASUS\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\ASUS\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\7.0.0\\microsoft.extensions.dependencyinjection.abstractions.7.0.0.nupkg.sha512",

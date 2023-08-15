@@ -15,6 +15,7 @@ namespace Application.Mappings
         {
             CreateMap<Category,CategoryBuildProfileDTO>().ReverseMap();
             CreateMap<InsertCategoryDTO,Category>().ReverseMap();
+            CreateMap<UpdateCategoryDTO,Category>().ReverseMap();
         }
     }
 }

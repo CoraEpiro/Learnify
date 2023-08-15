@@ -11,7 +11,7 @@ namespace Application.Tasks.Commands.Update.UpdateCategory
     {
         public UpdateCategoryCommandValidator()
         {
-            
+            RuleFor(x => x.updateCategoryDTO.Title).NotEmpty();
         }
     }
 }

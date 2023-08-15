@@ -8,9 +8,9 @@ namespace AppDomain.DTOs.Category
 {
     public class UpdateCategoryDTO
     {
+        public string Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        public int UseCount { get; set; } = 0;
         public string IconLink { get; set; }
         public string AccentColor { get; set; }
     }

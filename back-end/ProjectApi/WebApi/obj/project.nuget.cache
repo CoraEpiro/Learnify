@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "jFeNb9iMqrKi7oUf4Yjc9Tb5kw3HiZR+KS96I0aXipsOCSZ4VAB/kdzmH5oEyav8/Z1H5eCvyAyjpAZex4iTRA==",
+  "dgSpecHash": "Jk8e3MnYz5i8nYlWFXQZSwt7a20UFSiU/xQuUmvgVkpABcUfK6LziAgCYN+2m1zBuozknwg1vucKlzOoda5mzQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\ASUS\\Desktop\\new\\Learnify\\back-end\\ProjectApi\\WebApi\\WebApi.csproj",
+  "projectFilePath": "C:\\Users\\ASUS\\Desktop\\Final-Project\\Learnify\\back-end\\ProjectApi\\WebApi\\WebApi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ASUS\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\ASUS\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
