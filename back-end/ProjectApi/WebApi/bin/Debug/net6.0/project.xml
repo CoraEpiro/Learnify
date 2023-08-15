@@ -4,5 +4,72 @@
         <name>WebApi</name>
     </assembly>
     <members>
+        <member name="T:WebApi.Controllers.UsersController">
+            <summary>
+            Controller for managing user-related operations.
+            </summary>
+        </member>
+        <member name="M:WebApi.Controllers.UsersController.#ctor(MediatR.IMediator)">
+            <summary>
+            Initializes a new instance of the <see cref="T:WebApi.Controllers.UsersController"/> class.
+            </summary>
+            <param name="mediator">The mediator used for handling commands and queries.</param>
+        </member>
+        <member name="M:WebApi.Controllers.UsersController.UpdateUsername(Application.Tasks.Commands.Update.UpdateUser.UpdateUsername.UpdateUsernameCommand)">
+            <summary>
+            Updates the username of a user.
+            </summary>
+            <param name="updateCommand">The command containing update information.</param>
+            <returns>The updated user's DTO if successful, NotFound if user not found.</returns>
+        </member>
+        <member name="M:WebApi.Controllers.UsersController.UpdatePassword(Application.Tasks.Commands.Update.UpdateUser.UpdatePassword.UpdatePasswordCommand)">
+            <summary>
+            Updates the password of a user.
+            </summary>
+            <param name="updateCommand">The command containing update information.</param>
+            <returns>The updated user's DTO if successful, NotFound if user not found.</returns>
+        </member>
+        <member name="M:WebApi.Controllers.UsersController.BuildUser(Application.Tasks.Commands.Insert.UserInserts.BuildUser.BuildUserCommand)">
+            <summary>
+            Builds a new user.
+            </summary>
+            <param name="buildCommand">The command containing user information.</param>
+            <returns>The created user's DTO if successful, NotFound if user creation fails.</returns>
+        </member>
+        <member name="M:WebApi.Controllers.UsersController.DeleteUser(Application.Tasks.Commands.Delete.DeleteUser.DeleteUserCommand)">
+            <summary>
+            Deletes a user.
+            </summary>
+            <param name="deleteCommand">The command containing user deletion information.</param>
+            <returns>Ok if deletion is successful.</returns>
+        </member>
+        <member name="M:WebApi.Controllers.UsersController.GetUserById(Application.Tasks.Queries.UserQueries.GetUserById.GetUserByIdQuery)">
+            <summary>
+            Retrieves a user by their ID.
+            </summary>
+            <param name="getCommand">The query containing user ID.</param>
+            <returns>The retrieved user's DTO if found, NotFound if user not found.</returns>
+        </member>
+        <member name="M:WebApi.Controllers.UsersController.GetUserByEmail(Application.Tasks.Queries.UserQueries.GetUserByEmail.GetUserByEmailQuery)">
+            <summary>
+            Retrieves a user by their email address.
+            </summary>
+            <param name="getCommand">The query containing email address.</param>
+            <returns>The retrieved user's DTO if found, NotFound if user not found.</returns>
+        </member>
+        <member name="M:WebApi.Controllers.UsersController.GetUserByUsername(Application.Tasks.Queries.UserQueries.GetUserByUsername.GetUserByUsernameQuery)">
+            <summary>
+            Retrieves a user by their username.
+            </summary>
+            <param name="getCommand">The query containing username.</param>
+            <returns>The retrieved user's DTO if found, NotFound if user not found.</returns>
+        </member>
+        <member name="M:WebApi.Controllers.UsersController.GetUserByUsersecret(Application.Tasks.Queries.UserQueries.GetUserByUsersecret.GetUserByUsersecretQuery)">
+            <summary>
+            Retrieves a user by their secret.
+            </summary>
+            <param name="getCommand">The query containing user secret.</param>
+            <returns>The retrieved user's DTO if found, NotFound if user not found.</returns>
+        </member>
     </members>
 </doc>

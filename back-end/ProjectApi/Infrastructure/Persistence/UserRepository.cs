@@ -24,23 +24,27 @@ public class UserRepository : IUserRepository
         _httpContextAccessor = httpContextAccessor;
     }
 
-    public async Task<PendingUser> GetPendingUserByIdAsync(string? id)
-    {
-        var pendingUser = await _context.PendingUsers.FirstOrDefaultAsync(x => x.Id == id);
-
-        return pendingUser!;
-    }
     public async Task<User> GetUserByEmailAsync(string? email)
     {
-        var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == email);
+        var pendingUser = await _context.PendingUsers.FirstOrDefaultAsync(x => x.Email == email);
 
-        return user!;
+        if(pendingUser is null)
+            pendingUser = await _context.Users.FirstOrDefaultAsync(x => x.Email == email);
+
+        var user = new User(pendingUser);
+
+        return user;
     }
     public async Task<User> GetUserByIdAsync(string? id)
     {
-        var user = await _context.Users.FindAsync(id);
+        var pendingUser = await _context.PendingUsers.FindAsync(id);
 
-        return user!;
+        if(pendingUser is null)
+            pendingUser = await _context.Users.FindAsync(id);
+
+        var user = new User(pendingUser);
+
+        return user;
     }
     public async Task<User> GetUserByUsernameAsync(string? username)
     {
@@ -69,7 +73,7 @@ public class UserRepository : IUserRepository
 
         return user is not null;
     }
-    public async Task<string> LogInAsync(string email, string password)
+    public async Task<TokenID> LogInAsync(string email, string password)
     {
         var user = await _context.PendingUsers.FirstOrDefaultAsync(x => x.Email == email);
 
@@ -85,12 +89,10 @@ public class UserRepository : IUserRepository
         if(!isPasswordValid)
             throw new Exception("Password is not valid");
 
-        /*if(user is PendingUser)
-            await BuildUserAsync(new User(user));*/
-
         var token = _jwtService.GenerateSecurityToken(user.Id, user.Email);
+        var tokenID = new TokenID(user.Id, token);
 
-        return token;
+        return tokenID;
     }
     private JwtSecurityToken GetTokenFromRequest()
     {
@@ -169,7 +171,8 @@ public class UserRepository : IUserRepository
     }
     public async Task<User> UpdateUsernameAsync(string id, string newUsername)
     {
-        var user = await GetUserByIdAsync(id);
+        var pendingUser = await GetUserByIdAsync(id);
+        var user = new User(pendingUser);
         var usernameExist = await IsUsernameExistAsync(newUsername);
 
         if(usernameExist)
@@ -183,7 +186,8 @@ public class UserRepository : IUserRepository
     }
     public async Task<User> UpdatePasswordAsync(string id, string newPassword)
     {
-        var user = await GetUserByIdAsync(id);
+        var pendingUser = await GetUserByIdAsync(id);
+        var user = new User(pendingUser);
 
         user.Password = _cryptService.CryptPassword(newPassword);
 

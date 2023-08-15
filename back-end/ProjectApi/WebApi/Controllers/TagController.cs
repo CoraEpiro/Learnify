@@ -60,7 +60,6 @@ namespace WebApi.Controllers
             {
                 return Ok(categoryGet);
             }
-
         }
 
         [HttpPost("InsertCategory")]

@@ -3,7 +3,7 @@ using AppDomain.Interfaces;
 using Application.DTO;
 using MediatR;
 
-namespace Application.Tasks.Commands.Insert.InsertUser;
+namespace Application.Tasks.Commands.Insert.UserInserts.InsertUser;
 
 public class InsertUserCommandHandler : IRequestHandler<InsertUserCommand, string>
 {

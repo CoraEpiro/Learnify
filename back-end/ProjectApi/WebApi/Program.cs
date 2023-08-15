@@ -19,18 +19,14 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddFluentValidation();
 
-
 builder.Services.AddConfigs(builder.Configuration);
 builder.Services.AuthenticationAndAuthorization(builder.Configuration);
 builder.Services.AddSwagger();
-
-
 
 builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
 {
     options.SuppressInferBindingSourcesForParameters = true;
 });
-
 
 
 var app = builder.Build();
