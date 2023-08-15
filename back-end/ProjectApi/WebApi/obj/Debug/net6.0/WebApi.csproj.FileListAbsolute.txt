@@ -337,3 +337,5 @@ C:\Users\ASUS\Desktop\new\Learnify\back-end\ProjectApi\WebApi\obj\Debug\net6.0\p
 C:\Users\ASUS\Desktop\new\Learnify\back-end\ProjectApi\WebApi\obj\Debug\net6.0\WebApi.pdb
 C:\Users\ASUS\Desktop\new\Learnify\back-end\ProjectApi\WebApi\obj\Debug\net6.0\WebApi.genruntimeconfig.cache
 C:\Users\ASUS\Desktop\new\Learnify\back-end\ProjectApi\WebApi\obj\Debug\net6.0\ref\WebApi.dll
+C:\Users\chess\Source\Repos\CoraEpiro\Learnify\back-end\ProjectApi\WebApi\obj\Debug\net6.0\project.xml
+C:\Users\chess\Source\Repos\CoraEpiro\Learnify\back-end\ProjectApi\WebApi\bin\Debug\net6.0\project.xml

@@ -12,21 +12,21 @@ public class GetUserQueryValidator : AbstractValidator<GetUserQuery>
         _userRepository = userRepository;
     }
 
-    /*    public GetUserCommandValidator()
-        {
-            RuleFor(u => u.Email)
-                .NotEmpty()
-                .NotNull()
-                .EmailAddress()
-                .Must(BeUniqueEmail);
+    public GetUserQueryValidator()
+    {
+        RuleFor(u => u.Email)
+            .NotEmpty()
+            .NotNull()
+            .EmailAddress()
+            .Must(BeUniqueEmail);
 
-            RuleFor(u => u.Password)
-                .NotEmpty()
-                .NotNull()
-                .MinimumLength(8)
-                .MaximumLength(16);
-        }
-    */
+        RuleFor(u => u.Password)
+            .NotEmpty()
+            .NotNull()
+            .MinimumLength(8)
+            .MaximumLength(16);
+    }
+
     private bool BeUniqueEmail(string email)
     {
         var isEmailExist = _userRepository.IsEmailExistAsync(email).GetAwaiter().GetResult();

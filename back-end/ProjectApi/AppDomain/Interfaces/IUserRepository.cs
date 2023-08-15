@@ -7,8 +7,7 @@ namespace AppDomain.Interfaces;
 public interface IUserRepository
 {
     Task<string> RegisterUserAsync(InsertPendingUserDTO user);
-    Task<string> LogInAsync(string email, string password);
-    Task<PendingUser> GetPendingUserByIdAsync(string? id);
+    Task<TokenID> LogInAsync(string email, string password);
     Task<User> GetUserByIdAsync(string? id);
     Task<User> GetUserByEmailAsync(string? email);
     Task<User> GetUserByUsersecretAsync(string? userSecret);
