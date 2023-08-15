@@ -4,7 +4,7 @@ using AppDomain.Interfaces;
 using Application.DTO;
 using MediatR;
 
-namespace Application.Tasks.Commands.Update.UpdateUser.BuildUser;
+namespace Application.Tasks.Commands.Insert.UserInserts.BuildUser;
 
 public class BuildUserCommandHandler : IRequestHandler<BuildUserCommand, User>
 {

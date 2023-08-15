@@ -1,5 +1,5 @@
 ﻿using AppDomain.DTOs.User;
-using Application.Tasks.Commands.Insert.InsertUser;
+using Application.Tasks.Commands.Insert.UserInserts.InsertUser;
 using Application.Tasks.Queries.UserQueries.GetUser;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -30,8 +30,8 @@ public class AuthorizationController : ControllerBase
         return Ok(token);
     }
 
-    [HttpGet("LogInUser/{Email}/{Password}")]
-    public async Task<ActionResult<TokenID>> LogInUser(GetUserQuery loginCommand)
+    [HttpPost("LogInUser")]
+    public async Task<ActionResult<TokenID>> LogInUser([FromBody] GetUserQuery loginCommand)
     {
         var tokenID = await _mediator.Send(loginCommand);
 

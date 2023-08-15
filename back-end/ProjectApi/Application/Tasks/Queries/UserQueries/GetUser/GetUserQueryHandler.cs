@@ -1,9 +1,5 @@
-﻿using AppDomain.DTO;
-using AppDomain.DTOs.User;
-using AppDomain.Entities.UserRelated;
+﻿using AppDomain.DTOs.User;
 using AppDomain.Interfaces;
-using Application.DTO;
-using Application.Tasks.Commands.Insert.InsertUser;
 using MediatR;
 
 namespace Application.Tasks.Queries.UserQueries.GetUser;

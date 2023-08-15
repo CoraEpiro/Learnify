@@ -29,7 +29,7 @@
             <param name="updateCommand">The command containing update information.</param>
             <returns>The updated user's DTO if successful, NotFound if user not found.</returns>
         </member>
-        <member name="M:WebApi.Controllers.UsersController.BuildUser(Application.Tasks.Commands.Update.UpdateUser.BuildUser.BuildUserCommand)">
+        <member name="M:WebApi.Controllers.UsersController.BuildUser(Application.Tasks.Commands.Insert.UserInserts.BuildUser.BuildUserCommand)">
             <summary>
             Builds a new user.
             </summary>

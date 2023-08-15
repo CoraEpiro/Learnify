@@ -1,0 +1,44 @@
+# Compiled binary files
+*.o
+*.obj
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Debug files
+*.pdb
+*.class
+*.swp
+*.swo
+
+# IDE and editor-specific files and directories
+.vscode/
+.idea/
+*.sln
+*.user
+*.suo
+
+# Build and output directories
+/bin/
+/build/
+/out/
+/target/
+/dist/
+
+# Dependency directories (specific to certain languages or tools)
+/node_modules/
+/vendor/
+/packages/
+
+# Sensitive or environment-specific files
+secrets.txt
+*.env
+
+# Temporary files and backups
+*~
+*.bak
+*.tmp
+
+# Log files
+*.log

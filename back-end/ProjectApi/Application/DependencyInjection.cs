@@ -1,6 +1,4 @@
 ﻿using Application.Mappings;
-using Application.Tasks.Commands.Insert.InsertUser;
-using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 

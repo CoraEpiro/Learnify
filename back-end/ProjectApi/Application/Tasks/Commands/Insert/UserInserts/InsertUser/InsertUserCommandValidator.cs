@@ -1,7 +1,7 @@
 ﻿using AppDomain.Interfaces;
 using FluentValidation;
 
-namespace Application.Tasks.Commands.Insert.InsertUser;
+namespace Application.Tasks.Commands.Insert.UserInserts.InsertUser;
 
 public class InsertUserCommandValidator : AbstractValidator<InsertUserCommand>
 {

@@ -1,16 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MediatR;
 using Application.Tasks.Commands.Delete.DeleteUser;
-using Application.Tasks.Commands.Insert.InsertUser;
 using AppDomain.DTO;
-using Application.Tasks.Commands.Update.UpdateUser.BuildUser;
 using Application.Tasks.Commands.Update.UpdateUser.UpdatePassword;
 using Application.Tasks.Commands.Update.UpdateUser.UpdateUsername;
 using Application.Tasks.Queries.UserQueries.GetUserByUsersecret;
 using Application.Tasks.Queries.UserQueries.GetUserByUsername;
 using Application.Tasks.Queries.UserQueries.GetUserById;
 using Application.Tasks.Queries.UserQueries.GetUserByEmail;
-using Application.Tasks.Queries.UserQueries.GetUser;
+using Application.Tasks.Commands.Insert.UserInserts.BuildUser;
 
 namespace WebApi.Controllers;
 

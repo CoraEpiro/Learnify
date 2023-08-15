@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Tasks.Commands.Update.UpdateUser.BuildUser;
+namespace Application.Tasks.Commands.Insert.UserInserts.BuildUser;
 
 using AppDomain.Entities.UserRelated;
 using FluentValidation;
