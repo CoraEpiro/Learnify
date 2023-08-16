@@ -1,4 +1,6 @@
 ﻿using AppDomain.DTOs.User;
+using Application.Tasks.Commands.Delete.UserDeletes.VerifyEmail;
+using Application.Tasks.Commands.Insert.UserInserts.InserOTPCode;
 using Application.Tasks.Commands.Insert.UserInserts.InsertUser;
 using Application.Tasks.Commands.Update.UpdateUser.UpdateToken;
 using Application.Tasks.Queries.UserQueries.GetUser;
@@ -65,5 +67,31 @@ public class AuthorizationController : ControllerBase
             return BadRequest();
 
         return Ok(token);
+    }
+
+    /// <summary>
+    /// Sends an OTP code to the user's email for verification.
+    /// </summary>
+    /// <param name="insertOTPCommand">The command containing data for sending OTP.</param>
+    /// <returns>The result of sending the OTP code.</returns>
+    [HttpPost("SendOTPCode")]
+    public async Task<ActionResult> SendOTPCode([FromBody] InsertOTPCommand insertOTPCommand)
+    {
+        var result = await _mediator.Send(insertOTPCommand);
+
+        return Ok(result);
+    }
+
+    /// <summary>
+    /// Verifies the user's email using the provided verification code.
+    /// </summary>
+    /// <param name="verifyEmailCommand">The command containing the verification code.</param>
+    /// <returns>The result of email verification.</returns>
+    [HttpPost("VerifyEmail")]
+    public async Task<ActionResult> VerifyEmail([FromBody] VerifyEmailCommand verifyEmailCommand)
+    {
+        var result = await _mediator.Send(verifyEmailCommand);
+
+        return Ok(result);
     }
 }

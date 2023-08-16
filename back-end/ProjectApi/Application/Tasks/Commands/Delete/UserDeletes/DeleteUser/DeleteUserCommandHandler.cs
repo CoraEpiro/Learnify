@@ -3,7 +3,7 @@ using AppDomain.Interfaces;
 using Application.DTO;
 using MediatR;
 
-namespace Application.Tasks.Commands.Delete.DeleteUser
+namespace Application.Tasks.Commands.Delete.UserDeletes.DeleteUser
 {
     public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, Task>
     {

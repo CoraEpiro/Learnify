@@ -68,12 +68,22 @@ public interface IUserRepository
     Task<bool> IsUsernameExistAsync(string username);
 
     /// <summary>
+    /// Sends an OTP code to the user's email for verification.
+    /// </summary>
+    /// <param name="email">The email address of the user.</param>
+    /// <returns>A task representing the asynchronous operation to send the OTP code.</returns>
+    Task<Task> SendOTPCodeAsync(string email);
+
+    /// <summary>
+    /// Verifies the user's email using the provided verification code.
+    /// </summary>
+    /// <param name="email">The email address of the user.</param>
+    /// <param name="otpCode">The OTP code for verification.</param>
+    /// <returns>A task representing the asynchronous operation to verify the email.</returns>
+    Task<Task> VerifyEmailAsync(string email, string otpCode);
+
+    /// <summary>
     /// Checks if an email exists asynchronously.
     /// </summary>
     Task<bool> IsEmailExistAsync(string email);
-
-    /// <summary>
-    /// Retrieves a JWT security token from the request.
-    /// </summary>
-    JwtSecurityToken GetTokenFromRequest();
 }

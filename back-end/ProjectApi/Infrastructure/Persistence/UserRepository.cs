@@ -3,6 +3,7 @@ using AppDomain.Entities.UserRelated;
 using AppDomain.Interfaces;
 using Application.DTO;
 using Application.Services;
+using Infrastructure.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System.IdentityModel.Tokens.Jwt;
@@ -230,6 +231,41 @@ public class UserRepository : IUserRepository
         await _context.SaveChangesAsync();
 
         return user;
+    }
+
+    /// <inheritdoc/>
+    public async Task<Task> SendOTPCodeAsync(string email)
+    {
+        var otpCode = OTPCodeGenerator.GenerateOTPCode();
+
+        _context.EmailVerifications.Add(new EmailVerification
+        {
+            Id = IDGeneratorService.GetShortUniqueId(),
+            Email = email,
+            OTP = otpCode,
+            ExpireUntil = DateTime.UtcNow.AddMinutes(2.5)
+        });
+
+        await _context.SaveChangesAsync();
+
+        await EmailSender.SendEmailAsync(email, otpCode);
+
+        return Task.CompletedTask;
+    }
+
+    /// <inheritdoc/>
+    public async Task<Task> VerifyEmailAsync(string email, string otpCode)
+    {
+        var verification = _context.EmailVerifications.FirstOrDefault(x => x.Email == email && x.OTP == otpCode);
+
+        if(verification.ExpireUntil < DateTime.UtcNow)
+            return Task.FromResult("OTP is already expired.");
+
+        _context.EmailVerifications.Remove(verification);
+
+        await _context.SaveChangesAsync();
+
+        return Task.FromResult("Your Email is verified.");
     }
 
     /// <inheritdoc/>

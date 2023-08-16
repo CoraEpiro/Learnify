@@ -4,6 +4,32 @@
         <name>WebApi</name>
     </assembly>
     <members>
+        <member name="T:AuthorizationController">
+            <summary>
+            Controller responsible for user authorization operations.
+            </summary>
+        </member>
+        <member name="M:AuthorizationController.#ctor(MediatR.IMediator)">
+            <summary>
+            Initializes a new instance of the <see cref="T:AuthorizationController"/> class.
+            </summary>
+            <param name="mediator">The mediator for handling requests and notifications.</param>
+        </member>
+        <member name="M:AuthorizationController.RegisterUser(Application.Tasks.Commands.Insert.UserInserts.InsertUser.InsertUserCommand)">
+            <summary>
+            Registers a new user and returns a token upon successful registration.
+            </summary>
+        </member>
+        <member name="M:AuthorizationController.LogInUser(Application.Tasks.Queries.UserQueries.GetUser.GetUserQuery)">
+            <summary>
+            Logs in a user and returns a token upon successful authentication.
+            </summary>
+        </member>
+        <member name="M:AuthorizationController.RefreshToken(Application.Tasks.Commands.Update.UpdateUser.UpdateToken.UpdateTokenCommand)">
+            <summary>
+            Refreshes the authentication token and returns the updated token.
+            </summary>
+        </member>
         <member name="T:WebApi.Controllers.UsersController">
             <summary>
             Controller for managing user-related operations.
@@ -36,7 +62,7 @@
             <param name="buildCommand">The command containing user information.</param>
             <returns>The created user's DTO if successful, NotFound if user creation fails.</returns>
         </member>
-        <member name="M:WebApi.Controllers.UsersController.DeleteUser(Application.Tasks.Commands.Delete.DeleteUser.DeleteUserCommand)">
+        <member name="M:WebApi.Controllers.UsersController.DeleteUser(Application.Tasks.Commands.Delete.UserDeletes.DeleteUser.DeleteUserCommand)">
             <summary>
             Deletes a user.
             </summary>

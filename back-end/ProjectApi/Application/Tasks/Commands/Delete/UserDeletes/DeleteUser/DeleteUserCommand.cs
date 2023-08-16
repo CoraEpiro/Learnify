@@ -2,9 +2,9 @@
 using Application.DTO;
 using MediatR;
 
-namespace Application.Tasks.Commands.Delete.DeleteUser;
+namespace Application.Tasks.Commands.Delete.UserDeletes.DeleteUser;
 
 public class DeleteUserCommand : IRequest<Task>
 {
-    public string Id { get; set;}
+    public string Id { get; set; }
 }
