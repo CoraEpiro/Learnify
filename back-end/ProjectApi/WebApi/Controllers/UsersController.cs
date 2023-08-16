@@ -54,7 +54,7 @@ public class UsersController : ControllerBase
     /// <param name="updateCommand">The command containing update information.</param>
     /// <returns>The updated user's DTO if successful, NotFound if user not found.</returns>
     [HttpPatch("UpdatePassword/{Id}/{Password}")]
-    public async Task<ActionResult<UserDTO>> UpdatePassword(UpdatePasswordCommand updateCommand)
+    public async Task<ActionResult<UserDTO>> UpdatePassword([FromBody] UpdatePasswordCommand updateCommand)
     {
         var user = await _mediator.Send(updateCommand);
 

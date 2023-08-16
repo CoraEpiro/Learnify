@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "YpUQRq0313I7tLUm/mN1K0si6YzBqX1vcuzBcSyJyJjYwIvFrvuB4FuPvO3VyH95WM42SdCftLb6At4BqpLElw==",
+  "dgSpecHash": "hH8NaP6BSnKiqEiHS95Otv3RieTLQbMAIRCPi+9Mun3XDSIUcugVlzDdKNa5zu2B7S4cXJbjTtzQONsg69Zr5w==",
   "success": true,
-  "projectFilePath": "C:\\Users\\chess\\source\\repos\\CoraEpiro\\Learnify\\back-end\\ProjectApi\\Infrastructure\\Infrastructure.csproj",
+  "projectFilePath": "C:\\Users\\chess\\Source\\Repos\\CoraEpiro\\Learnify\\back-end\\ProjectApi\\Infrastructure\\Infrastructure.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\chess\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\chess\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",

@@ -90,38 +90,39 @@ public class UserRepository : IUserRepository
             throw new Exception("Password is not valid");
 
         var token = _jwtService.GenerateSecurityToken(user.Id, user.Email);
+
+        user.RefreshToken = token;
+
+        _context.Update(user);
+
+        await _context.SaveChangesAsync();
+
         var tokenID = new TokenID(user.Id, token);
 
         return tokenID;
     }
-    private JwtSecurityToken GetTokenFromRequest()
+    public async Task<string> RegisterUserAsync(InsertPendingUserDTO insertUser)
     {
-        var authHeader = _httpContextAccessor.HttpContext.Request.Headers["Authorization"].FirstOrDefault();
-
-        if (!string.IsNullOrEmpty(authHeader) && authHeader.StartsWith("Bearer "))
+        var user = _context.PendingUsers.Add(new PendingUser
         {
-            var token = authHeader.Substring("Bearer ".Length);
-            var tokenHandler = new JwtSecurityTokenHandler();
+            Id = IDGeneratorService.GetShortUniqueId(),
+            Email = insertUser.Email,
+            Name = insertUser.Name,
+            Password = _cryptService.CryptPassword(insertUser.Password),
+            JoinedTime = DateTime.UtcNow
+        }).Entity;
 
-            if (tokenHandler.CanReadToken(token))
-            {
-                return tokenHandler.ReadJwtToken(token);
-            }
-        }
+        await _context.SaveChangesAsync();
 
-        return null;
-    }
-    private string GetClaimValue(string claimType)
-    {
-        var token = GetTokenFromRequest();
+        var token = _jwtService.GenerateSecurityToken(user.Id, user.Email);
 
-        if (token is not null)
-        {
-            var claim = token.Claims.FirstOrDefault(c => c.Type == claimType);
-            return claim?.Value;
-        }
+        user.RefreshToken = token;
 
-        return null;
+        _context.Update(user);
+
+        await _context.SaveChangesAsync();
+
+        return token;
     }
     public async Task<User> BuildUserAsync(BuildUserDTO buildUser)
     {
@@ -142,23 +143,6 @@ public class UserRepository : IUserRepository
 
         return newUser;
     }
-    public async Task<string> RegisterUserAsync(InsertPendingUserDTO insertUser)
-    {
-        var user = _context.PendingUsers.Add(new PendingUser
-        {
-            Id = IDGeneratorService.GetShortUniqueId(),
-            Email = insertUser.Email,
-            Name = insertUser.Name,
-            Password = _cryptService.CryptPassword(insertUser.Password),
-            JoinedTime = DateTime.UtcNow
-        }).Entity;
-
-        await _context.SaveChangesAsync();
-
-        var token = _jwtService.GenerateSecurityToken(user.Id, user.Email);
-
-        return token;
-    }
     public async Task<Task> DeleteUserAsync(string id)
     {
         var user = await _context.PendingUsers.FindAsync(id);
@@ -168,6 +152,24 @@ public class UserRepository : IUserRepository
         await _context.SaveChangesAsync();
 
         return Task.CompletedTask;
+    }
+    public async Task<string> UpdateTokenAsync()
+    {
+        var userEmail = GetClaimValue("userEmail");
+        var user = _context.PendingUsers.FirstOrDefault(x => x.Email == userEmail);
+
+        if(user is null)
+            user = _context.Users.FirstOrDefault(x => x.Email == userEmail);
+
+        var token = _jwtService.GenerateSecurityToken(user.Id, user.Email);
+
+        user.RefreshToken = token;
+
+        _context.Update(user);
+
+        await _context.SaveChangesAsync();
+
+        return token;
     }
     public async Task<User> UpdateUsernameAsync(string id, string newUsername)
     {
@@ -194,5 +196,32 @@ public class UserRepository : IUserRepository
         await _context.SaveChangesAsync();
 
         return user;
+    }
+    private JwtSecurityToken GetTokenFromRequest()
+    {
+        var authHeader = _httpContextAccessor.HttpContext.Request.Headers["Authorization"].FirstOrDefault();
+
+        if (!string.IsNullOrEmpty(authHeader) && authHeader.StartsWith("Bearer "))
+        {
+            var token = authHeader.Substring("Bearer ".Length);
+            var tokenHandler = new JwtSecurityTokenHandler();
+
+            if (tokenHandler.CanReadToken(token))
+                return tokenHandler.ReadJwtToken(token);
+        }
+
+        return null;
+    }
+    private string GetClaimValue(string claimType)
+    {
+        var token = GetTokenFromRequest();
+
+        if (token is not null)
+        {
+            var claim = token.Claims.FirstOrDefault(c => c.Type == claimType);
+            return claim?.Value;
+        }
+
+        return null;
     }
 }

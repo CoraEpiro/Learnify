@@ -13,4 +13,5 @@ public class PendingUser : EntityBase
     public DateTime JoinedTime { get; set; }
     public bool ProfileBuilded { get; set; } = false;
     public bool isDeleted { get; set; }
+    public string RefreshToken { get; set; } = String.Empty;
 }

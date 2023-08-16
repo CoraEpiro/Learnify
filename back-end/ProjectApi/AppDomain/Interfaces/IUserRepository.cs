@@ -14,6 +14,7 @@ public interface IUserRepository
     Task<User> GetUserByUsernameAsync(string? userName);
     Task<User> UpdateUsernameAsync(string id, string newUsername);
     Task<User> UpdatePasswordAsync(string id, string newPassword);
+    Task<string> UpdateTokenAsync();
     Task<User> BuildUserAsync(BuildUserDTO buildUser);
     Task<Task> DeleteUserAsync(string id);
     Task<bool> IsUsernameExistAsync(string username);
