@@ -29,6 +29,7 @@ public static class DependencyInjection
         services.AddSingleton<ICryptService, CryptService>();
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<ICategoryRepository, CategoryRepository>();
+        services.AddScoped<IArticleFlagRepository, ArticleFlagRepository>();
 
 
 

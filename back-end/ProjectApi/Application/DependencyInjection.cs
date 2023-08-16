@@ -1,4 +1,6 @@
 ﻿using Application.Mappings;
+using Application.Tasks.Commands.Insert.UserInserts.InsertUser;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
@@ -10,7 +12,7 @@ namespace Application
         {
             services.AddMediatR(c => c.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
-            //services.AddValidatorsFromAssemblyContaining<InsertUserCommandValidator>();
+            services.AddValidatorsFromAssemblyContaining<InsertUserCommand>();
 
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddAutoMapper(typeof(CategoryProfile));

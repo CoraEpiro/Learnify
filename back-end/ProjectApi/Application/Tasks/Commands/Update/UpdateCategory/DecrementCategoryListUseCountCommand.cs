@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Application.Tasks.Commands.Update.UpdateCategory
 {
-    public class UpdateCategoryUseCountCommand : IRequest<int>
+    public class DecrementCategoryListUseCountCommand : IRequest<int>
     {
-        public string CategoryId { get; set; }
+        public List<string> CategoryIdList { get; set; }
     }
 }

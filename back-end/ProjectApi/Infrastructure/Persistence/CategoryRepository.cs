@@ -71,20 +71,55 @@ namespace Infrastructure.Persistence
             return category.Id;
         }
 
-        public async Task<int> UpdateUseCount(string categoryId)
+        public async Task<int> IncrementUseCounts(List<string> categoryIdList)
         {
-            var existingCategory = await _context.Categories.FindAsync(categoryId);
+            try
+            {
+                foreach (var item in categoryIdList)
+                {
+                    var existingCategory = await _context.Categories.FindAsync(item);
 
-            if (existingCategory is null)
+                    existingCategory.UseCount++;
+
+                    _context.Update(existingCategory);
+                }
+
+                await _context.SaveChangesAsync();
+
+                return 1;
+            }
+            catch (Exception)
+            {
                 return 0;
-
-            existingCategory.UseCount++;
-
-            _context.Categories.Update(existingCategory);
-
-            await _context.SaveChangesAsync();
-
-            return existingCategory.UseCount;
+                throw;
+            }
+            
         }
+
+        public async Task<int> DecrementUseCounts(List<string> categoryIdList)
+        {
+            try
+            {
+                foreach (var item in categoryIdList)
+                {
+                    var existingCategory = await _context.Categories.FindAsync(item);
+                    if(existingCategory.UseCount > 0)
+                        existingCategory.UseCount--;
+
+                    _context.Update(existingCategory);
+                }
+
+                await _context.SaveChangesAsync();
+
+                return 1;
+            }
+            catch (Exception)
+            {
+                return 0;
+                throw;
+            }
+
+        }
+    
     }
 }

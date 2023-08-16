@@ -14,6 +14,7 @@ namespace AppDomain.Interfaces
         Task<string> InsertCategory(Category category);
         Task<string> UpdateCategory(Category category);
         Task<string> DeleteCategory(string categoryId);
-        Task<int> UpdateUseCount(string categoryId);
+        Task<int> IncrementUseCounts(List<string> categoryIdList);
+        Task<int> DecrementUseCounts(List<string> categoryIdList);
     }
 }

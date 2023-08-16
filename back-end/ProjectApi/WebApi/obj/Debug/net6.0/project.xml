@@ -4,6 +4,60 @@
         <name>WebApi</name>
     </assembly>
     <members>
+        <member name="M:WebApi.Controllers.TagController.GetAllCategoryBuildProfile">
+            <summary>
+            Retrieves all available category build profiles.
+            </summary>
+            <returns>A list of category build profiles.</returns>
+        </member>
+        <member name="M:WebApi.Controllers.TagController.GetAllCategory">
+            <summary>
+            Retrieves all available categories.
+            </summary>
+            <returns>A list of categories.</returns>
+        </member>
+        <member name="M:WebApi.Controllers.TagController.GetCategoryById(Application.Tasks.Queries.CategoryQueries.GetCategoryById.GetCategoryByIdQuery)">
+            <summary>
+            Retrieves a category using its unique identifier.
+            </summary>
+            <param name="query">Query containing the category identifier.</param>
+            <returns>The requested category, or a "Not Found" response if not found.</returns>
+        </member>
+        <member name="M:WebApi.Controllers.TagController.InsertCategory(Application.Tasks.Commands.Insert.InsertCategory.InsertCategoryCommand)">
+            <summary>
+            Inserts a new category.
+            </summary>
+            <param name="command">The command containing category information.</param>
+            <returns>A success response with the inserted category ID.</returns>
+        </member>
+        <member name="M:WebApi.Controllers.TagController.UpdateCategory(Application.Tasks.Commands.Update.UpdateCategory.UpdateCategoryCommand)">
+            <summary>
+            Updates an existing category.
+            </summary>
+            <param name="command">The command for updating category information.</param>
+            <returns>A response indicating success or a "Not Found" response if the category doesn't exist.</returns>
+        </member>
+        <member name="M:WebApi.Controllers.TagController.DeleteCategory(Application.Tasks.Commands.Delete.DeleteCategory.DeleteCategoryCommand)">
+            <summary>
+            Deletes a category using its identifier.
+            </summary>
+            <param name="command">The command containing the category identifier.</param>
+            <returns>A response indicating deletion success or a "Not Found" response if the category doesn't exist.</returns>
+        </member>
+        <member name="M:WebApi.Controllers.TagController.IncrementCategoryUseCount(Application.Tasks.Commands.Update.UpdateCategory.IncrementCategoryUseCountCommand)">
+            <summary>
+            Increments the usage count of a category list.
+            </summary>
+            <param name="command">The command for incrementing the usage count.</param>
+            <returns>A response indicating the success of the increment operation or a failure response.</returns>
+        </member>
+        <member name="M:WebApi.Controllers.TagController.DecrementCategoryListUseCount(Application.Tasks.Commands.Update.UpdateCategory.DecrementCategoryListUseCountCommand)">
+            <summary>
+            Decrements the usage count of a category list.
+            </summary>
+            <param name="command">The command for decrementing the usage count.</param>
+            <returns>A response indicating the success of the decrement operation or a failure response.</returns>
+        </member>
         <member name="T:WebApi.Controllers.UsersController">
             <summary>
             Controller for managing user-related operations.
