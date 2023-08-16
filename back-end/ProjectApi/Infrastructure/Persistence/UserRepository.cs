@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using System.IdentityModel.Tokens.Jwt;
 
 namespace Infrastructure.Persistence;
+
+/// <inheritdoc/>
 public class UserRepository : IUserRepository
 {
     private readonly LearnifyDbContext _context;
@@ -15,6 +17,13 @@ public class UserRepository : IUserRepository
     private readonly IJwtService _jwtService;
     private readonly IHttpContextAccessor _httpContextAccessor;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="UserRepository"/> class.
+    /// </summary>
+    /// <param name="context">The database context.</param>
+    /// <param name="cryptService">The service for cryptography operations.</param>
+    /// <param name="jwtService">The service for JSON Web Token (JWT) operations.</param>
+    /// <param name="httpContextAccessor">The accessor for HTTP context.</param>
     public UserRepository(LearnifyDbContext context, ICryptService cryptService,
                             IJwtService jwtService, IHttpContextAccessor httpContextAccessor)
     {
@@ -24,6 +33,7 @@ public class UserRepository : IUserRepository
         _httpContextAccessor = httpContextAccessor;
     }
 
+    /// <inheritdoc/>
     public async Task<User> GetUserByEmailAsync(string? email)
     {
         var pendingUser = await _context.PendingUsers.FirstOrDefaultAsync(x => x.Email == email);
@@ -35,6 +45,8 @@ public class UserRepository : IUserRepository
 
         return user;
     }
+
+    /// <inheritdoc/>
     public async Task<User> GetUserByIdAsync(string? id)
     {
         var pendingUser = await _context.PendingUsers.FindAsync(id);
@@ -46,18 +58,24 @@ public class UserRepository : IUserRepository
 
         return user;
     }
+
+    /// <inheritdoc/>
     public async Task<User> GetUserByUsernameAsync(string? username)
     {
         var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == username);
 
         return user!;
     }
+
+    /// <inheritdoc/>
     public async Task<User> GetUserByUsersecretAsync(string? usersecret)
     {
         var user = await _context.Users.FirstOrDefaultAsync(x => x.UserSecret == usersecret);
 
         return user!;
     }
+
+    /// <inheritdoc/>
     public async Task<bool> IsEmailExistAsync(string email)
     {
         var user = await _context.PendingUsers.FirstOrDefaultAsync(x => x.Email == email);
@@ -67,12 +85,16 @@ public class UserRepository : IUserRepository
 
         return user is not null;
     }
+
+    /// <inheritdoc/>
     public async Task<bool> IsUsernameExistAsync(string username)
     {
         var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == username);
 
         return user is not null;
     }
+
+    /// <inheritdoc/>
     public async Task<TokenID> LogInAsync(string email, string password)
     {
         var user = await _context.PendingUsers.FirstOrDefaultAsync(x => x.Email == email);
@@ -101,6 +123,8 @@ public class UserRepository : IUserRepository
 
         return tokenID;
     }
+
+    /// <inheritdoc/>
     public async Task<string> RegisterUserAsync(InsertPendingUserDTO insertUser)
     {
         var user = _context.PendingUsers.Add(new PendingUser
@@ -124,6 +148,8 @@ public class UserRepository : IUserRepository
 
         return token;
     }
+
+    /// <inheritdoc/>
     public async Task<User> BuildUserAsync(BuildUserDTO buildUser)
     {
         var userEmail = GetClaimValue("userEmail");
@@ -143,6 +169,8 @@ public class UserRepository : IUserRepository
 
         return newUser;
     }
+
+    /// <inheritdoc/>
     public async Task<Task> DeleteUserAsync(string id)
     {
         var user = await _context.PendingUsers.FindAsync(id);
@@ -153,6 +181,8 @@ public class UserRepository : IUserRepository
 
         return Task.CompletedTask;
     }
+
+    /// <inheritdoc/>
     public async Task<string> UpdateTokenAsync()
     {
         var userEmail = GetClaimValue("userEmail");
@@ -171,6 +201,8 @@ public class UserRepository : IUserRepository
 
         return token;
     }
+
+    /// <inheritdoc/>
     public async Task<User> UpdateUsernameAsync(string id, string newUsername)
     {
         var pendingUser = await GetUserByIdAsync(id);
@@ -186,6 +218,8 @@ public class UserRepository : IUserRepository
 
         return user;
     }
+
+    /// <inheritdoc/>
     public async Task<User> UpdatePasswordAsync(string id, string newPassword)
     {
         var pendingUser = await GetUserByIdAsync(id);
@@ -197,7 +231,9 @@ public class UserRepository : IUserRepository
 
         return user;
     }
-    private JwtSecurityToken GetTokenFromRequest()
+
+    /// <inheritdoc/>
+    public JwtSecurityToken GetTokenFromRequest()
     {
         var authHeader = _httpContextAccessor.HttpContext.Request.Headers["Authorization"].FirstOrDefault();
 
@@ -212,6 +248,8 @@ public class UserRepository : IUserRepository
 
         return null;
     }
+
+    /// <inheritdoc/>
     private string GetClaimValue(string claimType)
     {
         var token = GetTokenFromRequest();

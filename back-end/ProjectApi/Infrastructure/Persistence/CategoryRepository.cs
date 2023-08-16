@@ -8,83 +8,81 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infrastructure.Persistence
+namespace Infrastructure.Persistence;
+
+public class CategoryRepository : ICategoryRepository
 {
-    public class CategoryRepository : ICategoryRepository
+    private readonly LearnifyDbContext _context;
+
+    public CategoryRepository(LearnifyDbContext context)
     {
-        private readonly LearnifyDbContext _context;
+        _context = context;
+    }
+    public async Task<string> DeleteCategory(string categoryId)
+    {
+        var existingCategory = await _context.Categories.FindAsync(categoryId);
 
-        public CategoryRepository(LearnifyDbContext context)
-        {
-            _context = context;
-        }
+        if (existingCategory is null)
+            return null;
 
-        public async Task<string> DeleteCategory(string categoryId)
-        {
-            var existingCategory = await _context.Categories.FindAsync(categoryId);
+        existingCategory.isDeleted = true;
 
-            if (existingCategory is null)
-                return null;
+        _context.Categories.Update(existingCategory);
 
-            existingCategory.isDeleted = true;
+        await _context.SaveChangesAsync();
 
-            _context.Categories.Update(existingCategory);
+        return categoryId;
+    }
 
-            await _context.SaveChangesAsync();
+    public async Task<List<Category>> GetAllCategory()
+    {
+        return _context.Categories.ToList();
+    }
 
-            return categoryId;
-        }
+    public async Task<Category> GetCategoryById(string id)
+    {
+        return _context.Categories.Where(c => c.Id == id).FirstOrDefault();
+    }
 
-        public async Task<List<Category>> GetAllCategory()
-        {
-            return _context.Categories.ToList();
-        }
+    public async Task<string> InsertCategory(Category category)
+    {
+        
+        var inserted = _context.Categories.Add(category);
 
-        public async Task<Category> GetCategoryById(string id)
-        {
-            return _context.Categories.Where(c => c.Id == id).FirstOrDefault();
-        }
+        await _context.SaveChangesAsync();
 
-        public async Task<string> InsertCategory(Category category)
-        {
-            
-            var inserted = _context.Categories.Add(category);
+        return inserted.Entity.Id;
+    }
 
-            await _context.SaveChangesAsync();
+    public async Task<string> UpdateCategory(Category category)
+    {
+        var existingCategory = await _context.Categories.FindAsync(category.Id);
 
-            return inserted.Entity.Id;
-        }
+        if (existingCategory is null)           
+            return null;
+        
+        category.UseCount = existingCategory.UseCount;
 
-        public async Task<string> UpdateCategory(Category category)
-        {
-            var existingCategory = await _context.Categories.FindAsync(category.Id);
+        _context.Entry(existingCategory).CurrentValues.SetValues(category);
 
-            if (existingCategory is null)           
-                return null;
-            
-            category.UseCount = existingCategory.UseCount;
+        await _context.SaveChangesAsync();
 
-            _context.Entry(existingCategory).CurrentValues.SetValues(category);
+        return category.Id;
+    }
 
-            await _context.SaveChangesAsync();
+    public async Task<int> UpdateUseCount(string categoryId)
+    {
+        var existingCategory = await _context.Categories.FindAsync(categoryId);
 
-            return category.Id;
-        }
+        if (existingCategory is null)
+            return 0;
 
-        public async Task<int> UpdateUseCount(string categoryId)
-        {
-            var existingCategory = await _context.Categories.FindAsync(categoryId);
+        existingCategory.UseCount++;
 
-            if (existingCategory is null)
-                return 0;
+        _context.Categories.Update(existingCategory);
 
-            existingCategory.UseCount++;
+        await _context.SaveChangesAsync();
 
-            _context.Categories.Update(existingCategory);
-
-            await _context.SaveChangesAsync();
-
-            return existingCategory.UseCount;
-        }
+        return existingCategory.UseCount;
     }
 }

@@ -1,23 +1,21 @@
-﻿using AppDomain.Common.Config;
-using AppDomain.Interfaces;
-using Microsoft.IdentityModel.Tokens;
+﻿using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using AppDomain.Common.Config;
+using AppDomain.Interfaces;
+using Microsoft.IdentityModel.Tokens;
 
-
-/// <summary>
-/// A JWT service responsible for generating a security token for a given email address.
-/// </summary>
+/// <inheritdoc/>
 public class JwtService : IJwtService
 {
     private readonly JwtConfig _config;
 
     /// <summary>
-    /// A constructor
+    /// Initializes a new instance of the <see cref="JwtService"/> class.
     /// </summary>
-    /// <param name="config"></param>
-    /// <exception cref="ArgumentNullException"></exception>
+    /// <param name="config">The JWT configuration settings.</param>
+    /// <exception cref="ArgumentNullException">Thrown when the <paramref name="config"/> is null.</exception>
     public JwtService(JwtConfig config) =>
         _config = config ?? throw new ArgumentNullException(nameof(config));
 
