@@ -12,10 +12,10 @@ namespace AppDomain.Interfaces;
 public interface IJwtService
 {
     /// <summary>
-    /// Generates a JWT security token for the given email address and id.
+    /// Generates a JWT security token for a user with the specified ID and email.
     /// </summary>
-    /// <param name="id">The id to generate the token for.</param>
-    /// <param name="email">The email address to generate the token for.</param>
-    /// <returns>The generated JWT security token.</returns>
+    /// <param name="id">The user's ID.</param>
+    /// <param name="email">The user's email address.</param>
+    /// <returns>The JWT security token as a string.</returns>
     string GenerateSecurityToken(string id, string email);
 }

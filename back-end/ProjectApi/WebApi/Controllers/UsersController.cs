@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MediatR;
-using Application.Tasks.Commands.Delete.DeleteUser;
 using AppDomain.DTO;
 using Application.Tasks.Commands.Update.UpdateUser.UpdatePassword;
 using Application.Tasks.Commands.Update.UpdateUser.UpdateUsername;
@@ -9,6 +8,7 @@ using Application.Tasks.Queries.UserQueries.GetUserByUsername;
 using Application.Tasks.Queries.UserQueries.GetUserById;
 using Application.Tasks.Queries.UserQueries.GetUserByEmail;
 using Application.Tasks.Commands.Insert.UserInserts.BuildUser;
+using Application.Tasks.Commands.Delete.UserDeletes.DeleteUser;
 
 namespace WebApi.Controllers;
 
@@ -54,7 +54,7 @@ public class UsersController : ControllerBase
     /// <param name="updateCommand">The command containing update information.</param>
     /// <returns>The updated user's DTO if successful, NotFound if user not found.</returns>
     [HttpPatch("UpdatePassword/{Id}/{Password}")]
-    public async Task<ActionResult<UserDTO>> UpdatePassword(UpdatePasswordCommand updateCommand)
+    public async Task<ActionResult<UserDTO>> UpdatePassword([FromBody] UpdatePasswordCommand updateCommand)
     {
         var user = await _mediator.Send(updateCommand);
 

@@ -2,9 +2,16 @@
 using AppDomain.DTOs.User;
 using AppDomain.Entities.UserRelated;
 
-
+/// <summary>
+/// Provides extension methods for converting between entity models and Data Transfer Objects (DTOs).
+/// </summary>
 public static class DtoAndModelConvertors
 {
+    /// <summary>
+    /// Converts a <see cref="User"/> entity to a <see cref="UserDTO"/> Data Transfer Object.
+    /// </summary>
+    /// <param name="user">The <see cref="User"/> entity to convert.</param>
+    /// <returns>The converted <see cref="UserDTO"/>.</returns>
     public static UserDTO ToUserDTO(this User user)
     {
         return new UserDTO
@@ -38,6 +45,11 @@ public static class DtoAndModelConvertors
         };
     }
 
+    /// <summary>
+    /// Converts a <see cref="PendingUser"/> entity to a <see cref="PendingUserDTO"/> Data Transfer Object.
+    /// </summary>
+    /// <param name="user">The <see cref="PendingUser"/> entity to convert.</param>
+    /// <returns>The converted <see cref="PendingUserDTO"/>.</returns>
     public static PendingUserDTO ToPendingUserDTO(this PendingUser user)
     {
         return new PendingUserDTO

@@ -6,7 +6,7 @@ namespace AppDomain.Entities.ContentRelated;
 
 public class Post : Entry
 {
-    public ICollection<Category> CategoryList { get; set; }
+    public ICollection<Category> Categories { get; set; }
     [Column(TypeName = "jsonb")]
     public Header Header { get; set; }
     public int ViewCount { get; set; }

@@ -3,11 +3,14 @@ using AppDomain.Entities.UserRelated;
 using AppDomain.Interfaces;
 using Application.DTO;
 using Application.Services;
+using Infrastructure.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System.IdentityModel.Tokens.Jwt;
 
 namespace Infrastructure.Persistence;
+
+/// <inheritdoc/>
 public class UserRepository : IUserRepository
 {
     private readonly LearnifyDbContext _context;
@@ -15,6 +18,13 @@ public class UserRepository : IUserRepository
     private readonly IJwtService _jwtService;
     private readonly IHttpContextAccessor _httpContextAccessor;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="UserRepository"/> class.
+    /// </summary>
+    /// <param name="context">The database context.</param>
+    /// <param name="cryptService">The service for cryptography operations.</param>
+    /// <param name="jwtService">The service for JSON Web Token (JWT) operations.</param>
+    /// <param name="httpContextAccessor">The accessor for HTTP context.</param>
     public UserRepository(LearnifyDbContext context, ICryptService cryptService,
                             IJwtService jwtService, IHttpContextAccessor httpContextAccessor)
     {
@@ -24,6 +34,7 @@ public class UserRepository : IUserRepository
         _httpContextAccessor = httpContextAccessor;
     }
 
+    /// <inheritdoc/>
     public async Task<User> GetUserByEmailAsync(string? email)
     {
         var pendingUser = await _context.PendingUsers.FirstOrDefaultAsync(x => x.Email == email);
@@ -35,6 +46,8 @@ public class UserRepository : IUserRepository
 
         return user;
     }
+
+    /// <inheritdoc/>
     public async Task<User> GetUserByIdAsync(string? id)
     {
         var pendingUser = await _context.PendingUsers.FindAsync(id);
@@ -46,18 +59,24 @@ public class UserRepository : IUserRepository
 
         return user;
     }
+
+    /// <inheritdoc/>
     public async Task<User> GetUserByUsernameAsync(string? username)
     {
         var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == username);
 
         return user!;
     }
+
+    /// <inheritdoc/>
     public async Task<User> GetUserByUsersecretAsync(string? usersecret)
     {
         var user = await _context.Users.FirstOrDefaultAsync(x => x.UserSecret == usersecret);
 
         return user!;
     }
+
+    /// <inheritdoc/>
     public async Task<bool> IsEmailExistAsync(string email)
     {
         var user = await _context.PendingUsers.FirstOrDefaultAsync(x => x.Email == email);
@@ -67,12 +86,16 @@ public class UserRepository : IUserRepository
 
         return user is not null;
     }
+
+    /// <inheritdoc/>
     public async Task<bool> IsUsernameExistAsync(string username)
     {
         var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == username);
 
         return user is not null;
     }
+
+    /// <inheritdoc/>
     public async Task<TokenID> LogInAsync(string email, string password)
     {
         var user = await _context.PendingUsers.FirstOrDefaultAsync(x => x.Email == email);
@@ -90,39 +113,44 @@ public class UserRepository : IUserRepository
             throw new Exception("Password is not valid");
 
         var token = _jwtService.GenerateSecurityToken(user.Id, user.Email);
+
+        user.RefreshToken = token;
+
+        _context.Update(user);
+
+        await _context.SaveChangesAsync();
+
         var tokenID = new TokenID(user.Id, token);
 
         return tokenID;
     }
-    private JwtSecurityToken GetTokenFromRequest()
+
+    /// <inheritdoc/>
+    public async Task<string> RegisterUserAsync(InsertPendingUserDTO insertUser)
     {
-        var authHeader = _httpContextAccessor.HttpContext.Request.Headers["Authorization"].FirstOrDefault();
-
-        if (!string.IsNullOrEmpty(authHeader) && authHeader.StartsWith("Bearer "))
+        var user = _context.PendingUsers.Add(new PendingUser
         {
-            var token = authHeader.Substring("Bearer ".Length);
-            var tokenHandler = new JwtSecurityTokenHandler();
+            Id = IDGeneratorService.GetShortUniqueId(),
+            Email = insertUser.Email,
+            Name = insertUser.Name,
+            Password = _cryptService.CryptPassword(insertUser.Password),
+            JoinedTime = DateTime.UtcNow
+        }).Entity;
 
-            if (tokenHandler.CanReadToken(token))
-            {
-                return tokenHandler.ReadJwtToken(token);
-            }
-        }
+        await _context.SaveChangesAsync();
 
-        return null;
+        var token = _jwtService.GenerateSecurityToken(user.Id, user.Email);
+
+        user.RefreshToken = token;
+
+        _context.Update(user);
+
+        await _context.SaveChangesAsync();
+
+        return token;
     }
-    private string GetClaimValue(string claimType)
-    {
-        var token = GetTokenFromRequest();
 
-        if (token is not null)
-        {
-            var claim = token.Claims.FirstOrDefault(c => c.Type == claimType);
-            return claim?.Value;
-        }
-
-        return null;
-    }
+    /// <inheritdoc/>
     public async Task<User> BuildUserAsync(BuildUserDTO buildUser)
     {
         var userEmail = GetClaimValue("userEmail");
@@ -142,23 +170,8 @@ public class UserRepository : IUserRepository
 
         return newUser;
     }
-    public async Task<string> RegisterUserAsync(InsertPendingUserDTO insertUser)
-    {
-        var user = _context.PendingUsers.Add(new PendingUser
-        {
-            Id = IDGeneratorService.GetShortUniqueId(),
-            Email = insertUser.Email,
-            Name = insertUser.Name,
-            Password = _cryptService.CryptPassword(insertUser.Password),
-            JoinedTime = DateTime.UtcNow
-        }).Entity;
 
-        await _context.SaveChangesAsync();
-
-        var token = _jwtService.GenerateSecurityToken(user.Id, user.Email);
-
-        return token;
-    }
+    /// <inheritdoc/>
     public async Task<Task> DeleteUserAsync(string id)
     {
         var user = await _context.PendingUsers.FindAsync(id);
@@ -169,6 +182,28 @@ public class UserRepository : IUserRepository
 
         return Task.CompletedTask;
     }
+
+    /// <inheritdoc/>
+    public async Task<string> UpdateTokenAsync()
+    {
+        var userEmail = GetClaimValue("userEmail");
+        var user = _context.PendingUsers.FirstOrDefault(x => x.Email == userEmail);
+
+        if(user is null)
+            user = _context.Users.FirstOrDefault(x => x.Email == userEmail);
+
+        var token = _jwtService.GenerateSecurityToken(user.Id, user.Email);
+
+        user.RefreshToken = token;
+
+        _context.Update(user);
+
+        await _context.SaveChangesAsync();
+
+        return token;
+    }
+
+    /// <inheritdoc/>
     public async Task<User> UpdateUsernameAsync(string id, string newUsername)
     {
         var pendingUser = await GetUserByIdAsync(id);
@@ -184,6 +219,8 @@ public class UserRepository : IUserRepository
 
         return user;
     }
+
+    /// <inheritdoc/>
     public async Task<User> UpdatePasswordAsync(string id, string newPassword)
     {
         var pendingUser = await GetUserByIdAsync(id);
@@ -194,5 +231,71 @@ public class UserRepository : IUserRepository
         await _context.SaveChangesAsync();
 
         return user;
+    }
+
+    /// <inheritdoc/>
+    public async Task<Task> SendOTPCodeAsync(string email)
+    {
+        var otpCode = OTPCodeGenerator.GenerateOTPCode();
+
+        _context.EmailVerifications.Add(new EmailVerification
+        {
+            Id = IDGeneratorService.GetShortUniqueId(),
+            Email = email,
+            OTP = otpCode,
+            ExpireUntil = DateTime.UtcNow.AddMinutes(2.5)
+        });
+
+        await _context.SaveChangesAsync();
+
+        await EmailSender.SendEmailAsync(email, otpCode);
+
+        return Task.CompletedTask;
+    }
+
+    /// <inheritdoc/>
+    public async Task<Task> VerifyEmailAsync(string email, string otpCode)
+    {
+        var verification = _context.EmailVerifications.FirstOrDefault(x => x.Email == email && x.OTP == otpCode);
+
+        if(verification.ExpireUntil < DateTime.UtcNow)
+            return Task.FromResult("OTP is already expired.");
+
+        _context.EmailVerifications.Remove(verification);
+
+        await _context.SaveChangesAsync();
+
+        return Task.FromResult("Your Email is verified.");
+    }
+
+    /// <inheritdoc/>
+    public JwtSecurityToken GetTokenFromRequest()
+    {
+        var authHeader = _httpContextAccessor.HttpContext.Request.Headers["Authorization"].FirstOrDefault();
+
+        if (!string.IsNullOrEmpty(authHeader) && authHeader.StartsWith("Bearer "))
+        {
+            var token = authHeader.Substring("Bearer ".Length);
+            var tokenHandler = new JwtSecurityTokenHandler();
+
+            if (tokenHandler.CanReadToken(token))
+                return tokenHandler.ReadJwtToken(token);
+        }
+
+        return null;
+    }
+
+    /// <inheritdoc/>
+    private string GetClaimValue(string claimType)
+    {
+        var token = GetTokenFromRequest();
+
+        if (token is not null)
+        {
+            var claim = token.Claims.FirstOrDefault(c => c.Type == claimType);
+            return claim?.Value;
+        }
+
+        return null;
     }
 }

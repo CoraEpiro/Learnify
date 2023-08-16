@@ -97,5 +97,4 @@ public class User : PendingUser
 
     [Column(TypeName = "jsonb")]
     public IEnumerable<VoteState>? CommentVoteList { get; set; }
-    public string RefreshToken { get; set; } = String.Empty;
 }

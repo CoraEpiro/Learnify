@@ -9,7 +9,7 @@ public class Course : ContentBase
     public Header Header { get; set; }
     public string Description { get; set; } = String.Empty;
     public string AccentColor { get; set; } = String.Empty; // HEXs
-    public IEnumerable<Topic> TopicList { get; set; }
+    public IEnumerable<Topic> Topics { get; set; }
     public int ViewCount { get; set; }
     public int FinishedCount { get; set; }
 }
