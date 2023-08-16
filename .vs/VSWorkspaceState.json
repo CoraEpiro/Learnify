@@ -1,11 +1,10 @@
 {
   "ExpandedNodes": [
     "",
+    "\\.github",
+    "\\.github\\workflows",
     "\\back-end",
-    "\\back-end\\ProjectApi",
-    "\\back-end\\ProjectApi\\WebApi",
-    "\\back-end\\ProjectApi\\WebApi\\Controllers"
+    "\\back-end\\ProjectApi"
   ],
-  "SelectedNode": "\\back-end\\ProjectApi\\WebApi\\Controllers\\UserController.cs",
   "PreviewInSolutionExplorer": false
 }

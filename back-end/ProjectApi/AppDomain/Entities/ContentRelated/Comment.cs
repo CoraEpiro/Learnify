@@ -2,5 +2,5 @@
 
 public class Comment : Entry
 {
-    //public IEnumerable<Comment> CommentList { get; set; }
+    //public IEnumerable<Comment> Comments { get; set; }
 }

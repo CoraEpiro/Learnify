@@ -11,4 +11,5 @@ public class ContentBase : EntityBase
 
     [Column(TypeName = "jsonb")]
     public Vote Vote { get; set; }
+    public bool isDeleted { get; set; }
 }

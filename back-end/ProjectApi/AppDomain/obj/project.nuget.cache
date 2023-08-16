@@ -1,19 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "usUb8vIk0fho5/nRaO+eCRg4WPBIeIWlBVUMLuG7MBHjJFJIIdWOkX4Z8yhbqboWjzTiRKsuW8GAS8FSDjMS2Q==",
+  "dgSpecHash": "c6dIaIG2+6XZO0J4imTZC2K2wiwLQ3PfevvbqP2SQUEYSG8wd0l4X7JZqMSmyTRqlkGmbZC9BSL5t1CwnKO/nQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\ASUS\\Desktop\\Final-Project\\Learnify\\back-end\\ProjectApi\\AppDomain\\AppDomain.csproj",
+  "projectFilePath": "C:\\Users\\chess\\source\\repos\\CoraEpiro\\Learnify\\back-end\\ProjectApi\\AppDomain\\AppDomain.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\ASUS\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
-    "C:\\Users\\ASUS\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\7.0.0\\microsoft.extensions.dependencyinjection.abstractions.7.0.0.nupkg.sha512",
-    "C:\\Users\\ASUS\\.nuget\\packages\\system.componentmodel.annotations\\5.0.0\\system.componentmodel.annotations.5.0.0.nupkg.sha512"
+    "C:\\Users\\chess\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
+    "C:\\Users\\chess\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\7.0.0\\microsoft.extensions.dependencyinjection.abstractions.7.0.0.nupkg.sha512",
+    "C:\\Users\\chess\\.nuget\\packages\\system.componentmodel.annotations\\5.0.0\\system.componentmodel.annotations.5.0.0.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "Undefined",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Problem reading the cache file C:\\Users\\ASUS\\Desktop\\Final-Project\\Learnify\\back-end\\ProjectApi\\AppDomain\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
-    }
-  ]
+  "logs": []
 }
