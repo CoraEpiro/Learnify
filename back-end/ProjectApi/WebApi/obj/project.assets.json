@@ -575,12 +575,12 @@
         "type": "package",
         "compile": {
           "lib/netstandard2.0/Microsoft.OpenApi.dll": {
-            "related": ".xml;.pdb"
+            "related": ".pdb;.xml"
           }
         },
         "runtime": {
           "lib/netstandard2.0/Microsoft.OpenApi.dll": {
-            "related": ".xml;.pdb"
+            "related": ".pdb;.xml"
           }
         }
       },
@@ -664,12 +664,12 @@
         },
         "compile": {
           "lib/net6.0/Swashbuckle.AspNetCore.Annotations.dll": {
-            "related": ".xml;.pdb"
+            "related": ".pdb;.xml"
           }
         },
         "runtime": {
           "lib/net6.0/Swashbuckle.AspNetCore.Annotations.dll": {
-            "related": ".xml;.pdb"
+            "related": ".pdb;.xml"
           }
         }
       },
@@ -680,12 +680,12 @@
         },
         "compile": {
           "lib/net6.0/Swashbuckle.AspNetCore.Swagger.dll": {
-            "related": ".xml;.pdb"
+            "related": ".pdb;.xml"
           }
         },
         "runtime": {
           "lib/net6.0/Swashbuckle.AspNetCore.Swagger.dll": {
-            "related": ".xml;.pdb"
+            "related": ".pdb;.xml"
           }
         },
         "frameworkReferences": [
@@ -699,12 +699,12 @@
         },
         "compile": {
           "lib/net6.0/Swashbuckle.AspNetCore.SwaggerGen.dll": {
-            "related": ".xml;.pdb"
+            "related": ".pdb;.xml"
           }
         },
         "runtime": {
           "lib/net6.0/Swashbuckle.AspNetCore.SwaggerGen.dll": {
-            "related": ".xml;.pdb"
+            "related": ".pdb;.xml"
           }
         }
       },
@@ -712,12 +712,12 @@
         "type": "package",
         "compile": {
           "lib/net6.0/Swashbuckle.AspNetCore.SwaggerUI.dll": {
-            "related": ".xml;.pdb"
+            "related": ".pdb;.xml"
           }
         },
         "runtime": {
           "lib/net6.0/Swashbuckle.AspNetCore.SwaggerUI.dll": {
-            "related": ".xml;.pdb"
+            "related": ".pdb;.xml"
           }
         },
         "frameworkReferences": [
@@ -2690,23 +2690,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\chess\\.nuget\\packages\\": {},
+    "C:\\Users\\ASUS\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\chess\\Source\\Repos\\CoraEpiro\\Learnify\\back-end\\ProjectApi\\WebApi\\WebApi.csproj",
+      "projectUniqueName": "C:\\Users\\ASUS\\Desktop\\Final-Project\\Learnify\\back-end\\ProjectApi\\WebApi\\WebApi.csproj",
       "projectName": "WebApi",
-      "projectPath": "C:\\Users\\chess\\Source\\Repos\\CoraEpiro\\Learnify\\back-end\\ProjectApi\\WebApi\\WebApi.csproj",
-      "packagesPath": "C:\\Users\\chess\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\chess\\Source\\Repos\\CoraEpiro\\Learnify\\back-end\\ProjectApi\\WebApi\\obj\\",
+      "projectPath": "C:\\Users\\ASUS\\Desktop\\Final-Project\\Learnify\\back-end\\ProjectApi\\WebApi\\WebApi.csproj",
+      "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\ASUS\\Desktop\\Final-Project\\Learnify\\back-end\\ProjectApi\\WebApi\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\chess\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\ASUS\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -2721,11 +2721,11 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Users\\chess\\Source\\Repos\\CoraEpiro\\Learnify\\back-end\\ProjectApi\\Application\\Application.csproj": {
-              "projectPath": "C:\\Users\\chess\\Source\\Repos\\CoraEpiro\\Learnify\\back-end\\ProjectApi\\Application\\Application.csproj"
+            "C:\\Users\\ASUS\\Desktop\\Final-Project\\Learnify\\back-end\\ProjectApi\\Application\\Application.csproj": {
+              "projectPath": "C:\\Users\\ASUS\\Desktop\\Final-Project\\Learnify\\back-end\\ProjectApi\\Application\\Application.csproj"
             },
-            "C:\\Users\\chess\\Source\\Repos\\CoraEpiro\\Learnify\\back-end\\ProjectApi\\Infrastructure\\Infrastructure.csproj": {
-              "projectPath": "C:\\Users\\chess\\Source\\Repos\\CoraEpiro\\Learnify\\back-end\\ProjectApi\\Infrastructure\\Infrastructure.csproj"
+            "C:\\Users\\ASUS\\Desktop\\Final-Project\\Learnify\\back-end\\ProjectApi\\Infrastructure\\Infrastructure.csproj": {
+              "projectPath": "C:\\Users\\ASUS\\Desktop\\Final-Project\\Learnify\\back-end\\ProjectApi\\Infrastructure\\Infrastructure.csproj"
             }
           }
         }
@@ -2778,7 +2778,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
       }
     }
   }
