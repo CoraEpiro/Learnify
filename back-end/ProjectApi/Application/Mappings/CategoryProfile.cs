@@ -1,4 +1,6 @@
-﻿using AppDomain.DTOs.Category;
+﻿using AppDomain.DTO;
+using AppDomain.DTOs.ArticleFlag;
+using AppDomain.DTOs.Category;
 using AppDomain.Entities.TagBaseRelated;
 using AutoMapper;
 using System;
@@ -16,6 +18,9 @@ namespace Application.Mappings
             CreateMap<Category,CategoryBuildProfileDTO>().ReverseMap();
             CreateMap<InsertCategoryDTO,Category>().ReverseMap();
             CreateMap<UpdateCategoryDTO,Category>().ReverseMap();
+
+            CreateMap<InsertArticleFlagDTO,ArticleFlag>().ReverseMap();
+            CreateMap<UpdateArticleFlagDTO,ArticleFlag>().ReverseMap();
         }
     }
 }

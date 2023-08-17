@@ -8,21 +8,12 @@ using AppDomain.Common.Config;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Infrastructure.Services;
+using Application.Services;
 
 namespace Infrastructure;
 
-/// <summary>
-/// Provides methods to configure dependency injection for infrastructure, Swagger documentation, configurations, and authentication/authorization.
-/// </summary>
 public static class DependencyInjection
 {
-    /// <summary>
-    /// Adds infrastructure services to the <see cref="IServiceCollection"/>.
-    /// </summary>
-    /// <param name="services">The <see cref="IServiceCollection"/> instance.</param>
-    /// <param name="configuration">The <see cref="IConfiguration"/> instance.</param>
-    /// <returns>The updated <see cref="IServiceCollection"/> instance.</returns>
     public static IServiceCollection AddInfrastructure(
         this IServiceCollection services,
         IConfiguration configuration
@@ -32,9 +23,20 @@ public static class DependencyInjection
             options => options.UseNpgsql(configuration.GetConnectionString("DefaultConnection"))
         );
 
+        var bcryptConfig = new BCryptConfig();
+        configuration.GetSection("BCrypt").Bind(bcryptConfig);
+        services.AddSingleton(bcryptConfig);
+        services.AddSingleton<ICryptService, CryptService>();
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<ICategoryRepository, CategoryRepository>();
-        services.AddSingleton<ICryptService, CryptService>();
+        services.AddScoped<IArticleFlagRepository, ArticleFlagRepository>();
+
+
+
+
+        var jwtConfig = new JwtConfig();
+        configuration.GetSection("JWT").Bind(jwtConfig);
+        services.AddSingleton(jwtConfig);
         services.AddSingleton<IJwtService, JwtService>();
 
         return services;
