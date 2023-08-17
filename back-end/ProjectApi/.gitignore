@@ -20,7 +20,8 @@
 *.suo
 
 # Build and output directories
-/bin/
+bin/
+obj/
 /build/
 /out/
 /target/
