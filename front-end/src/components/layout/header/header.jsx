@@ -11,7 +11,9 @@ const Header = () => {
         <div className={"w-full h-14 flex items-center "}>
           <div className={"w-fit flex items-center gap-4"}>
             <Brand />
-            <Search />
+            <div className={"w-[440px]"}>
+              <Search placeHolder={"Search..."} />
+            </div>
           </div>
           <div className={"w-full  flex items-center justify-end gap-4"}>
             <div className={"w-20"}>

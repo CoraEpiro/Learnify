@@ -38,6 +38,13 @@ const SideBar = () => {
           startFlex={true}
         />
         <BaseLinkButton
+          redirectUrl={"/categories"}
+          renderTitle={
+            <SideBarNavTitle title={"Categories"} iconName={"categories"} />
+          }
+          startFlex={true}
+        />
+        <BaseLinkButton
           renderTitle={
             <SideBarNavTitle title={"Leader Board"} iconName={"leader-board"} />
           }

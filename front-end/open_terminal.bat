@@ -1,1 +1,1 @@
-wt -d src --title "yarn" ;  new-tab -d src  --title "pnpm" ; new-tab -d src/components --title "crcf-c" ; new-tab -d src/components/pages --title "crcf-p"
+wt -d src --title "yarn"   ;new-tab -d src  --title "pnpm";new-tab -d src/components --title "crcf-c";new-tab -d src/components/pages --title "crcf-cp";new-tab -d src/pages --title "crcf-p"
