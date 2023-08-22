@@ -5,7 +5,7 @@ import WelcomeCard from "../../components/pages/build-profile/welcome-card/index
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import CategoryFollowStep from "../../components/pages/build-profile/category-follow-step/index.js";
 import BuildProfileStep from "../../components/pages/build-profile/build-profile-step/index.js";
-import DoneCard from "../../components/done-card/index.js";
+import DoneCard from "../../components/cards/done-card/index.js";
 
 const BuildProfile = () => {
   const [step, setStep] = useState(1);
@@ -24,6 +24,10 @@ const BuildProfile = () => {
     setStep(step + 1);
   };
 
+  const handleOnStepBack = () => {
+    setStep(step - 1);
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -40,7 +44,11 @@ const BuildProfile = () => {
       {step === 2 && <CategoryFollowStep onStepForward={handleOnStepForward} />}
 
       {step === 3 && (
-        <BuildProfileStep user={user} onStepForward={handleOnStepForward} />
+        <BuildProfileStep
+          user={user}
+          onStepBack={handleOnStepBack}
+          onStepForward={handleOnStepForward}
+        />
       )}
 
       {step === 4 && (

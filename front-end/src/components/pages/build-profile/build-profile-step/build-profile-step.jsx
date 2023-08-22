@@ -8,8 +8,9 @@ import TextInput from "../../../form/text-input/index.js";
 import TextAreaInput from "../../../form/text-area-input/index.js";
 import ErrorView from "../../../error-view/index.js";
 import { useEffect, useState } from "react";
+import { AiOutlineArrowLeft } from "react-icons/ai";
 
-const BuildProfileStep = ({ user, onStepForward }) => {
+const BuildProfileStep = ({ user, onStepForward, onStepBack }) => {
   const [animationParent] = useAutoAnimate();
 
   const [userNameIsAvailable, setUserNameIsAvailable] = useState(false);
@@ -33,15 +34,25 @@ const BuildProfileStep = ({ user, onStepForward }) => {
     <div className={"bg-white rounded-lg"} ref={animationParent}>
       <div
         className={
-          "py-4 px-12 grid grid-cols-2 items-center justify-end  border-b-2 border-b-black"
+          "py-4 px-12 flex items-center justify-between  border-b-2 border-b-black"
         }
         ref={animationParent}
       >
-        <div className={"w-full flex justify-end"}>
-          <StepperStat totalStep={2} currentStep={2} />
-        </div>
+        <button
+          onClick={onStepBack}
+          className={
+            "w-[190px]  flex items-center self-center gap-4 hover:bg-hover-blue-clr p-2 rounded-lg cursor-pointer smooth-animation"
+          }
+        >
+          {/*Icon*/}
+          <AiOutlineArrowLeft />
 
-        <div className={"w-full flex justify-end"} ref={animationParent}>
+          <p>Back to Categories</p>
+        </button>
+
+        <StepperStat totalStep={2} currentStep={2} />
+
+        <div className={"flex justify-end"} ref={animationParent}>
           <button
             onClick={() => {
               onStepForward();
@@ -149,6 +160,7 @@ const BuildProfileStep = ({ user, onStepForward }) => {
 BuildProfileStep.propTypes = {
   user: PropTypes.object,
   onStepForward: PropTypes.func,
+  onStepBack: PropTypes.func,
 };
 
 export default BuildProfileStep;

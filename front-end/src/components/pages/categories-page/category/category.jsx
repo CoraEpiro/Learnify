@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
-import PrimaryAccentButton from "../../../primary-accent-button/index.js";
 import LimitedText from "../../../limited-text/index.js";
 import CategoryTitle from "../category-title/index.js";
+import PrimaryAccentButton from "../../../buttons/primary-accent-button/index.js";
 
 const Category = ({ category }) => {
   //   id: 2,
@@ -26,7 +26,7 @@ const Category = ({ category }) => {
   return (
     <div
       className={
-        "w-[310px] h-44 bg-white rounded-lg border border-border-clr px-5 py-4 flex flex-col justify-between"
+        "w-[310px] h-44 bg-white rounded-lg border border-border-clr px-5 py-4 flex flex-col justify-between gap-1"
       }
     >
       <div className={"flex flex-col gap-1"}>
@@ -50,10 +50,19 @@ const Category = ({ category }) => {
         </p>
         {/*Footer*/}
       </div>
-      <div>
+      <div className={"flex items-center justify-between"}>
         {/*Follow button*/}
-        <PrimaryAccentButton title={"Follow"} />
+        <div className={"w-fit"}>
+          <PrimaryAccentButton title={"Follow"} />
+        </div>
         {/*Icon*/}
+        {category.iconLink && (
+          <img
+            className={"w-12"}
+            src={category.iconLink}
+            alt={`${category.title} icon`}
+          />
+        )}
       </div>
     </div>
   );

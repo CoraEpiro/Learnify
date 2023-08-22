@@ -31,7 +31,12 @@ const LastQuestions = () => {
   ];
   return (
     <div>
-      <LastListings title={"Last Questions"} data={questions} seeAllUrl={"/"} />
+      <LastListings
+        key={"Last Questions"}
+        title={"Last Questions"}
+        data={questions}
+        seeAllUrl={"/"}
+      />
     </div>
   );
 };

@@ -1,17 +1,17 @@
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { useEffect, useState } from "react";
 import { useTimer } from "react-timer-hook";
-import ResetPasswordHeader from "../reset-password/reset-password-header/index.js";
 import { LuMailOpen } from "react-icons/lu";
-import TimeShower from "../time-shower/index.js";
 import OtpInput from "react-otp-input";
-import ErrorView from "../error-view/index.js";
 import PropTypes from "prop-types";
 import "./otp-verification-card.css";
-import AccordionCollapse from "../accordion/index.js";
 import { SiMicrosoftoutlook } from "react-icons/si";
 import { BiLogoGmail } from "react-icons/bi";
 import { AiOutlineArrowLeft } from "react-icons/ai";
+import ResetPasswordHeader from "../../reset-password/reset-password-header/index.js";
+import TimeShower from "../../time-shower/index.js";
+import ErrorView from "../../error-view/index.js";
+import AccordionCollapse from "../../accordion/index.js";
 
 const OtpVerificationCard = ({
   onStepForward,

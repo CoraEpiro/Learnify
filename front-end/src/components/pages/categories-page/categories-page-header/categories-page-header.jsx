@@ -1,5 +1,5 @@
-import PrimaryButton from "../../../primary-button/index.js";
 import Search from "../../../search/index.js";
+import PrimaryButton from "../../../buttons/primary-button/index.js";
 
 const CategoriesPageHeader = () => {
   return (

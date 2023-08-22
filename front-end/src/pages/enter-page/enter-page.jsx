@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import EnterActionCard from "../../components/pages/enter-page/enter-action-card/index.js";
-import OtpVerificationCard from "../../components/otp-verification-card/index.js";
+import OtpVerificationCard from "../../components/cards/otp-verification-card/index.js";
 
 const EnterPage = () => {
   const location = useLocation();

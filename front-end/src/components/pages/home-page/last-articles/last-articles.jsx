@@ -25,7 +25,12 @@ const LastArticles = () => {
   ];
   return (
     <div>
-      <LastListings title={"Last Articles"} data={articles} seeAllUrl={"/"} />
+      <LastListings
+        key={"Last Articles"}
+        title={"Last Articles"}
+        data={articles}
+        seeAllUrl={"/"}
+      />
     </div>
   );
 };

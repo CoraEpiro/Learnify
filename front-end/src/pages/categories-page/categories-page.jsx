@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import CategoriesPageHeader from "../../components/pages/categories-page/categories-page-header/index.js";
 import CategoriesContainer from "../../components/pages/categories-page/categories-container/index.js";
+
 const CategoriesPage = () => {
   const categories = [
     {

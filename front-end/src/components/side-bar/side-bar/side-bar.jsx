@@ -1,6 +1,6 @@
-import BaseLinkButton from "../base-link-button/index.js";
 import SideBarNavTitle from "../side-bar-nav-title/index.js";
 import SideBarNavHeader from "../side-bar-nav-header/index.js";
+import BaseLinkButton from "../../buttons/base-link-button/index.js";
 
 const SideBar = () => {
   return (

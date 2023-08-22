@@ -3,8 +3,8 @@ import { useState } from "react";
 import ResetPasswordEmailInputStep from "../reset-password-email-input-step/index.js";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import ResetPasswordNewPasswordStep from "../reset-password-new-password-step/index.js";
-import OtpVerificationCard from "../../otp-verification-card/index.js";
-import DoneCard from "../../done-card/index.js";
+import OtpVerificationCard from "../../cards/otp-verification-card/index.js";
+import DoneCard from "../../cards/done-card/index.js";
 
 const ResetPasswordCard = ({ title, description, backUrlTitle, backUrl }) => {
   const [animationParent] = useAutoAnimate();

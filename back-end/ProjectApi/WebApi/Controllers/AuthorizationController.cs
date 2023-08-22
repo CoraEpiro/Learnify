@@ -43,7 +43,6 @@ public class AuthorizationController : ControllerBase
     /// <summary>
     /// Logs in a user and returns a token upon successful authentication.
     /// </summary>
-    [Authorize]
     [HttpPost("LogInUser")]
     public async Task<ActionResult<TokenID>> LogInUser([FromBody] GetUserQuery loginCommand)
     {

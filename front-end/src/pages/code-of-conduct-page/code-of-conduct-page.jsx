@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useEffect } from "react";
 
 const CodeOfConductPage = () => {
   document.title = "Code of Conduct for Learnify";

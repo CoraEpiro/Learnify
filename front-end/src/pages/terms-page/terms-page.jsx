@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 const TermsPage = () => {
   document.title = "Terms of Use for Learnify";
+
   return (
     <motion.div
       initial={{ opacity: 0 }}

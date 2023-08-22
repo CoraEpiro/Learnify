@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+import { nanoid } from "nanoid";
 
 const LastListings = ({ title, data, seeAllUrl }) => {
   return (
@@ -24,7 +25,7 @@ const LastListings = ({ title, data, seeAllUrl }) => {
         {data.map((item) => (
           <Link
             to={item.url}
-            key={item.title}
+            key={nanoid()}
             className={
               "group p-4 cursor-pointer border-t border-border-clr text-sm text-gray-700 flex flex-col gap-1"
             }
@@ -41,7 +42,7 @@ const LastListings = ({ title, data, seeAllUrl }) => {
 LastListings.propTypes = {
   title: PropTypes.string,
   data: PropTypes.array,
-  seeAllUrl: PropTypes.bool,
+  seeAllUrl: PropTypes.string,
 };
 
 export default LastListings;
