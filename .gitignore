@@ -76,4 +76,4 @@
 /back-end/ProjectApi/WebApi/obj/WebApi.csproj.nuget.g.props
 /back-end/ProjectApi/AppDomain/bin/Debug/net6.0/AppDomain.pdb
 back-end/ProjectApi/Application/obj/Debug/net6.0/Application.csproj.AssemblyReference.cache
-.vs
+.vs/
