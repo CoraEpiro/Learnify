@@ -77,3 +77,7 @@
 /back-end/ProjectApi/AppDomain/bin/Debug/net6.0/AppDomain.pdb
 back-end/ProjectApi/Application/obj/Debug/net6.0/Application.csproj.AssemblyReference.cache
 .vs/
+back-end/ProjectApi/.vs/ProjectApi/v17/.suo
+back-end/ProjectApi/Application/obj/Debug/net6.0/Application.csproj.AssemblyReference.cache
+back-end/ProjectApi/Infrastructure/obj/Debug/net6.0/Infrastructure.csproj.AssemblyReference.cache
+back-end/ProjectApi/WebApi/obj/Debug/net6.0/WebApi.csproj.AssemblyReference.cache
