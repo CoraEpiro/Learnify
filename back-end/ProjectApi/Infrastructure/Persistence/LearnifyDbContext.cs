@@ -11,8 +11,9 @@ namespace Infrastructure.Persistence;
 
 public class LearnifyDbContext : DbContext
 {
-	public LearnifyDbContext(DbContextOptions<LearnifyDbContext> options) : base(options)
-	{
+    public LearnifyDbContext(DbContextOptions<LearnifyDbContext> options)
+        : base(options)
+    {
         Database.EnsureCreated();
     }
 
@@ -30,9 +31,11 @@ public class LearnifyDbContext : DbContext
     public DbSet<Course> Courses { get; set; }
     public DbSet<Resource> Resources { get; set; }
     public DbSet<Lesson> Lessons { get; set; }
+
     //public DbSet<Comment> Comments { get; set; }
     public DbSet<ArticleFlag> ArticleFlags { get; set; }
     public DbSet<ResourceFlag> ResourceFlags { get; set; }
+
     //public DbSet<FailAttemp> FailAttemps { get; set; }
     public DbSet<EmailVerification> EmailVerifications { get; set; }
 
@@ -42,17 +45,11 @@ public class LearnifyDbContext : DbContext
         modelBuilder.Entity<ResourceFlag>().HasQueryFilter(c => c.isDeleted == false);
         modelBuilder.Entity<ArticleFlag>().HasQueryFilter(c => c.isDeleted == false);
 
-        modelBuilder.Entity<Category>()
-        .Property(b => b.isDeleted)
-        .HasDefaultValue(false);
+        modelBuilder.Entity<Category>().Property(b => b.isDeleted).HasDefaultValue(false);
 
-        modelBuilder.Entity<ResourceFlag>()
-        .Property(b => b.isDeleted)
-        .HasDefaultValue(false);
+        modelBuilder.Entity<ResourceFlag>().Property(b => b.isDeleted).HasDefaultValue(false);
 
-        modelBuilder.Entity<ArticleFlag>()
-        .Property(b => b.isDeleted)
-        .HasDefaultValue(false);
+        modelBuilder.Entity<ArticleFlag>().Property(b => b.isDeleted).HasDefaultValue(false);
     }
 
     /*    protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -210,4 +207,4 @@ public class LearnifyDbContext : DbContext
             // Apply similar value converters for other properties...
         }
     */
-}   
+}

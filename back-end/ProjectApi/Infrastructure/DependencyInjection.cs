@@ -31,9 +31,6 @@ public static class DependencyInjection
         services.AddScoped<ICategoryRepository, CategoryRepository>();
         services.AddScoped<IArticleFlagRepository, ArticleFlagRepository>();
 
-
-
-
         var jwtConfig = new JwtConfig();
         configuration.GetSection("JWT").Bind(jwtConfig);
         services.AddSingleton(jwtConfig);

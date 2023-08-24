@@ -1,11 +1,12 @@
 ﻿using AppDomain.DTO;
+using AppDomain.DTOs.User;
 using AppDomain.Interfaces;
 using Application.DTO;
 using MediatR;
 
 namespace Application.Tasks.Commands.Insert.UserInserts.InsertUser;
 
-public class InsertUserCommandHandler : IRequestHandler<InsertUserCommand, string>
+public class InsertUserCommandHandler : IRequestHandler<InsertUserCommand, UserAuthDto>
 {
     private readonly IUserRepository _userRepository;
 
@@ -14,7 +15,10 @@ public class InsertUserCommandHandler : IRequestHandler<InsertUserCommand, strin
         _userRepository = userRepository;
     }
 
-    public async Task<string> Handle(InsertUserCommand request, CancellationToken cancellationToken)
+    public async Task<UserAuthDto> Handle(
+        InsertUserCommand request,
+        CancellationToken cancellationToken
+    )
     {
         return await _userRepository.RegisterUserAsync(request.User);
     }

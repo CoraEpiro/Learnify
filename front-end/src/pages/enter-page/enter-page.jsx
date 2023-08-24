@@ -5,6 +5,8 @@ import EnterActionCard from "../../components/pages/enter-page/enter-action-card
 import OtpVerificationCard from "../../components/cards/otp-verification-card/index.js";
 
 const EnterPage = () => {
+  document.title = "Learnify";
+
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const initialState = queryParams.get("state");

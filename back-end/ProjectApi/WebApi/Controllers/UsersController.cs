@@ -9,6 +9,8 @@ using Application.Tasks.Queries.UserQueries.GetUserById;
 using Application.Tasks.Queries.UserQueries.GetUserByEmail;
 using Application.Tasks.Commands.Insert.UserInserts.BuildUser;
 using Application.Tasks.Commands.Delete.UserDeletes.DeleteUser;
+using Application.Tasks.Queries.UserQueries.UserExistByEmail;
+using Application.Tasks.Queries.UserQueries.UserExistByUsername;
 
 namespace WebApi.Controllers;
 
@@ -31,79 +33,12 @@ public class UsersController : ControllerBase
     }
 
     /// <summary>
-    /// Updates the username of a user.
+    /// Retrieves a user by their email address.
     /// </summary>
-    /// <param name="updateCommand">The command containing update information.</param>
-    /// <returns>The updated user's DTO if successful, NotFound if user not found.</returns>
-    [HttpPatch("UpdateUsername/{Id}/{Username}")]
-    public async Task<ActionResult<UserDTO>> UpdateUsername(UpdateUsernameCommand updateCommand)
-    {
-        var user = await _mediator.Send(updateCommand);
-
-        if (user is null)
-            return NotFound();
-
-        var userDTO = DtoAndModelConvertors.ToUserDTO(user);
-
-        return Ok(userDTO);
-    }
-
-    /// <summary>
-    /// Updates the password of a user.
-    /// </summary>
-    /// <param name="updateCommand">The command containing update information.</param>
-    /// <returns>The updated user's DTO if successful, NotFound if user not found.</returns>
-    [HttpPatch("UpdatePassword/{Id}/{Password}")]
-    public async Task<ActionResult<UserDTO>> UpdatePassword([FromBody] UpdatePasswordCommand updateCommand)
-    {
-        var user = await _mediator.Send(updateCommand);
-
-        if (user is null)
-            return NotFound();
-
-        var userDTO = DtoAndModelConvertors.ToUserDTO(user);
-
-        return Ok(userDTO);
-    }
-
-    /// <summary>
-    /// Builds a new user.
-    /// </summary>
-    /// <param name="buildCommand">The command containing user information.</param>
-    /// <returns>The created user's DTO if successful, NotFound if user creation fails.</returns>
-    [HttpPost("BuildUser")]
-    public async Task<ActionResult<UserDTO>> BuildUser([FromBody] BuildUserCommand buildCommand)
-    {
-        var user = await _mediator.Send(buildCommand);
-
-        if (user is null)
-            return NotFound();
-
-        var userDTO = DtoAndModelConvertors.ToUserDTO(user);
-
-        return Ok(userDTO);
-    }
-
-    /// <summary>
-    /// Deletes a user.
-    /// </summary>
-    /// <param name="deleteCommand">The command containing user deletion information.</param>
-    /// <returns>Ok if deletion is successful.</returns>
-    [HttpDelete("DeleteUser/{Id}")]
-    public async Task<ActionResult> DeleteUser(DeleteUserCommand deleteCommand)
-    {
-        await _mediator.Send(deleteCommand);
-
-        return Ok();
-    }
-
-    /// <summary>
-    /// Retrieves a user by their ID.
-    /// </summary>
-    /// <param name="getCommand">The query containing user ID.</param>
+    /// <param name="getCommand">The query containing email address.</param>
     /// <returns>The retrieved user's DTO if found, NotFound if user not found.</returns>
-    [HttpGet("GetUserById/{Id}")]
-    public async Task<ActionResult<UserDTO>> GetUserById(GetUserByIdQuery getCommand)
+    [HttpGet("GetUserByEmail/{Email}")]
+    public async Task<ActionResult<UserDTO>> GetUserByEmail(GetUserByEmailQuery getCommand)
     {
         var user = await _mediator.Send(getCommand);
 
@@ -116,12 +51,12 @@ public class UsersController : ControllerBase
     }
 
     /// <summary>
-    /// Retrieves a user by their email address.
+    /// Retrieves a user by their ID.
     /// </summary>
-    /// <param name="getCommand">The query containing email address.</param>
+    /// <param name="getCommand">The query containing user ID.</param>
     /// <returns>The retrieved user's DTO if found, NotFound if user not found.</returns>
-    [HttpGet("GetUserByEmail/{Email}")]
-    public async Task<ActionResult<UserDTO>> GetUserByEmail(GetUserByEmailQuery getCommand)
+    [HttpGet("GetUserById/{Id}")]
+    public async Task<ActionResult<UserDTO>> GetUserById(GetUserByIdQuery getCommand)
     {
         var user = await _mediator.Send(getCommand);
 
@@ -156,8 +91,10 @@ public class UsersController : ControllerBase
     /// </summary>
     /// <param name="getCommand">The query containing user secret.</param>
     /// <returns>The retrieved user's DTO if found, NotFound if user not found.</returns>
-    [HttpGet("GetUserByUsersecret/{Secret}")]
-    public async Task<ActionResult<UserDTO>> GetUserByUsersecret(GetUserByUsersecretQuery getCommand)
+    [HttpGet("GetUserByUserSecret/{Secret}")]
+    public async Task<ActionResult<UserDTO>> GetUserByUserSecret(
+        GetUserByUsersecretQuery getCommand
+    )
     {
         var user = await _mediator.Send(getCommand);
 
@@ -167,5 +104,108 @@ public class UsersController : ControllerBase
         var userDTO = DtoAndModelConvertors.ToUserDTO(user);
 
         return Ok(userDTO);
+    }
+
+    /// <summary>
+    /// Updates the username of a user.
+    /// </summary>
+    /// <param name="updateCommand">The command containing update information.</param>
+    /// <returns>The updated user's DTO if successful, NotFound if user not found.</returns>
+    [HttpPatch("UpdateUsername/{Id}/{Username}")]
+    public async Task<ActionResult<UserDTO>> UpdateUsername(UpdateUsernameCommand updateCommand)
+    {
+        var user = await _mediator.Send(updateCommand);
+
+        if (user is null)
+            return NotFound();
+
+        var userDTO = DtoAndModelConvertors.ToUserDTO(user);
+
+        return Ok(userDTO);
+    }
+
+    /// <summary>
+    /// Check for user exist for given email address
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("UserExistByEmail/{Email}")]
+    public async Task<ActionResult> UserExistByEmail(UserExistByEmailQuery command)
+    {
+        try
+        {
+            return await _mediator.Send(command) ? Ok() : NotFound();
+        }
+        catch (Exception)
+        {
+            return Problem("A problem has occurred please try again later");
+        }
+    }
+
+    /// <summary>
+    /// Check for user exist for given username
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("UserExistByUsername/{Username}")]
+    public async Task<ActionResult> UserExistByUsername(UserExistByUsernameQuery command)
+    {
+        try
+        {
+            return await _mediator.Send(command) ? Ok() : NotFound();
+        }
+        catch (Exception)
+        {
+            return Problem("A problem has occurred please try again later");
+        }
+    }
+
+    /// <summary>
+    /// Builds a new user.
+    /// </summary>
+    /// <param name="buildCommand">The command containing user information.</param>
+    /// <returns>The created user's DTO if successful, NotFound if user creation fails.</returns>
+    [HttpPost("BuildUser")]
+    public async Task<ActionResult<UserDTO>> BuildUser([FromBody] BuildUserCommand buildCommand)
+    {
+        var user = await _mediator.Send(buildCommand);
+
+        if (user is null)
+            return NotFound();
+
+        var userDTO = DtoAndModelConvertors.ToUserDTO(user);
+
+        return Ok(userDTO);
+    }
+
+    /// <summary>
+    /// Updates the password of a user.
+    /// </summary>
+    /// <param name="updateCommand">The command containing update information.</param>
+    /// <returns>The updated user's DTO if successful, NotFound if user not found.</returns>
+    [HttpPatch("UpdatePassword/{Id}/{Password}")]
+    public async Task<ActionResult<UserDTO>> UpdatePassword(
+        [FromBody] UpdatePasswordCommand updateCommand
+    )
+    {
+        var user = await _mediator.Send(updateCommand);
+
+        if (user is null)
+            return NotFound();
+
+        var userDTO = DtoAndModelConvertors.ToUserDTO(user);
+
+        return Ok(userDTO);
+    }
+
+    /// <summary>
+    /// Deletes a user.
+    /// </summary>
+    /// <param name="deleteCommand">The command containing user deletion information.</param>
+    /// <returns>Ok if deletion is successful.</returns>
+    [HttpDelete("DeleteUser/{Id}")]
+    public async Task<ActionResult> DeleteUser(DeleteUserCommand deleteCommand)
+    {
+        await _mediator.Send(deleteCommand);
+
+        return Ok();
     }
 }

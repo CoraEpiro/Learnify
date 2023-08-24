@@ -1,21 +1,24 @@
-﻿using AppDomain.DTO;
+﻿using AppDomain.Exceptions.UserExceptions;
 using AppDomain.DTOs.User;
 using AppDomain.Entities.UserRelated;
 using Application.DTO;
-using System.IdentityModel.Tokens.Jwt;
 
 namespace AppDomain.Interfaces;
+
 public interface IUserRepository
 {
     /// <summary>
     /// Registers a new user asynchronously and returns the generated user ID.
     /// </summary>
-    Task<string> RegisterUserAsync(InsertPendingUserDTO user);
+    /// <exception cref="UserExistException"/>
+    Task<UserAuthDto> RegisterUserAsync(InsertPendingUserDTO user);
 
     /// <summary>
     /// Logs in a user asynchronously and returns the generated token ID.
     /// </summary>
-    Task<TokenID> LogInAsync(string email, string password);
+    /// <exception cref="UserNotFoundException"/>
+    /// <exception cref="UserInvalidPasswordException"/>
+    Task<UserAuthDto> LogInAsync(string email, string password);
 
     /// <summary>
     /// Retrieves a user by their ID asynchronously.
@@ -30,7 +33,7 @@ public interface IUserRepository
     /// <summary>
     /// Retrieves a user by their user secret asynchronously.
     /// </summary>
-    Task<User> GetUserByUsersecretAsync(string? userSecret);
+    Task<User> GetUserByUserSecretAsync(string? userSecret);
 
     /// <summary>
     /// Retrieves a user by their username asynchronously.

@@ -10,7 +10,9 @@ namespace Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
-            services.AddMediatR(c => c.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+            services.AddMediatR(
+                c => c.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly())
+            );
 
             services.AddValidatorsFromAssemblyContaining<InsertUserCommand>();
 

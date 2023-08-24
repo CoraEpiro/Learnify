@@ -1,4 +1,5 @@
 ﻿namespace Application.DTO;
+
 public class InsertPendingUserDTO
 {
     public string Name { get; set; } = String.Empty;

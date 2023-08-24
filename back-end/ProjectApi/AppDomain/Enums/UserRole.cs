@@ -3,9 +3,10 @@
 namespace AppDomain.Enums;
 
 [JsonConverter(typeof(JsonStringEnumConverter))]
-public enum ResourceFlags
+public enum UserRole
 {
-    Tool,
-    Usefull,
-    UI_Library
+    Sapling,
+    Tree,
+    Moderator,
+    Admin
 }

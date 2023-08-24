@@ -6,7 +6,7 @@ using MediatR;
 
 namespace Application.Tasks.Queries.UserQueries.GetUser;
 
-public class GetUserQuery : IRequest<TokenID>
+public class GetUserQuery : IRequest<UserAuthDto>
 {
     public string Email { get; set; }
     public string Password { get; set; }

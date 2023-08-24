@@ -14,17 +14,9 @@ public class GetUserQueryValidator : AbstractValidator<GetUserQuery>
 
     public GetUserQueryValidator()
     {
-        RuleFor(u => u.Email)
-            .NotEmpty()
-            .NotNull()
-            .EmailAddress()
-            .Must(BeUniqueEmail);
+        RuleFor(u => u.Email).NotEmpty().NotNull().EmailAddress().Must(BeUniqueEmail);
 
-        RuleFor(u => u.Password)
-            .NotEmpty()
-            .NotNull()
-            .MinimumLength(8)
-            .MaximumLength(16);
+        RuleFor(u => u.Password).NotEmpty().NotNull().MinimumLength(8).MaximumLength(16);
     }
 
     private bool BeUniqueEmail(string email)

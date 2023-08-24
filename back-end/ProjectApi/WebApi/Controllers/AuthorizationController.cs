@@ -1,18 +1,23 @@
 ﻿using AppDomain.DTOs.User;
+using AppDomain.Exceptions.UserExceptions;
 using Application.Tasks.Commands.Delete.UserDeletes.VerifyEmail;
 using Application.Tasks.Commands.Insert.UserInserts.InserOTPCode;
 using Application.Tasks.Commands.Insert.UserInserts.InsertUser;
 using Application.Tasks.Commands.Update.UpdateUser.UpdateToken;
 using Application.Tasks.Queries.UserQueries.GetUser;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
+
+namespace WebApi.Controllers;
 
 /// <summary>
 /// Controller responsible for user authorization operations.
 /// </summary>
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/auth")]
 public class AuthorizationController : ControllerBase
 {
     private readonly IMediator _mediator;
@@ -27,31 +32,72 @@ public class AuthorizationController : ControllerBase
     }
 
     /// <summary>
-    /// Registers a new user and returns a token upon successful registration.
+    /// With auth
     /// </summary>
-    [HttpPost("RegisterUser")]
-    public async Task<ActionResult<string>> RegisterUser([FromBody] InsertUserCommand insertCommand)
+    /// <returns></returns>
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [HttpGet("with-auth")]
+    public async Task<ActionResult> TestWithAuth()
     {
-        var token = await _mediator.Send(insertCommand);
-
-        if (token is null)
-            return BadRequest();
-
-        return Ok(token);
+        return Ok();
     }
 
     /// <summary>
-    /// Logs in a user and returns a token upon successful authentication.
+    /// With out auth
     /// </summary>
-    [HttpPost("LogInUser")]
+    /// <returns></returns>
+    [HttpGet("without-auth")]
+    public async Task<ActionResult> TestWithOutAuth()
+    {
+        return Ok();
+    }
+
+    /// <summary>
+    /// Registers a new user and returns a <see cref="UserAuthDto"/>.
+    /// </summary>
+    [HttpPost("register")]
+    public async Task<ActionResult<UserAuthDto>> RegisterUser(
+        [FromBody] InsertUserCommand insertCommand
+    )
+    {
+        try
+        {
+            var authDto = await _mediator.Send(insertCommand);
+            return Ok(authDto);
+        }
+        catch (UserExistException ex)
+        {
+            return Conflict(ex.Message);
+        }
+        catch (Exception)
+        {
+            return Problem("A problem has occurred please try again later");
+        }
+    }
+
+    /// <summary>
+    /// Logs in a user and returns a <see cref="UserAuthDto"/>.
+    /// </summary>
+    [HttpPost("login")]
     public async Task<ActionResult<TokenID>> LogInUser([FromBody] GetUserQuery loginCommand)
     {
-        var tokenID = await _mediator.Send(loginCommand);
-
-        if (tokenID is null)
-            return BadRequest();
-
-        return Ok(tokenID);
+        try
+        {
+            var authDto = await _mediator.Send(loginCommand);
+            return Ok(authDto);
+        }
+        catch (UserNotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (UserInvalidPasswordException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+        catch (Exception)
+        {
+            return Problem("A problem has occurred please try again later");
+        }
     }
 
     /// <summary>

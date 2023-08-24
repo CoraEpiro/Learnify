@@ -3,6 +3,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using AppDomain.Common.Config;
+using AppDomain.Enums;
 using AppDomain.Interfaces;
 using Microsoft.IdentityModel.Tokens;
 
@@ -20,12 +21,13 @@ public class JwtService : IJwtService
         _config = config ?? throw new ArgumentNullException(nameof(config));
 
     /// <inheritdoc/>
-    public string GenerateSecurityToken(string id, string email)
+    public string GenerateSecurityToken(string id, string email, UserRole role)
     {
         var claims = new[]
         {
             new Claim("userId", id),
-            new Claim("userEmail", email)
+            new Claim("userEmail", email),
+            new Claim("userRole", role.ToString())
         };
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.Secret));

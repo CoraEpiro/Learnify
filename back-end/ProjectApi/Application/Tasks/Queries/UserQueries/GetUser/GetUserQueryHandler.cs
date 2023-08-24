@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Application.Tasks.Queries.UserQueries.GetUser;
 
-public class GetUserQueryHandler : IRequestHandler<GetUserQuery, TokenID>
+public class GetUserQueryHandler : IRequestHandler<GetUserQuery, UserAuthDto>
 {
     private readonly IUserRepository _userRepository;
 
@@ -13,7 +13,7 @@ public class GetUserQueryHandler : IRequestHandler<GetUserQuery, TokenID>
         _userRepository = userRepository;
     }
 
-    public async Task<TokenID> Handle(GetUserQuery request, CancellationToken cancellationToken)
+    public async Task<UserAuthDto> Handle(GetUserQuery request, CancellationToken cancellationToken)
     {
         return await _userRepository.LogInAsync(request.Email, request.Password);
     }

@@ -5,6 +5,8 @@ import LastArticles from "../../components/pages/home-page/last-articles/index.j
 import ArticleViewBy from "../../components/pages/home-page/article-view-by/index.js";
 
 const HomePage = () => {
+  document.title = "Learnify";
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
