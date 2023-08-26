@@ -75,6 +75,7 @@ public class UserRepository : IUserRepository
 
         return user!;
     }
+
     /// <inheritdoc/>
     public async Task<UserResponsePublishedCounts> GetUserResponsePublishedCountsAsync(string userId)
     {
@@ -85,6 +86,21 @@ public class UserRepository : IUserRepository
         counts.PublishedQuestionCount = await _context.Questions.CountAsync(x => x.UserId == userId);
 
         return counts;
+    }
+
+    /// <inheritdoc/>
+    public async Task<UserProfile> GetUserProfileAsync()
+    {
+        var userId = GetClaimValue("userId");
+
+        if (userId is null)
+            return null;
+
+        var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == userId);
+
+        var profile = ModelConvertors.ToUserProfile(user);
+
+        return profile;
     }
 
     /// <inheritdoc/>
@@ -159,6 +175,10 @@ public class UserRepository : IUserRepository
     public async Task<User> BuildUserAsync(BuildUserDTO buildUser)
     {
         var userEmail = GetClaimValue("userEmail");
+
+        if (userEmail is null)
+            return null;
+
         var pendingUser = _context.PendingUsers.FirstOrDefault(x => x.Email == userEmail);
 
         var user = new User(pendingUser);
@@ -180,6 +200,10 @@ public class UserRepository : IUserRepository
     public async Task<string> UpdateTokenAsync()
     {
         var userEmail = GetClaimValue("userEmail");
+
+        if (userEmail is null)
+            return null;
+
         var user = _context.PendingUsers.FirstOrDefault(x => x.Email == userEmail);
 
         if (user is null)
@@ -281,6 +305,16 @@ public class UserRepository : IUserRepository
     }
 
     /// <inheritdoc/>
+    public async Task<bool> IsEmailExistAsync(string email)
+    {
+        var user =
+            await _context.PendingUsers.FirstOrDefaultAsync(x => x.Email == email)
+            ?? await _context.Users.FirstOrDefaultAsync(x => x.Email == email);
+
+        return user is not null;
+    }
+
+    /// <inheritdoc/>
     private string GetClaimValue(string claimType)
     {
         var token = GetTokenFromRequest();
@@ -311,15 +345,5 @@ public class UserRepository : IUserRepository
         }
 
         return null;
-    }
-
-    /// <inheritdoc/>
-    public async Task<bool> IsEmailExistAsync(string email)
-    {
-        var user =
-            await _context.PendingUsers.FirstOrDefaultAsync(x => x.Email == email)
-            ?? await _context.Users.FirstOrDefaultAsync(x => x.Email == email);
-
-        return user is not null;
     }
 }

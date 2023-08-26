@@ -42,6 +42,8 @@ public interface IUserRepository
     /// </summary>
     Task<User> GetUserByUserSecretAsync(string? userSecret);
 
+    Task<UserProfile> GetUserProfileAsync();
+
     Task<UserResponsePublishedCounts> GetUserResponsePublishedCountsAsync(string userId);
 
     /// <summary>

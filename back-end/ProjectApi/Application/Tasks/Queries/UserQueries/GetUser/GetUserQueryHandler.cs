@@ -4,11 +4,11 @@ using MediatR;
 
 namespace Application.Tasks.Queries.UserQueries.GetUser;
 
-public class GetUserQueryHandler : IRequestHandler<GetUserQuery, UserAuthDto>
+public class GetUserProfileQueryHandler : IRequestHandler<GetUserQuery, UserAuthDto>
 {
     private readonly IUserRepository _userRepository;
 
-    public GetUserQueryHandler(IUserRepository userRepository)
+    public GetUserProfileQueryHandler(IUserRepository userRepository)
     {
         _userRepository = userRepository;
     }

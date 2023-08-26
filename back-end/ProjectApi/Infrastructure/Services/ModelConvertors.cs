@@ -107,4 +107,15 @@ public static class ModelConvertors
             Joined = user.JoinedTime
         };
     }
+
+    public static UserProfile ToUserProfile(this User user)
+    {
+        return new UserProfile
+        {
+            Name = user.Name,
+            Username = user.UserName,
+            Email = user.Email,
+            ProfilePhoto = user.ProfilePhoto
+        };
+    }
 }

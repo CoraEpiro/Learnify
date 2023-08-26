@@ -3,16 +3,16 @@ using FluentValidation;
 
 namespace Application.Tasks.Queries.UserQueries.GetUser;
 
-public class GetUserQueryValidator : AbstractValidator<GetUserQuery>
+public class GetUserProfileQueryValidator : AbstractValidator<GetUserQuery>
 {
     private readonly IUserRepository _userRepository;
 
-    public GetUserQueryValidator(IUserRepository userRepository)
+    public GetUserProfileQueryValidator(IUserRepository userRepository)
     {
         _userRepository = userRepository;
     }
 
-    public GetUserQueryValidator()
+    public GetUserProfileQueryValidator()
     {
         RuleFor(u => u.Email).NotEmpty().NotNull().EmailAddress().Must(BeUniqueEmail);
 

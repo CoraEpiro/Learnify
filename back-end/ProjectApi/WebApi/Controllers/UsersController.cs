@@ -27,9 +27,10 @@ public class UsersController : ControllerBase
     private readonly IUserRepository _userRepository;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="UsersController"/> class.
+    /// Initializes a new instance of the UsersController class with the required dependencies.
     /// </summary>
-    /// <param name="mediator">The mediator used for handling commands and queries.</param>
+    /// <param name="mediator">The mediator for handling requests and commands.</param>
+    /// <param name="userRepository">The repository for user-related operations.</param>
     public UsersController(IMediator mediator, IUserRepository userRepository)
     {
         _mediator = mediator;
@@ -108,6 +109,11 @@ public class UsersController : ControllerBase
         return Ok(userDTO);
     }
 
+    /// <summary>
+    /// Retrieves detailed user information in the form of a UserResponse based on their ID.
+    /// </summary>
+    /// <param name="getCommand">The query containing the user's ID.</param>
+    /// <returns>The retrieved user's detailed information if found, NotFound if user not found.</returns>
     [HttpGet("GetUserResponseById/{Id}")]
     public async Task<ActionResult<UserResponse>> GetUserResponseById(GetUserByIdQuery getCommand)
     {
@@ -123,6 +129,11 @@ public class UsersController : ControllerBase
         return Ok(userResponse);
     }
 
+    /// <summary>
+    /// Retrieves detailed user information in the form of a UserResponse based on their email.
+    /// </summary>
+    /// <param name="getCommand">The query containing the user's email.</param>
+    /// <returns>The retrieved user's detailed information if found, NotFound if user not found.</returns>
     [HttpGet("GetUserResponseByEmail/{Email}")]
     public async Task<ActionResult<UserResponse>> GetUserResponseByEmail(GetUserByEmailQuery getCommand)
     {
@@ -138,6 +149,11 @@ public class UsersController : ControllerBase
         return Ok(userResponse);
     }
 
+    /// <summary>
+    /// Retrieves detailed user information in the form of a UserResponse based on their username.
+    /// </summary>
+    /// <param name="getCommand">The query containing the user's username.</param>
+    /// <returns>The retrieved user's detailed information if found, NotFound if user not found.</returns>
     [HttpGet("GetUserResponseByUsername/{Username}")]
     public async Task<ActionResult<UserResponse>> GetUserResponseByUsername(GetUserByUsernameQuery getCommand)
     {
@@ -153,6 +169,11 @@ public class UsersController : ControllerBase
         return Ok(userResponse);
     }
 
+    /// <summary>
+    /// Retrieves detailed user information in the form of a UserResponse based on their user secret.
+    /// </summary>
+    /// <param name="getCommand">The query containing the user's secret.</param>
+    /// <returns>The retrieved user's detailed information if found, NotFound if user not found.</returns>
     [HttpGet("GetUserResponseByUsersecret/{Secret}")]
     public async Task<ActionResult<UserResponse>> GetUserResponseByUsersecret(GetUserByUsersecretQuery getCommand)
     {
@@ -167,6 +188,12 @@ public class UsersController : ControllerBase
 
         return Ok(userResponse);
     }
+
+    /// <summary>
+    /// Retrieves a preview of user information in the form of a UserPreviewResponse based on their ID.
+    /// </summary>
+    /// <param name="getCommand">The query containing the user's ID.</param>
+    /// <returns>The retrieved user's preview information if found, NotFound if user not found.</returns>
     [HttpGet("GetUserPreviewResponseById/{Id}")]
     public async Task<ActionResult<UserPreviewResponse>> GetUserPreviewResponseById(GetUserByIdQuery getCommand)
     {
@@ -180,6 +207,11 @@ public class UsersController : ControllerBase
         return Ok(userPreviewResponse);
     }
 
+    /// <summary>
+    /// Retrieves a preview of user information in the form of a UserPreviewResponse based on their email.
+    /// </summary>
+    /// <param name="getCommand">The query containing the user's email.</param>
+    /// <returns>The retrieved user's preview information if found, NotFound if user not found.</returns>
     [HttpGet("GetUserPreviewResponseByEmail/{Email}")]
     public async Task<ActionResult<UserPreviewResponse>> GetUserPreviewResponseByEmail(GetUserByEmailQuery getCommand)
     {
@@ -193,6 +225,11 @@ public class UsersController : ControllerBase
         return Ok(userPreviewResponse);
     }
 
+    /// <summary>
+    /// Retrieves a preview of user information in the form of a UserPreviewResponse based on their username.
+    /// </summary>
+    /// <param name="getCommand">The query containing the user's username.</param>
+    /// <returns>The retrieved user's preview information if found, NotFound if user not found.</returns>
     [HttpGet("GetUserPreviewResponseByUsername/{Username}")]
     public async Task<ActionResult<UserPreviewResponse>> GetUserPreviewResponseByUsername(GetUserByUsernameQuery getCommand)
     {
@@ -206,6 +243,11 @@ public class UsersController : ControllerBase
         return Ok(userPreviewResponse);
     }
 
+    /// <summary>
+    /// Retrieves a preview of user information in the form of a UserPreviewResponse based on their user secret.
+    /// </summary>
+    /// <param name="getCommand">The query containing the user's secret.</param>
+    /// <returns>The retrieved user's preview information if found, NotFound if user not found.</returns>
     [HttpGet("GetUserPreviewResponseByUsersecret/{Secret}")]
     public async Task<ActionResult<UserPreviewResponse>> GetUserPreviewResponseByUsersecret(GetUserByUsersecretQuery getCommand)
     {
@@ -217,6 +259,21 @@ public class UsersController : ControllerBase
         var userPreviewResponse = ModelConvertors.ToUserPreviewResponse(user);
 
         return Ok(userPreviewResponse);
+    }
+
+    /// <summary>
+    /// Retrieves the user's profile information.
+    /// </summary>
+    /// <returns>The user's profile information if available, Problem response if no user profile exists.</returns>
+    [HttpGet("GetUserProfile")]
+    public async Task<ActionResult<UserProfile>> GetUserProfile()
+    {
+        var profile = await _userRepository.GetUserProfileAsync();
+
+        if (profile is null)
+            return Problem("There is no current user.");
+
+        return Ok(profile);
     }
 
     /// <summary>
@@ -295,9 +352,7 @@ public class UsersController : ControllerBase
     /// <param name="updateCommand">The command containing update information.</param>
     /// <returns>The updated user's DTO if successful, NotFound if user not found.</returns>
     [HttpPatch("UpdatePassword/{Id}/{Password}")]
-    public async Task<ActionResult<UserDTO>> UpdatePassword(
-        [FromBody] UpdatePasswordCommand updateCommand
-    )
+    public async Task<ActionResult<UserDTO>> UpdatePassword([FromBody] UpdatePasswordCommand updateCommand)
     {
         var user = await _mediator.Send(updateCommand);
 
