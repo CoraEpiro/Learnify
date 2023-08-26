@@ -291,6 +291,17 @@ public class UsersController : ControllerBase
         return Ok(customization);
     }
 
+    [HttpGet("GetPersonalInfo")]
+    public async Task<ActionResult<PersonalInfoResponse>> GetPersonalInfo()
+    {
+        var personalInfo = await _userRepository.GetPersonalInfoAsync();
+
+        if(personalInfo is null)
+            return Problem("There is no current user.");
+
+        return Ok(personalInfo);
+    }
+
     /// <summary>
     /// Updates the username of a user.
     /// </summary>

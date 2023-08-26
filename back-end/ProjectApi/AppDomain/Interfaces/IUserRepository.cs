@@ -55,6 +55,12 @@ public interface IUserRepository
     Task<Customization> GetCustomizationAsync();
 
     /// <summary>
+    /// Retrieves personal information asynchronously.
+    /// </summary>
+    /// <returns>A task representing the asynchronous operation. Personal information response.</returns>
+    Task<PersonalInfoResponse> GetPersonalInfoAsync();
+
+    /// <summary>
     /// Retrieves the published counts associated with a user asynchronously.
     /// </summary>
     /// <param name="userId">The user's ID.</param>

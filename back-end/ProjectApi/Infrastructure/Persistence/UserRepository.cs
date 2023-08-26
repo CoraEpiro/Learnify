@@ -281,6 +281,23 @@ public class UserRepository : IUserRepository
     }
 
     /// <inheritdoc/>
+    public async Task<PersonalInfoResponse> GetPersonalInfoAsync()
+    {
+        var userId = GetClaimValue("userId");
+
+        if(userId is null)
+            return null;
+
+        var user = await GetUserByIdAsync(userId);
+
+        var personalInfo = new PersonalInfoResponse();
+        personalInfo.PersonalInfo = user.PersonalInfo;
+        personalInfo.ConnectedAccountList = user.ConnectedAccountList;
+
+        return personalInfo;
+    }
+
+    /// <inheritdoc/>
     public async Task<string> DeleteEmailVerificationAsync(string email, string otpCode)
     {
         try
