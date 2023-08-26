@@ -9,6 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Application.Services;
+using Infrastructure.Services;
 
 namespace Infrastructure;
 
@@ -26,15 +27,17 @@ public static class DependencyInjection
         var bcryptConfig = new BCryptConfig();
         configuration.GetSection("BCrypt").Bind(bcryptConfig);
         services.AddSingleton(bcryptConfig);
-        services.AddSingleton<ICryptService, CryptService>();
-        services.AddScoped<IUserRepository, UserRepository>();
-        services.AddScoped<ICategoryRepository, CategoryRepository>();
-        services.AddScoped<IArticleFlagRepository, ArticleFlagRepository>();
 
         var jwtConfig = new JwtConfig();
         configuration.GetSection("JWT").Bind(jwtConfig);
         services.AddSingleton(jwtConfig);
         services.AddSingleton<IJwtService, JwtService>();
+
+        services.AddSingleton<ICryptService, CryptService>();
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<ICategoryRepository, CategoryRepository>();
+        services.AddScoped<IArticleFlagRepository, ArticleFlagRepository>();
+        services.AddScoped<IEmailService, EmailService>();
 
         return services;
     }

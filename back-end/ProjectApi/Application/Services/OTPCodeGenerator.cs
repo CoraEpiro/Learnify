@@ -1,4 +1,4 @@
-﻿namespace Infrastructure.Services;
+﻿namespace Application.Services;
 
 /// <summary>
 /// Service for Generating OTP codes.

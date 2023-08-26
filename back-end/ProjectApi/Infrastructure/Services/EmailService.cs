@@ -1,12 +1,25 @@
 ﻿using AppDomain.Interfaces;
 using System.Net.Mail;
 using System.Net;
+using Microsoft.EntityFrameworkCore;
+using Infrastructure.Persistence;
+using AppDomain.Entities.UserRelated;
 
 namespace Infrastructure.Services;
 
-public static class EmailSender
+
+/// <inheritdoc/>
+public class EmailService : IEmailService
 {
-    public static async Task SendEmailAsync(string email, string otpCode)
+    private readonly LearnifyDbContext _context;
+
+    public EmailService(LearnifyDbContext context)
+    {
+        _context = context;
+    }
+
+    /// <inheritdoc/>
+    public async Task SendEmailAsync(string email, string otpCode)
     {
         var htmlTemplate = @"<!DOCTYPE html>
             <html lang=""en"">
@@ -154,5 +167,20 @@ public static class EmailSender
         };
 
         smtpClient.Send(mailMessage);
+    }
+
+    /// <inheritdoc/>
+    public async Task<EmailVerification> VerifyEmailAsync(string email, string otpCode)
+    {
+        var verification = await _context.EmailVerifications.FirstOrDefaultAsync(
+            x => x.Email == email && x.OTP == otpCode);
+
+        if (verification is null)
+            return null;
+
+        else if (verification.ExpireUntil < DateTime.UtcNow)
+            return null;
+
+        return verification;
     }
 }

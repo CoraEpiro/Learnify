@@ -1,6 +1,7 @@
-﻿using AppDomain.DTOs.User;
+﻿using AppDomain.Common.Entities;
+using AppDomain.DTOs.User;
 using AppDomain.Exceptions.UserExceptions;
-using Application.Tasks.Commands.Delete.UserDeletes.VerifyEmail;
+using Application.Tasks.Commands.Delete.UserDeletes.DeleteEmailVerification;
 using Application.Tasks.Commands.Insert.UserInserts.InserOTPCode;
 using Application.Tasks.Commands.Insert.UserInserts.InsertUser;
 using Application.Tasks.Commands.Update.UpdateUser.UpdateToken;
@@ -133,10 +134,21 @@ public class AuthorizationController : ControllerBase
     /// <param name="verifyEmailCommand">The command containing the verification code.</param>
     /// <returns>The result of email verification.</returns>
     [HttpPost("VerifyEmail")]
-    public async Task<ActionResult> VerifyEmail([FromBody] VerifyEmailCommand verifyEmailCommand)
+    public async Task<ActionResult> VerifyEmail([FromBody] DeleteEmailVerificationCommand deleteEmailVerificationCommand)
     {
-        var result = await _mediator.Send(verifyEmailCommand);
+        var result = await _mediator.Send(deleteEmailVerificationCommand);
 
-        return Ok(result);
+        if (result is null)
+        {
+            GeneralResponse response = new() { Result = 0, Message = "Invalid OTP code" };
+
+            return BadRequest(response);
+        }
+        else
+        {
+            GeneralResponse reponse = new() { Result = result, Message = $"Verification according to email: {deleteEmailVerificationCommand.Email} is deleted." };
+
+            return Ok(reponse);
+        }
     }
 }

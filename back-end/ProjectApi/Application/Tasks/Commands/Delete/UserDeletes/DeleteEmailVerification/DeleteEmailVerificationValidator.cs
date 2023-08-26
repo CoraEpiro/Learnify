@@ -1,4 +1,4 @@
-﻿using Application.Tasks.Commands.Delete.UserDeletes.VerifyEmail;
+﻿using Application.Tasks.Commands.Delete.UserDeletes.DeleteEmailVerification;
 using FluentValidation;
 using System;
 using System.Collections.Generic;
@@ -6,11 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Tasks.Commands.Delete.VerifyEmail;
+namespace Application.Tasks.Commands.Delete.DeleteEmailVerification;
 
-public class VerifyEmailCommandValidator : AbstractValidator<VerifyEmailCommand>
+public class DeleteEmailVerificationValidator : AbstractValidator<DeleteEmailVerificationCommand>
 {
-    public VerifyEmailCommandValidator()
+    public DeleteEmailVerificationValidator()
     {
         RuleFor(u => u.Email)
             .NotEmpty()

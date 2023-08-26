@@ -65,6 +65,10 @@ public interface IUserRepository
     /// </summary>
     Task<Task> DeleteUserAsync(string id);
 
+
+    Task<string> DeleteEmailVerificationAsync(string email, string otpCode);
+
+
     /// <summary>
     /// Checks if a username exists asynchronously.
     /// </summary>
@@ -76,14 +80,6 @@ public interface IUserRepository
     /// <param name="email">The email address of the user.</param>
     /// <returns>A task representing the asynchronous operation to send the OTP code.</returns>
     Task<Task> SendOTPCodeAsync(string email);
-
-    /// <summary>
-    /// Verifies the user's email using the provided verification code.
-    /// </summary>
-    /// <param name="email">The email address of the user.</param>
-    /// <param name="otpCode">The OTP code for verification.</param>
-    /// <returns>A task representing the asynchronous operation to verify the email.</returns>
-    Task<Task> VerifyEmailAsync(string email, string otpCode);
 
     /// <summary>
     /// Checks if an email exists asynchronously.

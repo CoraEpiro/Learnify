@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AppDomain.Common.Entities
+namespace AppDomain.Common.Entities;
+
+public class GeneralResponse
 {
-    public class GeneralResponce
-    {
-        public object Result { get; set; }
-        public string Message { get; set; }
-    }
+    public object Result { get; set; }
+    public string Message { get; set; }
 }

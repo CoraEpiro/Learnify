@@ -75,8 +75,8 @@ namespace WebApi.Controllers
 
             if (categoryGet is null)
             {
-                GeneralResponce responce = new() { Result = 0, Message = $"Category is not exist in this id = {query.CategoryId}" };
-                return NotFound(responce);
+                GeneralResponse response = new() { Result = 0, Message = $"Category is not exist in this id = {query.CategoryId}" };
+                return NotFound(response);
             }
             else
             {
@@ -95,9 +95,9 @@ namespace WebApi.Controllers
         {
             var insertedId = await _mediator.Send(command);
 
-            GeneralResponce responce = new() { Result = insertedId, Message = $"Category Id: {insertedId} inserted successfully" };
+            GeneralResponse response = new() { Result = insertedId, Message = $"Category Id: {insertedId} inserted successfully" };
 
-            return Ok(responce);
+            return Ok(response);
         }
 
         /// <summary>
@@ -113,13 +113,13 @@ namespace WebApi.Controllers
 
             if(updatedId is null)
             {
-                GeneralResponce responce = new() { Result = 0, Message = $"Category Id: {command.updateCategoryDTO.Id} is not exist, Update process failed" };
-                return NotFound(responce);
+                GeneralResponse response = new() { Result = 0, Message = $"Category Id: {command.updateCategoryDTO.Id} is not exist, Update process failed" };
+                return NotFound(response);
             }
             else
             {
-                GeneralResponce responce = new() { Result = updatedId, Message = $"Category Id: {updatedId}, Update process successfully" };
-                return Ok(responce);
+                GeneralResponse response = new() { Result = updatedId, Message = $"Category Id: {updatedId}, Update process successfully" };
+                return Ok(response);
             }
                 
         }
@@ -137,13 +137,13 @@ namespace WebApi.Controllers
 
             if (deleted is null)
             {
-                GeneralResponce responce = new() { Result = 0, Message = $"Category Id: {command.CategoryId} is not exist, Delete process failed" };
-                return NotFound(responce);
+                GeneralResponse response = new() { Result = 0, Message = $"Category Id: {command.CategoryId} is not exist, Delete process failed" };
+                return NotFound(response);
             }
             else
             {
-                GeneralResponce responce = new() { Result = deleted, Message = $"Category Id: {deleted}, Delete process successfully" };
-                return Ok(responce);
+                GeneralResponse response = new() { Result = deleted, Message = $"Category Id: {deleted}, Delete process successfully" };
+                return Ok(response);
             }
         }
 
@@ -160,13 +160,13 @@ namespace WebApi.Controllers
 
             if (result is 1)
             {
-                GeneralResponce responce = new() { Result = 1, Message = $"CategoryList Increment UseCount process successfully" };  
-                return NotFound(responce);
+                GeneralResponse response = new() { Result = 1, Message = $"CategoryList Increment UseCount process successfully" };  
+                return NotFound(response);
             }
             else
             {
-                GeneralResponce responce = new() { Result = 0, Message = $"CategoryList Increment UseCount process failed" };
-                return Ok(responce);
+                GeneralResponse response = new() { Result = 0, Message = $"CategoryList Increment UseCount process failed" };
+                return Ok(response);
             }
         }
 
@@ -183,13 +183,13 @@ namespace WebApi.Controllers
 
             if (result is 1)
             {
-                GeneralResponce responce = new() { Result = 1, Message = $"CategoryList Decrement UseCount process successfully" };
-                return NotFound(responce);
+                GeneralResponse response = new() { Result = 1, Message = $"CategoryList Decrement UseCount process successfully" };
+                return NotFound(response);
             }
             else
             {
-                GeneralResponce responce = new() { Result = 0, Message = $"CategoryList Decrement UseCount process failed" };
-                return Ok(responce);
+                GeneralResponse response = new() { Result = 0, Message = $"CategoryList Decrement UseCount process failed" };
+                return Ok(response);
             }
         }
 
@@ -201,8 +201,8 @@ namespace WebApi.Controllers
 
             if(result.Count is 0)
             {
-                GeneralResponce responce = new() { Result = 0,Message = "ArticleFlag List is Empty"};
-                return NotFound(responce);
+                GeneralResponse response = new() { Result = 0,Message = "ArticleFlag List is Empty"};
+                return NotFound(response);
             }
             return Ok(result);
         }
@@ -214,8 +214,8 @@ namespace WebApi.Controllers
 
             if (getArticleFlag is null)
             {
-                GeneralResponce responce = new() { Result = 0, Message = $"ArticleFlag is not exist in this id = {query.ArticleFlagId}" };
-                return NotFound(responce);
+                GeneralResponse response = new() { Result = 0, Message = $"ArticleFlag is not exist in this id = {query.ArticleFlagId}" };
+                return NotFound(response);
             }
             else
             {
@@ -229,9 +229,9 @@ namespace WebApi.Controllers
         {
             var insertedId = await _mediator.Send(command);
 
-            GeneralResponce responce = new() { Result = insertedId, Message = $"ArticleFlag Id: {insertedId} inserted successfully" };
+            GeneralResponse response = new() { Result = insertedId, Message = $"ArticleFlag Id: {insertedId} inserted successfully" };
 
-            return Ok(responce);
+            return Ok(response);
         }
 
         [HttpPut("UpdateArticleFlag")]
@@ -241,13 +241,13 @@ namespace WebApi.Controllers
 
             if (updatedId is null)
             {
-                GeneralResponce responce = new() { Result = 0, Message = $"ArticleFlag Id: {command.UpdateArticleFlagDTO.Id} is not exist, Update process failed" };
-                return NotFound(responce);
+                GeneralResponse response = new() { Result = 0, Message = $"ArticleFlag Id: {command.UpdateArticleFlagDTO.Id} is not exist, Update process failed" };
+                return NotFound(response);
             }
             else
             {
-                GeneralResponce responce = new() { Result = updatedId, Message = $"ArticleFlag Id: {updatedId}, Update process successfully" };
-                return Ok(responce);
+                GeneralResponse response = new() { Result = updatedId, Message = $"ArticleFlag Id: {updatedId}, Update process successfully" };
+                return Ok(response);
             }
 
         }
@@ -259,13 +259,13 @@ namespace WebApi.Controllers
 
             if (deleted is null)
             {
-                GeneralResponce responce = new() { Result = 0, Message = $"ArticleFLag Id: {command.ArticleFLagId} is not exist, Delete process failed" };
-                return NotFound(responce);
+                GeneralResponse response = new() { Result = 0, Message = $"ArticleFLag Id: {command.ArticleFLagId} is not exist, Delete process failed" };
+                return NotFound(response);
             }
             else
             {
-                GeneralResponce responce = new() { Result = deleted, Message = $"ArticleFLag Id: {deleted}, Delete process successfully" };
-                return Ok(responce);
+                GeneralResponse response = new() { Result = deleted, Message = $"ArticleFLag Id: {deleted}, Delete process successfully" };
+                return Ok(response);
             }
         }
     }

@@ -18,6 +18,7 @@ public class UserRepository : IUserRepository
     private readonly ICryptService _cryptService;
     private readonly IJwtService _jwtService;
     private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly IEmailService _emailService;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="UserRepository"/> class.
@@ -30,13 +31,14 @@ public class UserRepository : IUserRepository
         LearnifyDbContext context,
         ICryptService cryptService,
         IJwtService jwtService,
-        IHttpContextAccessor httpContextAccessor
-    )
+        IHttpContextAccessor httpContextAccessor,
+        IEmailService emailService)
     {
         _context = context;
         _cryptService = cryptService;
         _jwtService = jwtService;
         _httpContextAccessor = httpContextAccessor;
+        _emailService = emailService;
     }
 
     /// <inheritdoc/>
@@ -262,20 +264,23 @@ public class UserRepository : IUserRepository
     }
 
     /// <inheritdoc/>
-    public async Task<Task> VerifyEmailAsync(string email, string otpCode)
+    public async Task<string> DeleteEmailVerificationAsync(string email, string otpCode)
     {
-        var verification = _context.EmailVerifications.FirstOrDefault(
-            x => x.Email == email && x.OTP == otpCode
-        );
+        try
+        {
+            var verification = await _emailService.VerifyEmailAsync(email, otpCode);
 
-        if (verification.ExpireUntil < DateTime.UtcNow)
-            return Task.FromResult("OTP is already expired.");
+            _context.EmailVerifications.Remove(verification);
 
-        _context.EmailVerifications.Remove(verification);
+            await _context.SaveChangesAsync();
 
-        await _context.SaveChangesAsync();
+            return email;
+        }
+        catch (Exception)
+        {
 
-        return Task.FromResult("Your Email is verified.");
+            throw;
+        }
     }
 
     /// <inheritdoc/>
@@ -295,7 +300,7 @@ public class UserRepository : IUserRepository
 
         await _context.SaveChangesAsync();
 
-        await EmailSender.SendEmailAsync(email, otpCode);
+        await _emailService.SendEmailAsync(email, otpCode);
 
         return Task.CompletedTask;
     }

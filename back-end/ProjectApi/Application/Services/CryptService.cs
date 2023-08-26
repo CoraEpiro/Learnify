@@ -1,7 +1,7 @@
 ﻿using AppDomain.Common.Config;
 using AppDomain.Interfaces;
 
-
+namespace Application.Services;
 
 /// <inheritdoc/>
 public class CryptService : ICryptService
