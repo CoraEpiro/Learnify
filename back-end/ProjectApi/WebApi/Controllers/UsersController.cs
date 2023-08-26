@@ -13,6 +13,8 @@ using Application.Tasks.Queries.UserQueries.UserExistByEmail;
 using Application.Tasks.Queries.UserQueries.UserExistByUsername;
 using AppDomain.Responses;
 using AppDomain.Interfaces;
+using Application.Tasks.Commands.Update.UpdateUser.UpdateProfile;
+using Application.Tasks.Commands.Update.UpdateUser.UpdatePersonalInfo;
 
 namespace WebApi.Controllers;
 
@@ -303,6 +305,24 @@ public class UsersController : ControllerBase
     }
 
     /// <summary>
+    /// Updates the password of a user.
+    /// </summary>
+    /// <param name="updateCommand">The command containing update information.</param>
+    /// <returns>The updated user's DTO if successful, NotFound if user not found.</returns>
+    [HttpPatch("UpdatePassword/{Id}/{Password}")]
+    public async Task<ActionResult<UserDTO>> UpdatePassword([FromBody] UpdatePasswordCommand updateCommand)
+    {
+        var user = await _mediator.Send(updateCommand);
+
+        if (user is null)
+            return NotFound();
+
+        var userDTO = ModelConvertors.ToUserDTO(user);
+
+        return Ok(userDTO);
+    }
+
+    /// <summary>
     /// Updates the username of a user.
     /// </summary>
     /// <param name="updateCommand">The command containing update information.</param>
@@ -318,6 +338,38 @@ public class UsersController : ControllerBase
         var userDTO = ModelConvertors.ToUserDTO(user);
 
         return Ok(userDTO);
+    }
+
+    /// <summary>
+    /// Updates the user's profile information asynchronously.
+    /// </summary>
+    /// <param name="updateCommand">The command containing updated profile information.</param>
+    /// <returns>A task representing the asynchronous operation. The updated user profile if successful, BadRequest if update fails.</returns>
+    [HttpPatch("UpdateProfile")]
+    public async Task<ActionResult<UserProfile>> UpdateProfile([FromBody] UpdateUserProfileCommand updateCommand)
+    {
+        var profile = await _mediator.Send(updateCommand);
+
+        if (profile is null)
+            return BadRequest("Update process went wrong.");
+
+        return Ok(profile);
+    }
+
+    /// <summary>
+    /// Updates the user's personal information asynchronously.
+    /// </summary>
+    /// <param name="updateCommand">The command containing updated personal information.</param>
+    /// <returns>A task representing the asynchronous operation. The updated personal information if successful, BadRequest if update fails.</returns>
+    [HttpPatch("UpdatePersonalInfo")]
+    public async Task<ActionResult<PersonalInfoResponse>> UpdatePersonalInfo([FromBody] UpdatePersonalInfoCommand updateCommand)
+    {
+        var personalInfo = await _mediator.Send(updateCommand);
+
+        if (personalInfo is null)
+            return BadRequest("Update process went wrong.");
+
+        return Ok(personalInfo);
     }
 
     /// <summary>
@@ -363,24 +415,6 @@ public class UsersController : ControllerBase
     public async Task<ActionResult<UserDTO>> BuildUser([FromBody] BuildUserCommand buildCommand)
     {
         var user = await _mediator.Send(buildCommand);
-
-        if (user is null)
-            return NotFound();
-
-        var userDTO = ModelConvertors.ToUserDTO(user);
-
-        return Ok(userDTO);
-    }
-
-    /// <summary>
-    /// Updates the password of a user.
-    /// </summary>
-    /// <param name="updateCommand">The command containing update information.</param>
-    /// <returns>The updated user's DTO if successful, NotFound if user not found.</returns>
-    [HttpPatch("UpdatePassword/{Id}/{Password}")]
-    public async Task<ActionResult<UserDTO>> UpdatePassword([FromBody] UpdatePasswordCommand updateCommand)
-    {
-        var user = await _mediator.Send(updateCommand);
 
         if (user is null)
             return NotFound();

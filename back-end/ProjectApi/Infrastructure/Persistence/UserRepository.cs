@@ -251,6 +251,73 @@ public class UserRepository : IUserRepository
     }
 
     /// <inheritdoc/>
+    public async Task<PersonalInfoResponse> UpdatePersonalInfoAsync(PersonalInfoResponse response)
+    {
+        var userId = GetClaimValue("userId");
+
+        if (userId is null)
+            return null;
+
+        var personalInfoResponse = new PersonalInfoResponse();
+        var user = await GetUserByIdAsync(userId);
+        var personalInfo = user.PersonalInfo;
+        var newPersonalInfo = response.PersonalInfo;
+
+        personalInfo.Bio = newPersonalInfo.Bio ?? personalInfo.Bio;
+        personalInfo.Work = newPersonalInfo.Work ?? personalInfo.Work;
+        personalInfo.Location = newPersonalInfo.Location ?? personalInfo.Location;
+        personalInfo.Education = newPersonalInfo.Education ?? personalInfo.Education;
+        personalInfo.WebsiteUrl = newPersonalInfo.WebsiteUrl ?? personalInfo.WebsiteUrl;
+        personalInfo.DisplayEmail = newPersonalInfo.DisplayEmail ?? personalInfo.DisplayEmail;
+        personalInfo.AvailableFor = newPersonalInfo.AvailableFor ?? personalInfo.AvailableFor;
+        personalInfo.PinnedArticles = newPersonalInfo.PinnedArticles ?? personalInfo.PinnedArticles;
+        personalInfo.CurrentlyWorking = newPersonalInfo.CurrentlyWorking ?? personalInfo.CurrentlyWorking;
+        personalInfo.PinnedRepositories = newPersonalInfo.PinnedRepositories ?? personalInfo.PinnedRepositories;
+
+        user.PersonalInfo = personalInfo;
+        user.ConnectedAccountList = response.ConnectedAccountList;
+
+         _context.Update(user);
+
+        await _context.SaveChangesAsync();
+
+        personalInfoResponse.PersonalInfo = personalInfo;
+        personalInfoResponse.ConnectedAccountList = user.ConnectedAccountList;
+
+        return personalInfoResponse;
+    }
+
+    /// <inheritdoc/>
+    public async Task<UserProfile> UpdateProfileAsync(UserProfile profile)
+    {
+        var userId = GetClaimValue("userId");
+
+        if(userId is null)
+            return null;
+
+        var user = await GetUserByIdAsync(userId);
+
+        user.Name = profile.Name ?? user.Name;
+        user.UserName = profile.Username ?? user.UserName;
+        user.Email = profile.Email ?? user.Email;
+        user.ProfilePhoto = profile.ProfilePhoto ?? user.ProfilePhoto;
+
+        var newUserProfile = new UserProfile
+        {
+            Name = user.Name,
+            Email = user.Email,
+            Username = user.UserName,
+            ProfilePhoto = user.ProfilePhoto
+        };
+
+        _context.Update(user);
+
+        await _context.SaveChangesAsync();
+
+        return newUserProfile;
+    }
+
+    /// <inheritdoc/>
     public async Task<Task> DeleteUserAsync(string id)
     {
         var user = await _context.PendingUsers.FindAsync(id);

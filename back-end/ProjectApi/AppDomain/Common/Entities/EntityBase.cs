@@ -2,5 +2,5 @@
 
 public class EntityBase
 {
-    public String Id { get; set; } = String.Empty;
+    public string Id { get; set; }
 }

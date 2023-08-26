@@ -78,9 +78,23 @@ public interface IUserRepository
     Task<User> UpdatePasswordAsync(string id, string newPassword);
 
     /// <summary>
+    /// Updates personal information asynchronously.
+    /// </summary>
+    /// <param name="response">The updated personal information response.</param>
+    /// <returns>A task representing the asynchronous operation. The updated personal information response.</returns>
+    Task<PersonalInfoResponse> UpdatePersonalInfoAsync(PersonalInfoResponse response);
+
+    /// <summary>
     /// Updates the user's authentication token asynchronously.
     /// </summary>
     Task<string> UpdateTokenAsync();
+
+    /// <summary>
+    /// Updates the user's profile asynchronously.
+    /// </summary>
+    /// <param name="profile">The updated user profile information.</param>
+    /// <returns>A task representing the asynchronous operation. The updated user profile information.</returns>
+    Task<UserProfile> UpdateProfileAsync(UserProfile profile);
 
     /// <summary>
     /// Builds and returns a user object asynchronously based on provided information.
