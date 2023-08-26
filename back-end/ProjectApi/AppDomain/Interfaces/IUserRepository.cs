@@ -97,6 +97,13 @@ public interface IUserRepository
     Task<UserProfile> UpdateProfileAsync(UserProfile profile);
 
     /// <summary>
+    /// Updates customization information asynchronously.
+    /// </summary>
+    /// <param name="customization">The updated customization information.</param>
+    /// <returns>A task representing the asynchronous operation. The updated customization information.</returns>
+    Task<Customization> UpdateCustomizationAsync(Customization customization);
+
+    /// <summary>
     /// Builds and returns a user object asynchronously based on provided information.
     /// </summary>
     Task<User> BuildUserAsync(BuildUserDTO buildUser);

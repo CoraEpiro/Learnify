@@ -15,6 +15,7 @@ using AppDomain.Responses;
 using AppDomain.Interfaces;
 using Application.Tasks.Commands.Update.UpdateUser.UpdateProfile;
 using Application.Tasks.Commands.Update.UpdateUser.UpdatePersonalInfo;
+using Application.Tasks.Commands.Update.UpdateUser.UpdateCustomization;
 
 namespace WebApi.Controllers;
 
@@ -351,7 +352,7 @@ public class UsersController : ControllerBase
         var profile = await _mediator.Send(updateCommand);
 
         if (profile is null)
-            return BadRequest("Update process went wrong.");
+            return Problem("Update process went wrong.");
 
         return Ok(profile);
     }
@@ -367,9 +368,25 @@ public class UsersController : ControllerBase
         var personalInfo = await _mediator.Send(updateCommand);
 
         if (personalInfo is null)
-            return BadRequest("Update process went wrong.");
+            return Problem("Update process went wrong.");
 
         return Ok(personalInfo);
+    }
+
+    /// <summary>
+    /// Updates customization information asynchronously.
+    /// </summary>
+    /// <param name="updateCommand">The command containing the updated customization information.</param>
+    /// <returns>A task representing the asynchronous operation. The updated customization information if successful, BadRequest if the update fails.</returns>
+    [HttpPatch("UpdateCustomization")]
+    public async Task<ActionResult<Customization>> UpdateCustomization([FromBody] UpdateCustomizationCommand updateCommand)
+    {
+        var customization = await _mediator.Send(updateCommand);
+
+        if(customization is null)
+            return Problem("Update process went wrong.");
+
+        return Ok(customization);
     }
 
     /// <summary>

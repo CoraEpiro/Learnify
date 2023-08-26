@@ -5,6 +5,6 @@ namespace AppDomain.Responses;
 
 public class Customization
 {
-    public PersonalInfo PersonalInfo { get; set; }
-    public IEnumerable<ConnectedAccount> ConnectedAccountList { get; set; }
+    public Settings Settings { get; set; }
+    public Brand Brand { get; set; }
 }

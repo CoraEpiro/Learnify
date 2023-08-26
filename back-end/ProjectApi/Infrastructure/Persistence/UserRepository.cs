@@ -318,6 +318,52 @@ public class UserRepository : IUserRepository
     }
 
     /// <inheritdoc/>
+    public async Task<Customization> UpdateCustomizationAsync(Customization customization)
+    {
+        var userId = GetClaimValue("userId");
+
+        if (userId is null)
+            return null;
+
+        var user = await GetUserByIdAsync(userId);
+
+        if(user is null)
+            return null;
+
+        var settings = user.Settings;
+        var newSettings = customization.Settings;
+
+        settings.ContentPerPage = newSettings.ContentPerPage;
+        settings.IsTwoFactorActivated = newSettings.IsTwoFactorActivated;
+        settings.Font = newSettings.Font;
+        settings.Theme = newSettings.Theme;
+
+        var brand = user.Brand;
+        var newBrand = customization.Brand;
+
+        brand.BannerPhoto = newBrand.BannerPhoto;
+        brand.AccentColor = newBrand.AccentColor;
+
+        user.Settings = settings;
+        user.Brand = brand;
+
+        var savedUser = _context.Update(user).Entity;
+
+        await _context.SaveChangesAsync();
+
+        if(savedUser is null)
+            return null;
+
+        var newCustomization = new Customization()
+        {
+            Settings = savedUser.Settings,
+            Brand = savedUser.Brand
+        };
+
+        return newCustomization;
+    }
+
+    /// <inheritdoc/>
     public async Task<Task> DeleteUserAsync(string id)
     {
         var user = await _context.PendingUsers.FindAsync(id);
@@ -341,8 +387,8 @@ public class UserRepository : IUserRepository
 
         var customization = new Customization();
 
-        customization.PersonalInfo = user.PersonalInfo;
-        customization.ConnectedAccountList = user.ConnectedAccountList;
+        customization.Settings = user.Settings;
+        customization.Brand = user.Brand;
 
         return customization;
     }
