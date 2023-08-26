@@ -2,6 +2,8 @@
 using AppDomain.DTOs.User;
 using AppDomain.Entities.UserRelated;
 using Application.DTO;
+using AppDomain.Responses;
+using AppDomain.ValueObjects;
 
 namespace AppDomain.Interfaces;
 
@@ -31,14 +33,16 @@ public interface IUserRepository
     Task<User> GetUserByEmailAsync(string? email);
 
     /// <summary>
+    /// Retrieves a user by their username asynchronously.
+    /// </summary>
+    Task<User> GetUserByUsernameAsync(string? userName);
+
+    /// <summary>
     /// Retrieves a user by their user secret asynchronously.
     /// </summary>
     Task<User> GetUserByUserSecretAsync(string? userSecret);
 
-    /// <summary>
-    /// Retrieves a user by their username asynchronously.
-    /// </summary>
-    Task<User> GetUserByUsernameAsync(string? userName);
+    Task<UserResponsePublishedCounts> GetUserResponsePublishedCountsAsync(string userId);
 
     /// <summary>
     /// Updates the username of a user asynchronously and returns the updated user.

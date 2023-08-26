@@ -2,7 +2,7 @@
 
 public class InsertPendingUserDTO
 {
-    public string Name { get; set; } = String.Empty;
-    public string Email { get; set; } = String.Empty;
-    public string Password { get; set; } = String.Empty;
+    public string Name { get; set; }
+    public string Email { get; set; }
+    public string Password { get; set; }
 }

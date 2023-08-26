@@ -2,6 +2,8 @@
 using AppDomain.Entities.UserRelated;
 using AppDomain.Exceptions.UserExceptions;
 using AppDomain.Interfaces;
+using AppDomain.Responses;
+using AppDomain.ValueObjects;
 using Application.DTO;
 using Application.Services;
 using Infrastructure.Services;
@@ -21,12 +23,13 @@ public class UserRepository : IUserRepository
     private readonly IEmailService _emailService;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="UserRepository"/> class.
+    /// Initializes a new instance of the <see cref="UserRepository"/> class with the required dependencies.
     /// </summary>
-    /// <param name="context">The database context.</param>
-    /// <param name="cryptService">The service for cryptography operations.</param>
-    /// <param name="jwtService">The service for JSON Web Token (JWT) operations.</param>
-    /// <param name="httpContextAccessor">The accessor for HTTP context.</param>
+    /// <param name="context">The database context for data access.</param>
+    /// <param name="cryptService">Service for cryptographic operations.</param>
+    /// <param name="jwtService">Service for JSON Web Token operations.</param>
+    /// <param name="httpContextAccessor">Accessor for HTTP context-related information.</param>
+    /// <param name="emailService">Service for sending emails.</param>
     public UserRepository(
         LearnifyDbContext context,
         ICryptService cryptService,
@@ -42,33 +45,23 @@ public class UserRepository : IUserRepository
     }
 
     /// <inheritdoc/>
-    public async Task<User> GetUserByEmailAsync(string? email)
+    public async Task<User> GetUserByIdAsync(string id)
     {
-        var pendingUser = await _context.PendingUsers.FirstOrDefaultAsync(x => x.Email == email);
-
-        if (pendingUser is null)
-            pendingUser = await _context.Users.FirstOrDefaultAsync(x => x.Email == email);
-
-        var user = new User(pendingUser);
+        var user = await _context.Users.FindAsync(id);
 
         return user;
     }
 
     /// <inheritdoc/>
-    public async Task<User> GetUserByIdAsync(string? id)
+    public async Task<User> GetUserByEmailAsync(string email)
     {
-        var pendingUser = await _context.PendingUsers.FindAsync(id);
-
-        if (pendingUser is null)
-            pendingUser = await _context.Users.FindAsync(id);
-
-        var user = new User(pendingUser);
+        var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == email);
 
         return user;
     }
 
     /// <inheritdoc/>
-    public async Task<User> GetUserByUsernameAsync(string? username)
+    public async Task<User> GetUserByUsernameAsync(string username)
     {
         var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == username);
 
@@ -76,40 +69,22 @@ public class UserRepository : IUserRepository
     }
 
     /// <inheritdoc/>
-    public async Task<User> GetUserByUserSecretAsync(string? usersecret)
+    public async Task<User> GetUserByUserSecretAsync(string usersecret)
     {
         var user = await _context.Users.FirstOrDefaultAsync(x => x.UserSecret == usersecret);
 
         return user!;
     }
-
     /// <inheritdoc/>
-    public JwtSecurityToken GetTokenFromRequest()
+    public async Task<UserResponsePublishedCounts> GetUserResponsePublishedCountsAsync(string userId)
     {
-        var authHeader = _httpContextAccessor.HttpContext.Request.Headers[
-            "Authorization"
-        ].FirstOrDefault();
+        var counts = new UserResponsePublishedCounts();
 
-        if (!string.IsNullOrEmpty(authHeader) && authHeader.StartsWith("Bearer "))
-        {
-            var token = authHeader.Substring("Bearer ".Length);
-            var tokenHandler = new JwtSecurityTokenHandler();
+        counts.PublishedAnswerCount = await _context.Answers.CountAsync(x => x.UserId == userId);
+        counts.PublishedArticlesCount = await _context.Articles.CountAsync(x => x.UserId == userId);
+        counts.PublishedQuestionCount = await _context.Questions.CountAsync(x => x.UserId == userId);
 
-            if (tokenHandler.CanReadToken(token))
-                return tokenHandler.ReadJwtToken(token);
-        }
-
-        return null;
-    }
-
-    /// <inheritdoc/>
-    public async Task<bool> IsEmailExistAsync(string email)
-    {
-        var user =
-            await _context.PendingUsers.FirstOrDefaultAsync(x => x.Email == email)
-            ?? await _context.Users.FirstOrDefaultAsync(x => x.Email == email);
-
-        return user is not null;
+        return counts;
     }
 
     /// <inheritdoc/>
@@ -317,5 +292,34 @@ public class UserRepository : IUserRepository
         }
 
         return null;
+    }
+
+    /// <inheritdoc/>
+    private JwtSecurityToken GetTokenFromRequest()
+    {
+        var authHeader = _httpContextAccessor.HttpContext.Request.Headers[
+            "Authorization"
+        ].FirstOrDefault();
+
+        if (!string.IsNullOrEmpty(authHeader) && authHeader.StartsWith("Bearer "))
+        {
+            var token = authHeader.Substring("Bearer ".Length);
+            var tokenHandler = new JwtSecurityTokenHandler();
+
+            if (tokenHandler.CanReadToken(token))
+                return tokenHandler.ReadJwtToken(token);
+        }
+
+        return null;
+    }
+
+    /// <inheritdoc/>
+    public async Task<bool> IsEmailExistAsync(string email)
+    {
+        var user =
+            await _context.PendingUsers.FirstOrDefaultAsync(x => x.Email == email)
+            ?? await _context.Users.FirstOrDefaultAsync(x => x.Email == email);
+
+        return user is not null;
     }
 }

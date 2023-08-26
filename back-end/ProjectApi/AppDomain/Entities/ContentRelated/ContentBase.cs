@@ -6,7 +6,7 @@ namespace AppDomain.Entities.ContentRelated;
 
 public class ContentBase : EntityBase
 {
-    public string UserId { get; set; } = String.Empty;
+    public string UserId { get; set; }
     public DateTime UpdateTime { get; set; }
 
     [Column(TypeName = "jsonb")]

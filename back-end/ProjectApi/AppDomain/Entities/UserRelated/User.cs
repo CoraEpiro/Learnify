@@ -12,10 +12,7 @@ public class User : PendingUser
     // Password is in PendingUser
     // UserSecret is in PendingUser
     // JoinedTime is in PendingUser
-    public User()
-    {
-
-    }
+    public User() { }
     public User(PendingUser pendingUser)
     {
         Name = pendingUser.Name;

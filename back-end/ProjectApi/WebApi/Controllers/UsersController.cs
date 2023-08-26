@@ -11,6 +11,8 @@ using Application.Tasks.Commands.Insert.UserInserts.BuildUser;
 using Application.Tasks.Commands.Delete.UserDeletes.DeleteUser;
 using Application.Tasks.Queries.UserQueries.UserExistByEmail;
 using Application.Tasks.Queries.UserQueries.UserExistByUsername;
+using AppDomain.Responses;
+using AppDomain.Interfaces;
 
 namespace WebApi.Controllers;
 
@@ -22,32 +24,16 @@ namespace WebApi.Controllers;
 public class UsersController : ControllerBase
 {
     private readonly IMediator _mediator;
+    private readonly IUserRepository _userRepository;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="UsersController"/> class.
     /// </summary>
     /// <param name="mediator">The mediator used for handling commands and queries.</param>
-    public UsersController(IMediator mediator)
+    public UsersController(IMediator mediator, IUserRepository userRepository)
     {
         _mediator = mediator;
-    }
-
-    /// <summary>
-    /// Retrieves a user by their email address.
-    /// </summary>
-    /// <param name="getCommand">The query containing email address.</param>
-    /// <returns>The retrieved user's DTO if found, NotFound if user not found.</returns>
-    [HttpGet("GetUserByEmail/{Email}")]
-    public async Task<ActionResult<UserDTO>> GetUserByEmail(GetUserByEmailQuery getCommand)
-    {
-        var user = await _mediator.Send(getCommand);
-
-        if (user is null)
-            return NotFound();
-
-        var userDTO = DtoAndModelConvertors.ToUserDTO(user);
-
-        return Ok(userDTO);
+        _userRepository = userRepository;
     }
 
     /// <summary>
@@ -63,7 +49,25 @@ public class UsersController : ControllerBase
         if (user is null)
             return NotFound();
 
-        var userDTO = DtoAndModelConvertors.ToUserDTO(user);
+        var userDTO = ModelConvertors.ToUserDTO(user);
+
+        return Ok(userDTO);
+    }
+
+    /// <summary>
+    /// Retrieves a user by their email address.
+    /// </summary>
+    /// <param name="getCommand">The query containing email address.</param>
+    /// <returns>The retrieved user's DTO if found, NotFound if user not found.</returns>
+    [HttpGet("GetUserByEmail/{Email}")]
+    public async Task<ActionResult<UserDTO>> GetUserByEmail(GetUserByEmailQuery getCommand)
+    {
+        var user = await _mediator.Send(getCommand);
+
+        if (user is null)
+            return NotFound();
+
+        var userDTO = ModelConvertors.ToUserDTO(user);
 
         return Ok(userDTO);
     }
@@ -81,7 +85,7 @@ public class UsersController : ControllerBase
         if (user is null)
             return NotFound();
 
-        var userDTO = DtoAndModelConvertors.ToUserDTO(user);
+        var userDTO = ModelConvertors.ToUserDTO(user);
 
         return Ok(userDTO);
     }
@@ -92,18 +96,127 @@ public class UsersController : ControllerBase
     /// <param name="getCommand">The query containing user secret.</param>
     /// <returns>The retrieved user's DTO if found, NotFound if user not found.</returns>
     [HttpGet("GetUserByUserSecret/{Secret}")]
-    public async Task<ActionResult<UserDTO>> GetUserByUserSecret(
-        GetUserByUsersecretQuery getCommand
-    )
+    public async Task<ActionResult<UserDTO>> GetUserByUserSecret(GetUserByUsersecretQuery getCommand)
     {
         var user = await _mediator.Send(getCommand);
 
         if (user is null)
             return NotFound();
 
-        var userDTO = DtoAndModelConvertors.ToUserDTO(user);
+        var userDTO = ModelConvertors.ToUserDTO(user);
 
         return Ok(userDTO);
+    }
+
+    [HttpGet("GetUserResponseById/{Id}")]
+    public async Task<ActionResult<UserResponse>> GetUserResponseById(GetUserByIdQuery getCommand)
+    {
+        var user = await _mediator.Send(getCommand);
+
+        if (user is null)
+            return NotFound();
+
+        var counts = await _userRepository.GetUserResponsePublishedCountsAsync(user.Id);
+
+        var userResponse = ModelConvertors.ToUserResponse(user, counts);
+
+        return Ok(userResponse);
+    }
+
+    [HttpGet("GetUserResponseByEmail/{Email}")]
+    public async Task<ActionResult<UserResponse>> GetUserResponseByEmail(GetUserByEmailQuery getCommand)
+    {
+        var user = await _mediator.Send(getCommand);
+
+        if (user is null)
+            return NotFound();
+
+        var counts = await _userRepository.GetUserResponsePublishedCountsAsync(user.Id);
+
+        var userResponse = ModelConvertors.ToUserResponse(user, counts);
+
+        return Ok(userResponse);
+    }
+
+    [HttpGet("GetUserResponseByUsername/{Username}")]
+    public async Task<ActionResult<UserResponse>> GetUserResponseByUsername(GetUserByUsernameQuery getCommand)
+    {
+        var user = await _mediator.Send(getCommand);
+
+        if (user is null)
+            return NotFound();
+
+        var counts = await _userRepository.GetUserResponsePublishedCountsAsync(user.Id);
+
+        var userResponse = ModelConvertors.ToUserResponse(user, counts);
+
+        return Ok(userResponse);
+    }
+
+    [HttpGet("GetUserResponseByUsersecret/{Secret}")]
+    public async Task<ActionResult<UserResponse>> GetUserResponseByUsersecret(GetUserByUsersecretQuery getCommand)
+    {
+        var user = await _mediator.Send(getCommand);
+
+        if (user is null)
+            return NotFound();
+
+        var counts = await _userRepository.GetUserResponsePublishedCountsAsync(user.Id);
+
+        var userResponse = ModelConvertors.ToUserResponse(user, counts);
+
+        return Ok(userResponse);
+    }
+    [HttpGet("GetUserPreviewResponseById/{Id}")]
+    public async Task<ActionResult<UserPreviewResponse>> GetUserPreviewResponseById(GetUserByIdQuery getCommand)
+    {
+        var user = await _mediator.Send(getCommand);
+
+        if (user is null)
+            return NotFound();
+
+        var userPreviewResponse = ModelConvertors.ToUserPreviewResponse(user);
+
+        return Ok(userPreviewResponse);
+    }
+
+    [HttpGet("GetUserPreviewResponseByEmail/{Email}")]
+    public async Task<ActionResult<UserPreviewResponse>> GetUserPreviewResponseByEmail(GetUserByEmailQuery getCommand)
+    {
+        var user = await _mediator.Send(getCommand);
+
+        if (user is null)
+            return NotFound();
+
+        var userPreviewResponse = ModelConvertors.ToUserPreviewResponse(user);
+
+        return Ok(userPreviewResponse);
+    }
+
+    [HttpGet("GetUserPreviewResponseByUsername/{Username}")]
+    public async Task<ActionResult<UserPreviewResponse>> GetUserPreviewResponseByUsername(GetUserByUsernameQuery getCommand)
+    {
+        var user = await _mediator.Send(getCommand);
+
+        if (user is null)
+            return NotFound();
+
+        var userPreviewResponse = ModelConvertors.ToUserPreviewResponse(user);
+
+        return Ok(userPreviewResponse);
+    }
+
+    [HttpGet("GetUserPreviewResponseByUsersecret/{Secret}")]
+    public async Task<ActionResult<UserPreviewResponse>> GetUserPreviewResponseByUsersecret(GetUserByUsersecretQuery getCommand)
+    {
+        var user = await _mediator.Send(getCommand);
+
+        if (user is null)
+            return NotFound();
+
+        var userPreviewResponse = ModelConvertors.ToUserPreviewResponse(user);
+
+        return Ok(userPreviewResponse);
     }
 
     /// <summary>
@@ -119,7 +232,7 @@ public class UsersController : ControllerBase
         if (user is null)
             return NotFound();
 
-        var userDTO = DtoAndModelConvertors.ToUserDTO(user);
+        var userDTO = ModelConvertors.ToUserDTO(user);
 
         return Ok(userDTO);
     }
@@ -129,11 +242,11 @@ public class UsersController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet("UserExistByEmail/{Email}")]
-    public async Task<ActionResult> UserExistByEmail(UserExistByEmailQuery command)
+    public async Task<ActionResult> UserExistByEmail(UserExistByEmailQuery getCommand)
     {
         try
         {
-            return await _mediator.Send(command) ? Ok() : NotFound();
+            return await _mediator.Send(getCommand) ? Ok() : NotFound();
         }
         catch (Exception)
         {
@@ -146,11 +259,11 @@ public class UsersController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet("UserExistByUsername/{Username}")]
-    public async Task<ActionResult> UserExistByUsername(UserExistByUsernameQuery command)
+    public async Task<ActionResult> UserExistByUsername(UserExistByUsernameQuery getCommand)
     {
         try
         {
-            return await _mediator.Send(command) ? Ok() : NotFound();
+            return await _mediator.Send(getCommand) ? Ok() : NotFound();
         }
         catch (Exception)
         {
@@ -171,7 +284,7 @@ public class UsersController : ControllerBase
         if (user is null)
             return NotFound();
 
-        var userDTO = DtoAndModelConvertors.ToUserDTO(user);
+        var userDTO = ModelConvertors.ToUserDTO(user);
 
         return Ok(userDTO);
     }
@@ -191,7 +304,7 @@ public class UsersController : ControllerBase
         if (user is null)
             return NotFound();
 
-        var userDTO = DtoAndModelConvertors.ToUserDTO(user);
+        var userDTO = ModelConvertors.ToUserDTO(user);
 
         return Ok(userDTO);
     }
