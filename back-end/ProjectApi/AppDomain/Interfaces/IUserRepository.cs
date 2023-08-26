@@ -42,8 +42,23 @@ public interface IUserRepository
     /// </summary>
     Task<User> GetUserByUserSecretAsync(string? userSecret);
 
+    /// <summary>
+    /// Retrieves the user's profile asynchronously.
+    /// </summary>
+    /// <returns>A task representing the asynchronous operation. The user's profile information.</returns>
     Task<UserProfile> GetUserProfileAsync();
 
+    /// <summary>
+    /// Retrieves customization information asynchronously.
+    /// </summary>
+    /// <returns>A task representing the asynchronous operation. The customization information.</returns>
+    Task<Customization> GetCustomizationAsync();
+
+    /// <summary>
+    /// Retrieves the published counts associated with a user asynchronously.
+    /// </summary>
+    /// <param name="userId">The user's ID.</param>
+    /// <returns>A task representing the asynchronous operation. The published counts for the user.</returns>
     Task<UserResponsePublishedCounts> GetUserResponsePublishedCountsAsync(string userId);
 
     /// <summary>
@@ -71,9 +86,13 @@ public interface IUserRepository
     /// </summary>
     Task<Task> DeleteUserAsync(string id);
 
-
+    /// <summary>
+    /// Deletes an email verification record asynchronously.
+    /// </summary>
+    /// <param name="email">The email address associated with the verification.</param>
+    /// <param name="otpCode">The one-time password code used for verification.</param>
+    /// <returns>A task representing the asynchronous operation. A string indicating the result of the deletion.</returns>
     Task<string> DeleteEmailVerificationAsync(string email, string otpCode);
-
 
     /// <summary>
     /// Checks if a username exists asynchronously.

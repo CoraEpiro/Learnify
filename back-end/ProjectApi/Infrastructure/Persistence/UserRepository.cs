@@ -263,6 +263,24 @@ public class UserRepository : IUserRepository
     }
 
     /// <inheritdoc/>
+    public async Task<Customization> GetCustomizationAsync()
+    {
+        var userId = GetClaimValue("userId");
+
+        if (userId is null)
+            return null;
+
+        var user = await GetUserByIdAsync(userId);
+
+        var customization = new Customization();
+
+        customization.PersonalInfo = user.PersonalInfo;
+        customization.ConnectedAccountList = user.ConnectedAccountList;
+
+        return customization;
+    }
+
+    /// <inheritdoc/>
     public async Task<string> DeleteEmailVerificationAsync(string email, string otpCode)
     {
         try

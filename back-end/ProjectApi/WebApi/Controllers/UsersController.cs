@@ -277,6 +277,21 @@ public class UsersController : ControllerBase
     }
 
     /// <summary>
+    /// Retrieves customization information asynchronously.
+    /// </summary>
+    /// <returns>A task representing the asynchronous operation. Customization information if available, Problem response if not found.</returns>
+    [HttpGet("GetCustomization")]
+    public async Task<ActionResult<Customization>> GetCustomization()
+    {
+        var customization = await _userRepository.GetCustomizationAsync();
+
+        if (customization is null)
+            return Problem("There is no current user.");
+
+        return Ok(customization);
+    }
+
+    /// <summary>
     /// Updates the username of a user.
     /// </summary>
     /// <param name="updateCommand">The command containing update information.</param>

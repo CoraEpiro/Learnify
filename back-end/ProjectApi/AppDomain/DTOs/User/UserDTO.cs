@@ -11,7 +11,7 @@ public class UserDTO
     public string Email { get; set; } = String.Empty;
     public string Password { get; set; } = String.Empty; // Hashed
     public string ProfilePhoto { get; set; } = String.Empty; // URL
-    public PersonalInfo PersonalInfo { get; set; }
+    public PersonalInfo PersonalInfo { get; set; } 
     public IEnumerable<string>? CategoryFollowedList { get; set; } // Category Id List
     public Brand Brand { get; set; }
     public Settings Settings { get; set; }
