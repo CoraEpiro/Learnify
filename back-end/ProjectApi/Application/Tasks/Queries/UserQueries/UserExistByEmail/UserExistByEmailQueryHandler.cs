@@ -1,10 +1,5 @@
 ﻿using AppDomain.Interfaces;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Tasks.Queries.UserQueries.UserExistByEmail;
 
@@ -17,11 +12,15 @@ public class UserExistByEmailQueryHandler : IRequestHandler<UserExistByEmailQuer
         _userRepository = userRepository;
     }
 
-    public async Task<bool> Handle(
-        UserExistByEmailQuery request,
-        CancellationToken cancellationToken
-    )
+    public async Task<bool> Handle(UserExistByEmailQuery request, CancellationToken cancellationToken)
     {
-        return await _userRepository.IsEmailExistAsync(request.Email);
+        try
+        {
+            return await _userRepository.IsEmailExistAsync(request.Email);
+        }
+        catch (Exception)
+        {
+            throw;
+        }
     }
 }

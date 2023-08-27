@@ -17,6 +17,13 @@ public class BuildUserCommandHandler : IRequestHandler<BuildUserCommand, User>
 
     public async Task<User> Handle(BuildUserCommand request, CancellationToken cancellationToken)
     {
-        return await _userRepository.BuildUserAsync(request.BuildUser);
+        try
+        {
+            return await _userRepository.BuildUserAsync(request.BuildUser);
+        }
+        catch (Exception)
+        {
+            throw;
+        }
     }
 }

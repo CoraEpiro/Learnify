@@ -6,7 +6,6 @@ using AppDomain.Responses;
 using AppDomain.ValueObjects;
 using Application.DTO;
 using Application.Services;
-using Infrastructure.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System.IdentityModel.Tokens.Jwt;
@@ -71,13 +70,19 @@ public class UserRepository : IUserRepository
     {
         var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == username);
 
-        return user!;
+        if (user is null)
+            throw new UserNotFoundException("GetUserByUsernameAsync");
+
+        return user;
     }
 
     /// <inheritdoc/>
     public async Task<User> GetUserByUserSecretAsync(string usersecret)
     {
         var user = await _context.Users.FirstOrDefaultAsync(x => x.UserSecret == usersecret);
+
+        if (user is null)
+            throw new UserNotFoundException("GetUserByUserSecretAsync");
 
         return user!;
     }
@@ -99,10 +104,7 @@ public class UserRepository : IUserRepository
     {
         var userId = GetClaimValue("userId");
 
-        if (userId is null)
-            return null;
-
-        var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == userId);
+        var user = await GetUserByIdAsync(userId);
 
         var profile = ModelConvertors.ToUserProfile(user);
 
@@ -112,9 +114,16 @@ public class UserRepository : IUserRepository
     /// <inheritdoc/>
     public async Task<bool> IsUsernameExistAsync(string username)
     {
-        var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == username);
+        try
+        {
+            var user = await GetUserByUsernameAsync(username);
 
-        return user is not null;
+            return true;
+        }
+        catch (Exception)
+        {
+            return false;
+        }
     }
 
     /// <inheritdoc/>
@@ -135,6 +144,7 @@ public class UserRepository : IUserRepository
         user.RefreshToken = token;
 
         _context.Update(user);
+
         await _context.SaveChangesAsync();
 
         var autDto = new UserAuthDto(token, user.Role, user.Email, user.IsProfileBuilt);
@@ -149,6 +159,7 @@ public class UserRepository : IUserRepository
             throw new UserExistException(insertUser.Email);
 
         var id = IDGeneratorService.GetShortUniqueId();
+
         var token = _jwtService.GenerateSecurityToken(
             id,
             insertUser.Email,
@@ -182,12 +193,10 @@ public class UserRepository : IUserRepository
     {
         var userEmail = GetClaimValue("userEmail");
 
-        if (userEmail is null)
-            return null;
-
         var pendingUser = _context.PendingUsers.FirstOrDefault(x => x.Email == userEmail);
 
         var user = new User(pendingUser);
+
         user.BuildUser(buildUser);
         user.Id = IDGeneratorService.GetUniqueId();
         user.IsProfileBuilt = true;
@@ -207,13 +216,13 @@ public class UserRepository : IUserRepository
     {
         var userEmail = GetClaimValue("userEmail");
 
-        if (userEmail is null)
-            return null;
-
         var user = _context.PendingUsers.FirstOrDefault(x => x.Email == userEmail);
 
         if (user is null)
             user = _context.Users.FirstOrDefault(x => x.Email == userEmail);
+
+        if(user is null)
+            throw new UserNotFoundException("UpdateTokenAsync");
 
         var token = _jwtService.GenerateSecurityToken(user.Id, user.Email, user.Role);
 
@@ -234,7 +243,7 @@ public class UserRepository : IUserRepository
         var usernameExist = await IsUsernameExistAsync(newUsername);
 
         if (usernameExist)
-            throw new Exception("Username already exist");
+            throw new Exception("Username already exists.");
 
         user.UserName = newUsername;
 
@@ -284,9 +293,6 @@ public class UserRepository : IUserRepository
     {
         var userId = GetClaimValue("userId");
 
-        if (userId is null)
-            return null;
-
         var personalInfoResponse = new PersonalInfoResponse();
         var user = await GetUserByIdAsync(userId);
         var personalInfo = user.PersonalInfo;
@@ -321,9 +327,6 @@ public class UserRepository : IUserRepository
     {
         var userId = GetClaimValue("userId");
 
-        if(userId is null)
-            return null;
-
         var user = await GetUserByIdAsync(userId);
 
         user.Name = profile.Name ?? user.Name;
@@ -351,13 +354,7 @@ public class UserRepository : IUserRepository
     {
         var userId = GetClaimValue("userId");
 
-        if (userId is null)
-            return null;
-
         var user = await GetUserByIdAsync(userId);
-
-        if(user is null)
-            return null;
 
         var settings = user.Settings;
         var newSettings = customization.Settings;
@@ -381,7 +378,7 @@ public class UserRepository : IUserRepository
         await _context.SaveChangesAsync();
 
         if(savedUser is null)
-            return null;
+            throw new DbUpdateException("Something went wrong during UpdateCustomizationAsync process.");
 
         var newCustomization = new Customization()
         {
@@ -437,9 +434,6 @@ public class UserRepository : IUserRepository
     {
         var userId = GetClaimValue("userId");
 
-        if (userId is null)
-            return null;
-
         var user = await GetUserByIdAsync(userId);
 
         var customization = new Customization();
@@ -454,9 +448,6 @@ public class UserRepository : IUserRepository
     public async Task<PersonalInfoResponse> GetPersonalInfoAsync()
     {
         var userId = GetClaimValue("userId");
-
-        if(userId is null)
-            return null;
 
         var user = await GetUserByIdAsync(userId);
 
@@ -482,7 +473,6 @@ public class UserRepository : IUserRepository
         }
         catch (Exception)
         {
-
             throw;
         }
     }
@@ -524,13 +514,11 @@ public class UserRepository : IUserRepository
     {
         var token = GetTokenFromRequest();
 
-        if (token is not null)
-        {
-            var claim = token.Claims.FirstOrDefault(c => c.Type == claimType);
-            return claim?.Value;
-        }
+        if (token is null)
+            throw new UnauthorizedAccessException("Token is null");
 
-        return null;
+        var claim = token.Claims.FirstOrDefault(c => c.Type == claimType);
+        return claim?.Value;
     }
 
     /// <inheritdoc/>

@@ -1,23 +1,23 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using MediatR;
+﻿using MediatR;
 using AppDomain.DTO;
-using Application.Tasks.Commands.Update.UpdateUser.UpdatePassword;
-using Application.Tasks.Commands.Update.UpdateUser.UpdateUsername;
-using Application.Tasks.Queries.UserQueries.GetUserByUsersecret;
-using Application.Tasks.Queries.UserQueries.GetUserByUsername;
-using Application.Tasks.Queries.UserQueries.GetUserById;
-using Application.Tasks.Queries.UserQueries.GetUserByEmail;
-using Application.Tasks.Commands.Insert.UserInserts.BuildUser;
-using Application.Tasks.Commands.Delete.UserDeletes.DeleteUser;
-using Application.Tasks.Queries.UserQueries.UserExistByEmail;
-using Application.Tasks.Queries.UserQueries.UserExistByUsername;
 using AppDomain.Responses;
 using AppDomain.Interfaces;
+using Microsoft.AspNetCore.Mvc;
+using AppDomain.Exceptions.UserExceptions;
+using Application.Tasks.Queries.UserQueries.GetUserById;
+using Application.Tasks.Queries.UserQueries.GetUserByEmail;
+using Application.Tasks.Queries.UserQueries.UserExistByEmail;
+using Application.Tasks.Queries.UserQueries.GetUserByUsername;
+using Application.Tasks.Commands.Insert.UserInserts.BuildUser;
+using Application.Tasks.Commands.Delete.UserDeletes.DeleteUser;
+using Application.Tasks.Queries.UserQueries.GetUserByUsersecret;
+using Application.Tasks.Queries.UserQueries.UserExistByUsername;
 using Application.Tasks.Commands.Update.UpdateUser.UpdateProfile;
+using Application.Tasks.Commands.Update.UpdateUser.RenewPassword;
+using Application.Tasks.Commands.Update.UpdateUser.UpdatePassword;
+using Application.Tasks.Commands.Update.UpdateUser.UpdateUsername;
 using Application.Tasks.Commands.Update.UpdateUser.UpdatePersonalInfo;
 using Application.Tasks.Commands.Update.UpdateUser.UpdateCustomization;
-using AppDomain.Exceptions.UserExceptions;
-using Application.Tasks.Commands.Update.UpdateUser.RenewPassword;
 
 namespace WebApi.Controllers;
 
@@ -57,7 +57,6 @@ public class UsersController : ControllerBase
             var userDTO = ModelConvertors.ToUserDTO(user);
 
             return Ok(userDTO);
-
         }
         catch (UserNotFoundException ex)
         {
@@ -84,7 +83,6 @@ public class UsersController : ControllerBase
             var userDTO = ModelConvertors.ToUserDTO(user);
 
             return Ok(userDTO);
-
         }
         catch (UserNotFoundException ex)
         {
@@ -104,14 +102,22 @@ public class UsersController : ControllerBase
     [HttpGet("GetUserByUsername/{Username}")]
     public async Task<ActionResult<UserDTO>> GetUserByUsername(GetUserByUsernameQuery getCommand)
     {
-        var user = await _mediator.Send(getCommand);
+        try
+        {
+            var user = await _mediator.Send(getCommand);
 
-        if (user is null)
-            return NotFound();
+            var userDTO = ModelConvertors.ToUserDTO(user);
 
-        var userDTO = ModelConvertors.ToUserDTO(user);
-
-        return Ok(userDTO);
+            return Ok(userDTO);
+        }
+        catch (UserNotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return Problem(ex.Message);
+        }
     }
 
     /// <summary>
@@ -122,14 +128,22 @@ public class UsersController : ControllerBase
     [HttpGet("GetUserByUserSecret/{Secret}")]
     public async Task<ActionResult<UserDTO>> GetUserByUserSecret(GetUserByUsersecretQuery getCommand)
     {
-        var user = await _mediator.Send(getCommand);
+        try
+        {
+            var user = await _mediator.Send(getCommand);
 
-        if (user is null)
-            return NotFound();
+            var userDTO = ModelConvertors.ToUserDTO(user);
 
-        var userDTO = ModelConvertors.ToUserDTO(user);
-
-        return Ok(userDTO);
+            return Ok(userDTO);
+        }
+        catch (UserNotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return Problem(ex.Message);
+        }
     }
 
     /// <summary>
@@ -149,7 +163,6 @@ public class UsersController : ControllerBase
             var userResponse = ModelConvertors.ToUserResponse(user, counts);
 
             return Ok(userResponse);
-
         }
         catch (UserNotFoundException ex)
         {
@@ -178,7 +191,6 @@ public class UsersController : ControllerBase
             var userResponse = ModelConvertors.ToUserResponse(user, counts);
 
             return Ok(userResponse);
-
         }
         catch (UserNotFoundException ex)
         {
@@ -198,16 +210,24 @@ public class UsersController : ControllerBase
     [HttpGet("GetUserResponseByUsername/{Username}")]
     public async Task<ActionResult<UserResponse>> GetUserResponseByUsername(GetUserByUsernameQuery getCommand)
     {
-        var user = await _mediator.Send(getCommand);
+        try
+        {
+            var user = await _mediator.Send(getCommand);
 
-        if (user is null)
-            return NotFound();
+            var counts = await _userRepository.GetUserResponsePublishedCountsAsync(user.Id);
 
-        var counts = await _userRepository.GetUserResponsePublishedCountsAsync(user.Id);
+            var userResponse = ModelConvertors.ToUserResponse(user, counts);
 
-        var userResponse = ModelConvertors.ToUserResponse(user, counts);
-
-        return Ok(userResponse);
+            return Ok(userResponse);
+        }
+        catch (UserNotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return Problem(ex.Message);
+        }
     }
 
     /// <summary>
@@ -218,16 +238,24 @@ public class UsersController : ControllerBase
     [HttpGet("GetUserResponseByUsersecret/{Secret}")]
     public async Task<ActionResult<UserResponse>> GetUserResponseByUsersecret(GetUserByUsersecretQuery getCommand)
     {
-        var user = await _mediator.Send(getCommand);
+        try
+        {
+            var user = await _mediator.Send(getCommand);
 
-        if (user is null)
-            return NotFound();
+            var counts = await _userRepository.GetUserResponsePublishedCountsAsync(user.Id);
 
-        var counts = await _userRepository.GetUserResponsePublishedCountsAsync(user.Id);
+            var userResponse = ModelConvertors.ToUserResponse(user, counts);
 
-        var userResponse = ModelConvertors.ToUserResponse(user, counts);
-
-        return Ok(userResponse);
+            return Ok(userResponse);
+        }
+        catch (UserNotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return Problem(ex.Message);
+        }
     }
 
     /// <summary>
@@ -245,7 +273,6 @@ public class UsersController : ControllerBase
             var userPreviewResponse = ModelConvertors.ToUserPreviewResponse(user);
 
             return Ok(userPreviewResponse);
-
         }
         catch (UserNotFoundException ex)
         {
@@ -272,7 +299,6 @@ public class UsersController : ControllerBase
             var userPreviewResponse = ModelConvertors.ToUserPreviewResponse(user);
 
             return Ok(userPreviewResponse);
-
         }
         catch (UserNotFoundException ex)
         {
@@ -292,14 +318,22 @@ public class UsersController : ControllerBase
     [HttpGet("GetUserPreviewResponseByUsername/{Username}")]
     public async Task<ActionResult<UserPreviewResponse>> GetUserPreviewResponseByUsername(GetUserByUsernameQuery getCommand)
     {
-        var user = await _mediator.Send(getCommand);
+        try
+        {
+            var user = await _mediator.Send(getCommand);
 
-        if (user is null)
-            return NotFound();
+            var userPreviewResponse = ModelConvertors.ToUserPreviewResponse(user);
 
-        var userPreviewResponse = ModelConvertors.ToUserPreviewResponse(user);
-
-        return Ok(userPreviewResponse);
+            return Ok(userPreviewResponse);
+        }
+        catch (UserNotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return Problem(ex.Message);
+        }
     }
 
     /// <summary>
@@ -310,14 +344,22 @@ public class UsersController : ControllerBase
     [HttpGet("GetUserPreviewResponseByUsersecret/{Secret}")]
     public async Task<ActionResult<UserPreviewResponse>> GetUserPreviewResponseByUsersecret(GetUserByUsersecretQuery getCommand)
     {
-        var user = await _mediator.Send(getCommand);
+        try
+        {
+            var user = await _mediator.Send(getCommand);
 
-        if (user is null)
-            return NotFound();
+            var userPreviewResponse = ModelConvertors.ToUserPreviewResponse(user);
 
-        var userPreviewResponse = ModelConvertors.ToUserPreviewResponse(user);
-
-        return Ok(userPreviewResponse);
+            return Ok(userPreviewResponse);
+        }
+        catch (UserNotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return Problem(ex.Message);
+        }
     }
 
     /// <summary>
@@ -327,12 +369,21 @@ public class UsersController : ControllerBase
     [HttpGet("GetUserProfile")]
     public async Task<ActionResult<UserProfile>> GetUserProfile()
     {
-        var profile = await _userRepository.GetUserProfileAsync();
+        try
+        {
+            var profile = await _userRepository.GetUserProfileAsync();
 
-        if (profile is null)
-            return Problem("There is no current user.");
+            return Ok(profile);
+        }
+        catch (UserNotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return Problem(ex.Message);
+        }
 
-        return Ok(profile);
     }
 
     /// <summary>
@@ -342,12 +393,20 @@ public class UsersController : ControllerBase
     [HttpGet("GetCustomization")]
     public async Task<ActionResult<Customization>> GetCustomization()
     {
-        var customization = await _userRepository.GetCustomizationAsync();
+        try
+        {
+            var customization = await _userRepository.GetCustomizationAsync();
 
-        if (customization is null)
-            return Problem("There is no current user.");
-
-        return Ok(customization);
+            return Ok(customization);
+        }
+        catch (UserNotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return Problem(ex.Message);
+        }
     }
 
     /// <summary>
@@ -357,12 +416,20 @@ public class UsersController : ControllerBase
     [HttpGet("GetPersonalInfo")]
     public async Task<ActionResult<PersonalInfoResponse>> GetPersonalInfo()
     {
-        var personalInfo = await _userRepository.GetPersonalInfoAsync();
+        try
+        {
+            var personalInfo = await _userRepository.GetPersonalInfoAsync();
 
-        if(personalInfo is null)
-            return Problem("There is no current user.");
-
-        return Ok(personalInfo);
+            return Ok(personalInfo);
+        }
+        catch (UserNotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return Problem(ex.Message);
+        }
     }
 
     /// <summary>
@@ -429,14 +496,22 @@ public class UsersController : ControllerBase
     [HttpPatch("UpdateUsername/{Id}/{Username}")]
     public async Task<ActionResult<UserDTO>> UpdateUsername(UpdateUsernameCommand updateCommand)
     {
-        var user = await _mediator.Send(updateCommand);
+        try
+        {
+            var user = await _mediator.Send(updateCommand);
 
-        if (user is null)
-            return NotFound();
+            var userDTO = ModelConvertors.ToUserDTO(user);
 
-        var userDTO = ModelConvertors.ToUserDTO(user);
-
-        return Ok(userDTO);
+            return Ok(userDTO);
+        }
+        catch (UserNotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return Problem(ex.Message);
+        }
     }
 
     /// <summary>
@@ -447,12 +522,20 @@ public class UsersController : ControllerBase
     [HttpPatch("UpdateProfile")]
     public async Task<ActionResult<UserProfile>> UpdateProfile([FromBody] UpdateUserProfileCommand updateCommand)
     {
-        var profile = await _mediator.Send(updateCommand);
+        try
+        {
+            var profile = await _mediator.Send(updateCommand);
 
-        if (profile is null)
-            return Problem("Update process went wrong.");
-
-        return Ok(profile);
+            return Ok(profile);
+        }
+        catch (UserNotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return Problem(ex.Message);
+        }
     }
 
     /// <summary>
@@ -463,12 +546,20 @@ public class UsersController : ControllerBase
     [HttpPatch("UpdatePersonalInfo")]
     public async Task<ActionResult<PersonalInfoResponse>> UpdatePersonalInfo([FromBody] UpdatePersonalInfoCommand updateCommand)
     {
-        var personalInfo = await _mediator.Send(updateCommand);
+        try
+        {
+            var personalInfo = await _mediator.Send(updateCommand);
 
-        if (personalInfo is null)
-            return Problem("Update process went wrong.");
-
-        return Ok(personalInfo);
+            return Ok(personalInfo);
+        }
+        catch (UserNotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return Problem(ex.Message);
+        }
     }
 
     /// <summary>
@@ -479,12 +570,20 @@ public class UsersController : ControllerBase
     [HttpPatch("UpdateCustomization")]
     public async Task<ActionResult<Customization>> UpdateCustomization([FromBody] UpdateCustomizationCommand updateCommand)
     {
-        var customization = await _mediator.Send(updateCommand);
+        try
+        {
+            var customization = await _mediator.Send(updateCommand);
 
-        if(customization is null)
-            return Problem("Update process went wrong.");
-
-        return Ok(customization);
+            return Ok(customization);
+        }
+        catch (UserNotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return Problem(ex.Message);
+        }
     }
 
     /// <summary>
@@ -529,14 +628,22 @@ public class UsersController : ControllerBase
     [HttpPost("BuildUser")]
     public async Task<ActionResult<UserDTO>> BuildUser([FromBody] BuildUserCommand buildCommand)
     {
-        var user = await _mediator.Send(buildCommand);
+        try
+        {
+            var user = await _mediator.Send(buildCommand);
 
-        if (user is null)
-            return NotFound();
+            var userDTO = ModelConvertors.ToUserDTO(user);
 
-        var userDTO = ModelConvertors.ToUserDTO(user);
-
-        return Ok(userDTO);
+            return Ok(userDTO);
+        }
+        catch (UserNotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return Problem(ex.Message);
+        }
     }
 
     /// <summary>

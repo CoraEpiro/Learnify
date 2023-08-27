@@ -15,6 +15,13 @@ public class GetUserProfileQueryHandler : IRequestHandler<GetUserQuery, UserAuth
 
     public async Task<UserAuthDto> Handle(GetUserQuery request, CancellationToken cancellationToken)
     {
-        return await _userRepository.LogInAsync(request.Email, request.Password);
+        try
+        {
+            return await _userRepository.LogInAsync(request.Email, request.Password);
+        }
+        catch (Exception)
+        {
+            throw;
+        }
     }
 }

@@ -1,10 +1,8 @@
 ﻿using AppDomain.DTO;
 using AppDomain.DTOs.User;
-using AppDomain.Entities.ContentRelated;
 using AppDomain.Entities.UserRelated;
 using AppDomain.Responses;
 using AppDomain.ValueObjects;
-using Infrastructure.Persistence;
 
 /// <summary>
 /// Provides static methods to convert various entity types to their corresponding Data Transfer Objects (DTOs).

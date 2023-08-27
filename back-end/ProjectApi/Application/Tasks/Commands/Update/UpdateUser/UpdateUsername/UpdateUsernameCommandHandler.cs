@@ -1,7 +1,5 @@
-﻿using AppDomain.DTO;
-using AppDomain.Entities.UserRelated;
+﻿using AppDomain.Entities.UserRelated;
 using AppDomain.Interfaces;
-using Application.DTO;
 using MediatR;
 
 namespace Application.Tasks.Commands.Update.UpdateUser.UpdateUsername;
@@ -17,6 +15,13 @@ public class UpdateUsernameCommandHandler : IRequestHandler<UpdateUsernameComman
 
     public async Task<User> Handle(UpdateUsernameCommand request, CancellationToken cancellationToken)
     {
-        return await _userRepository.UpdateUsernameAsync(request.Id, request.Username);
+        try
+        {
+            return await _userRepository.UpdateUsernameAsync(request.Id, request.Username);
+        }
+        catch (Exception)
+        {
+            throw;
+        }
     }
 }

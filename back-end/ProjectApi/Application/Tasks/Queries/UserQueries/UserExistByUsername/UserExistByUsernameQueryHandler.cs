@@ -1,10 +1,5 @@
 ﻿using AppDomain.Interfaces;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Tasks.Queries.UserQueries.UserExistByUsername;
 
@@ -17,11 +12,15 @@ internal class UserExistByUsernameQueryHandler : IRequestHandler<UserExistByUser
         _userRepository = userRepository;
     }
 
-    public async Task<bool> Handle(
-        UserExistByUsernameQuery request,
-        CancellationToken cancellationToken
-    )
+    public async Task<bool> Handle(UserExistByUsernameQuery request, CancellationToken cancellationToken)
     {
-        return await _userRepository.IsUsernameExistAsync(request.Username);
+        try
+        {
+            return await _userRepository.IsUsernameExistAsync(request.Username);
+        }
+        catch (Exception)
+        {
+            throw;
+        }
     }
 }

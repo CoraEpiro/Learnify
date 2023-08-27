@@ -13,6 +13,10 @@ public class EmailService : IEmailService
 {
     private readonly LearnifyDbContext _context;
 
+    /// <summary>
+    /// Initializes a new instance of the EmailService class.
+    /// </summary>
+    /// <param name="context">The LearnifyDbContext used by the service.</param>
     public EmailService(LearnifyDbContext context)
     {
         _context = context;
@@ -154,7 +158,6 @@ public class EmailService : IEmailService
         mailMessage.From = new MailAddress(fromMail);
         mailMessage.Subject = "Your OTP Code";
         mailMessage.To.Add(email);
-        //mailMessage.Body = $"Your OTP code is: {otpCode}";
         mailMessage.Body = htmlTemplate;
         mailMessage.IsBodyHtml = true;
 

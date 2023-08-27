@@ -18,6 +18,13 @@ public class UpdateCustomizationCommandHandler : IRequestHandler<UpdateCustomiza
 
     public async Task<Customization> Handle(UpdateCustomizationCommand request, CancellationToken cancellationToken)
     {
-        return await _userRepository.UpdateCustomizationAsync(request.Customization);
+        try
+        {
+            return await _userRepository.UpdateCustomizationAsync(request.Customization);
+        }
+        catch (Exception)
+        {
+            throw;
+        }
     }
 }

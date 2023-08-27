@@ -24,7 +24,7 @@ public class DeleteEmailVerificationCommandHandler : IRequestHandler<DeleteEmail
         }
         catch (Exception)
         {
-            return null!;
+            throw;
         }
     }
 }

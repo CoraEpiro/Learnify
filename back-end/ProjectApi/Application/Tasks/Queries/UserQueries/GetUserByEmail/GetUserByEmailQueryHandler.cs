@@ -1,7 +1,5 @@
-﻿using AppDomain.DTO;
-using AppDomain.Entities.UserRelated;
+﻿using AppDomain.Entities.UserRelated;
 using AppDomain.Interfaces;
-using Application.DTO;
 using MediatR;
 
 namespace Application.Tasks.Queries.UserQueries.GetUserByEmail;

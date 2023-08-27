@@ -17,6 +17,13 @@ public class InsertOTPCommandHandler : IRequestHandler<InsertOTPCommand, Task>
 
     public async Task<Task> Handle(InsertOTPCommand request, CancellationToken cancellationToken)
     {
-        return await _userRepository.SendOTPCodeAsync(request.Email);
+        try
+        {
+            return await _userRepository.SendOTPCodeAsync(request.Email);
+        }
+        catch (Exception)
+        {
+            throw;
+        }
     }
 }
