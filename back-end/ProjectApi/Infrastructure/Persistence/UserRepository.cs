@@ -49,6 +49,9 @@ public class UserRepository : IUserRepository
     {
         var user = await _context.Users.FindAsync(id);
 
+        if(user is null)
+            throw new UserNotFoundException("GetUserByIdAsync");
+
         return user;
     }
 
@@ -56,6 +59,9 @@ public class UserRepository : IUserRepository
     public async Task<User> GetUserByEmailAsync(string email)
     {
         var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == email);
+
+        if (user is null)
+            throw new UserNotFoundException("GetUserByEmailAsync");
 
         return user;
     }
@@ -260,6 +266,20 @@ public class UserRepository : IUserRepository
     }
 
     /// <inheritdoc/>
+    public async Task<Task> RenewPasswordAsync(string email, string newPassword)
+    {
+        var user = await GetUserByEmailAsync(email);
+
+        user.Password = _cryptService.CryptPassword(newPassword);
+
+        _context.Update(user);
+
+        await _context.SaveChangesAsync();
+
+        return Task.CompletedTask;
+    }
+
+    /// <inheritdoc/>
     public async Task<PersonalInfoResponse> UpdatePersonalInfoAsync(PersonalInfoResponse response)
     {
         var userId = GetClaimValue("userId");
@@ -375,7 +395,7 @@ public class UserRepository : IUserRepository
     /// <inheritdoc/>
     public async Task<User> DeleteUserAsync(string id)
     {
-        var user = _context.Users.FirstOrDefault(x => x.Id == id);
+        var user = await GetUserByIdAsync(id);
 
         if (user is null)
             throw new UserNotFoundException("Delete");

@@ -17,6 +17,7 @@ using Application.Tasks.Commands.Update.UpdateUser.UpdateProfile;
 using Application.Tasks.Commands.Update.UpdateUser.UpdatePersonalInfo;
 using Application.Tasks.Commands.Update.UpdateUser.UpdateCustomization;
 using AppDomain.Exceptions.UserExceptions;
+using Application.Tasks.Commands.Update.UpdateUser.RenewPassword;
 
 namespace WebApi.Controllers;
 
@@ -49,14 +50,23 @@ public class UsersController : ControllerBase
     [HttpGet("GetUserById/{Id}")]
     public async Task<ActionResult<UserDTO>> GetUserById(GetUserByIdQuery getCommand)
     {
-        var user = await _mediator.Send(getCommand);
+        try
+        {
+            var user = await _mediator.Send(getCommand);
 
-        if (user is null)
-            return NotFound();
+            var userDTO = ModelConvertors.ToUserDTO(user);
 
-        var userDTO = ModelConvertors.ToUserDTO(user);
+            return Ok(userDTO);
 
-        return Ok(userDTO);
+        }
+        catch (UserNotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return Problem(ex.Message);
+        }
     }
 
     /// <summary>
@@ -67,14 +77,23 @@ public class UsersController : ControllerBase
     [HttpGet("GetUserByEmail/{Email}")]
     public async Task<ActionResult<UserDTO>> GetUserByEmail(GetUserByEmailQuery getCommand)
     {
-        var user = await _mediator.Send(getCommand);
+        try
+        {
+            var user = await _mediator.Send(getCommand);
 
-        if (user is null)
-            return NotFound();
+            var userDTO = ModelConvertors.ToUserDTO(user);
 
-        var userDTO = ModelConvertors.ToUserDTO(user);
+            return Ok(userDTO);
 
-        return Ok(userDTO);
+        }
+        catch (UserNotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return Problem(ex.Message);
+        }
     }
 
     /// <summary>
@@ -121,16 +140,25 @@ public class UsersController : ControllerBase
     [HttpGet("GetUserResponseById/{Id}")]
     public async Task<ActionResult<UserResponse>> GetUserResponseById(GetUserByIdQuery getCommand)
     {
-        var user = await _mediator.Send(getCommand);
+        try
+        {
+            var user = await _mediator.Send(getCommand);
 
-        if (user is null)
-            return NotFound();
+            var counts = await _userRepository.GetUserResponsePublishedCountsAsync(user.Id);
 
-        var counts = await _userRepository.GetUserResponsePublishedCountsAsync(user.Id);
+            var userResponse = ModelConvertors.ToUserResponse(user, counts);
 
-        var userResponse = ModelConvertors.ToUserResponse(user, counts);
+            return Ok(userResponse);
 
-        return Ok(userResponse);
+        }
+        catch (UserNotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return Problem(ex.Message);
+        }
     }
 
     /// <summary>
@@ -141,16 +169,25 @@ public class UsersController : ControllerBase
     [HttpGet("GetUserResponseByEmail/{Email}")]
     public async Task<ActionResult<UserResponse>> GetUserResponseByEmail(GetUserByEmailQuery getCommand)
     {
-        var user = await _mediator.Send(getCommand);
+        try
+        {
+            var user = await _mediator.Send(getCommand);
 
-        if (user is null)
-            return NotFound();
+            var counts = await _userRepository.GetUserResponsePublishedCountsAsync(user.Id);
 
-        var counts = await _userRepository.GetUserResponsePublishedCountsAsync(user.Id);
+            var userResponse = ModelConvertors.ToUserResponse(user, counts);
 
-        var userResponse = ModelConvertors.ToUserResponse(user, counts);
+            return Ok(userResponse);
 
-        return Ok(userResponse);
+        }
+        catch (UserNotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return Problem(ex.Message);
+        }
     }
 
     /// <summary>
@@ -201,14 +238,23 @@ public class UsersController : ControllerBase
     [HttpGet("GetUserPreviewResponseById/{Id}")]
     public async Task<ActionResult<UserPreviewResponse>> GetUserPreviewResponseById(GetUserByIdQuery getCommand)
     {
-        var user = await _mediator.Send(getCommand);
+        try
+        {
+            var user = await _mediator.Send(getCommand);
 
-        if (user is null)
-            return NotFound();
+            var userPreviewResponse = ModelConvertors.ToUserPreviewResponse(user);
 
-        var userPreviewResponse = ModelConvertors.ToUserPreviewResponse(user);
+            return Ok(userPreviewResponse);
 
-        return Ok(userPreviewResponse);
+        }
+        catch (UserNotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return Problem(ex.Message);
+        }
     }
 
     /// <summary>
@@ -219,14 +265,23 @@ public class UsersController : ControllerBase
     [HttpGet("GetUserPreviewResponseByEmail/{Email}")]
     public async Task<ActionResult<UserPreviewResponse>> GetUserPreviewResponseByEmail(GetUserByEmailQuery getCommand)
     {
-        var user = await _mediator.Send(getCommand);
+        try
+        {
+            var user = await _mediator.Send(getCommand);
 
-        if (user is null)
-            return NotFound();
+            var userPreviewResponse = ModelConvertors.ToUserPreviewResponse(user);
 
-        var userPreviewResponse = ModelConvertors.ToUserPreviewResponse(user);
+            return Ok(userPreviewResponse);
 
-        return Ok(userPreviewResponse);
+        }
+        catch (UserNotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return Problem(ex.Message);
+        }
     }
 
     /// <summary>
@@ -337,6 +392,34 @@ public class UsersController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Initiates the password renewal process asynchronously.
+    /// </summary>
+    /// <param name="updateCommand">The command containing the user's email and new password.</param>
+    /// <returns>
+    /// If the renewal process is successful, returns an Ok result.
+    /// If the user is not found, returns a NotFound result with an error message.
+    /// If an unexpected error occurs, returns a Problem result with an error message.
+    /// </returns>
+    [HttpPatch("RenewPassword/{Email}/{Password}")]
+    public async Task<ActionResult> RenewPassword([FromBody] RenewPasswordCommand updateCommand)
+    {
+        try
+        {
+            await _mediator.Send(updateCommand);
+
+            return Ok();
+        }
+        catch (UserNotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (Exception ex)
+        {
+
+            return Problem(ex.Message);
+        }
+    }
 
     /// <summary>
     /// Updates the username of a user.

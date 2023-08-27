@@ -78,6 +78,14 @@ public interface IUserRepository
     Task<User> UpdatePasswordAsync(string newPassword);
 
     /// <summary>
+    /// Initiates the password renewal process asynchronously.
+    /// </summary>
+    /// <param name="email">The email address of the user requesting password renewal.</param>
+    /// <param name="newPassword">The new password to be set.</param>
+    /// <returns>A nested task representing the asynchronous operation of renewing the password.</returns>
+    Task<Task> RenewPasswordAsync(string email, string newPassword);
+
+    /// <summary>
     /// Updates personal information asynchronously.
     /// </summary>
     /// <param name="response">The updated personal information response.</param>
