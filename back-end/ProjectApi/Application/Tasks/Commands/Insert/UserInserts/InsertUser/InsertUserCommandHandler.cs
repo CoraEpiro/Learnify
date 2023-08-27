@@ -15,10 +15,7 @@ public class InsertUserCommandHandler : IRequestHandler<InsertUserCommand, UserA
         _userRepository = userRepository;
     }
 
-    public async Task<UserAuthDto> Handle(
-        InsertUserCommand request,
-        CancellationToken cancellationToken
-    )
+    public async Task<UserAuthDto> Handle(InsertUserCommand request, CancellationToken cancellationToken)
     {
         return await _userRepository.RegisterUserAsync(request.User);
     }

@@ -275,14 +275,14 @@ public class UserRepository : IUserRepository
         personalInfo.PinnedRepositories = newPersonalInfo.PinnedRepositories ?? personalInfo.PinnedRepositories;
 
         user.PersonalInfo = personalInfo;
-        user.ConnectedAccountList = response.ConnectedAccountList;
+        //user.ConnectedAccountList = response.ConnectedAccountList;
 
          _context.Update(user);
 
         await _context.SaveChangesAsync();
 
         personalInfoResponse.PersonalInfo = personalInfo;
-        personalInfoResponse.ConnectedAccountList = user.ConnectedAccountList;
+        //personalInfoResponse.ConnectedAccountList = user.ConnectedAccountList;
 
         return personalInfoResponse;
     }
@@ -364,15 +364,43 @@ public class UserRepository : IUserRepository
     }
 
     /// <inheritdoc/>
-    public async Task<Task> DeleteUserAsync(string id)
+    public async Task<User> DeleteUserAsync(string id)
     {
-        var user = await _context.PendingUsers.FindAsync(id);
+        var user = _context.Users.FirstOrDefault(x => x.Id == id);
 
-        _context.PendingUsers.Remove(user);
+        if (user is null)
+            throw new UserNotFoundException("Delete");
+
+        user.IsDeleted = true;
 
         await _context.SaveChangesAsync();
 
-        return Task.CompletedTask;
+        return user;
+    }
+
+    private async Task<User> RemoveUserAsync(string id)
+    {
+        var pendingUser = await _context.PendingUsers.FindAsync(id);
+
+        if (pendingUser is not null)
+        {
+            pendingUser = _context.PendingUsers.Remove(pendingUser).Entity;
+
+            await _context.SaveChangesAsync();
+
+            return pendingUser is null ? null : new User(pendingUser);
+        }
+        else
+        {
+            var user = await _context.Users.FindAsync(id);
+
+            user = _context.Users.Remove(user).Entity;
+
+            await _context.SaveChangesAsync();
+
+            return user is null ? null : user;
+        }
+
     }
 
     /// <inheritdoc/>
@@ -405,7 +433,7 @@ public class UserRepository : IUserRepository
 
         var personalInfo = new PersonalInfoResponse();
         personalInfo.PersonalInfo = user.PersonalInfo;
-        personalInfo.ConnectedAccountList = user.ConnectedAccountList;
+        //personalInfo.ConnectedAccountList = user.ConnectedAccountList;
 
         return personalInfo;
     }

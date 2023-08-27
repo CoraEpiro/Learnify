@@ -5,11 +5,8 @@ namespace Application.Tasks.Commands.Insert.UserInserts.InsertUser;
 
 public class InsertUserCommandValidator : AbstractValidator<InsertUserCommand>
 {
-    private readonly IUserRepository _userRepository;
-
-    public InsertUserCommandValidator(IUserRepository userRepository)
+    public InsertUserCommandValidator()
     {
-        _userRepository = userRepository;
 
         RuleFor(dto => dto.User.Name).NotEmpty().MaximumLength(50);
 

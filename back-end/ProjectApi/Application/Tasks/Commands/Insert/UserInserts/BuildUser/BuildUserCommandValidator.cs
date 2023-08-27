@@ -21,22 +21,5 @@ public class BuildUserCommandValidator : AbstractValidator<BuildUserCommand>
 
         RuleFor(user => user.BuildUser.ProfilePhoto)
             .NotEmpty().WithMessage("Profile photo is required.");
-
-        // Add similar rules for other lists (ArticleSavedList, ArticleVoteList, etc.)
-
-        // Add rules for PersonalInfo, Brand, Settings, ConnectedAccountList, BadgeList, Grade, etc.
-
-        /*RuleFor(user => user.User.PersonalInfo)
-            .SetValidator(new PersonalInfoValidator());
-
-        RuleFor(user => user.User.Brand)
-            .SetValidator(new BrandValidator());
-
-        RuleFor(user => user.User.Settings)
-            .SetValidator(new SettingsValidator());*/
-
-        // ... More complex property validators
-
-        // Example custom rule for validating a boolean property
     }
 }

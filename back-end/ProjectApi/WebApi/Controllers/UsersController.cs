@@ -16,6 +16,7 @@ using AppDomain.Interfaces;
 using Application.Tasks.Commands.Update.UpdateUser.UpdateProfile;
 using Application.Tasks.Commands.Update.UpdateUser.UpdatePersonalInfo;
 using Application.Tasks.Commands.Update.UpdateUser.UpdateCustomization;
+using AppDomain.Exceptions.UserExceptions;
 
 namespace WebApi.Controllers;
 
@@ -447,10 +448,21 @@ public class UsersController : ControllerBase
     /// <param name="deleteCommand">The command containing user deletion information.</param>
     /// <returns>Ok if deletion is successful.</returns>
     [HttpDelete("DeleteUser/{Id}")]
-    public async Task<ActionResult> DeleteUser(DeleteUserCommand deleteCommand)
+    public async Task<ActionResult<UserDTO>> DeleteUser(DeleteUserCommand deleteCommand)
     {
-        await _mediator.Send(deleteCommand);
+        try
+        {
+            var user = await _mediator.Send(deleteCommand);
 
-        return Ok();
+            return Ok(ModelConvertors.ToUserDTO(user));
+        }
+        catch (UserNotFoundException)
+        {
+            return NotFound("User didn't find during deletion.");
+        }
+        catch (Exception)
+        {
+            return Problem("A problem occured during deletion.");
+        }
     }
 }

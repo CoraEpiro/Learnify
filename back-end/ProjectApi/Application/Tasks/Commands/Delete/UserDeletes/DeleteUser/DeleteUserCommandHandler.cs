@@ -1,11 +1,10 @@
-﻿using AppDomain.DTO;
+﻿using AppDomain.Entities.UserRelated;
 using AppDomain.Interfaces;
-using Application.DTO;
 using MediatR;
 
 namespace Application.Tasks.Commands.Delete.UserDeletes.DeleteUser
 {
-    public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, Task>
+    public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, User>
     {
         private readonly IUserRepository _userRepository;
 
@@ -14,9 +13,16 @@ namespace Application.Tasks.Commands.Delete.UserDeletes.DeleteUser
             _userRepository = userRepository;
         }
 
-        public async Task<Task> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
+        public async Task<User> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
         {
-            return await _userRepository.DeleteUserAsync(request.Id);
+            try
+            {
+                return await _userRepository.DeleteUserAsync(request.Id);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

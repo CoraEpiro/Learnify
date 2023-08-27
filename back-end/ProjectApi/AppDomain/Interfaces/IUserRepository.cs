@@ -111,7 +111,7 @@ public interface IUserRepository
     /// <summary>
     /// Deletes a user asynchronously and returns a task.
     /// </summary>
-    Task<Task> DeleteUserAsync(string id);
+    Task<User> DeleteUserAsync(string id);
 
     /// <summary>
     /// Deletes an email verification record asynchronously.
