@@ -11,11 +11,7 @@ public class UpdatePasswordCommandValidator : AbstractValidator<UpdatePasswordCo
 {
     public UpdatePasswordCommandValidator()
     {
-        RuleFor(u => u.Id)
-            .NotEmpty()
-            .NotNull();
-
-        RuleFor(u => u.Password)
+        RuleFor(u => u.NewPassword)
             .NotEmpty()
             .NotNull()
             .MinimumLength(8) // Minimum length requirement

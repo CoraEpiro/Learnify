@@ -17,6 +17,13 @@ public class UpdatePasswordCommandHandler : IRequestHandler<UpdatePasswordComman
 
     public async Task<User> Handle(UpdatePasswordCommand request, CancellationToken cancellationToken)
     {
-        return await _userRepository.UpdatePasswordAsync(request.Id, request.Password);
+        try
+        {
+            return await _userRepository.UpdatePasswordAsync(request.NewPassword);
+        }
+        catch (Exception)
+        {
+            throw;
+        }
     }
 }

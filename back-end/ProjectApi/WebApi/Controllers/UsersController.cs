@@ -295,6 +295,10 @@ public class UsersController : ControllerBase
         return Ok(customization);
     }
 
+    /// <summary>
+    /// Retrieves personal information asynchronously.
+    /// </summary>
+    /// <returns>A task representing the asynchronous operation. The personal information response if available, Problem response if no personal information exists.</returns>
     [HttpGet("GetPersonalInfo")]
     public async Task<ActionResult<PersonalInfoResponse>> GetPersonalInfo()
     {
@@ -314,15 +318,25 @@ public class UsersController : ControllerBase
     [HttpPatch("UpdatePassword/{Id}/{Password}")]
     public async Task<ActionResult<UserDTO>> UpdatePassword([FromBody] UpdatePasswordCommand updateCommand)
     {
-        var user = await _mediator.Send(updateCommand);
+        try
+        {
+            var user = await _mediator.Send(updateCommand);
 
-        if (user is null)
-            return NotFound();
+            var userDTO = ModelConvertors.ToUserDTO(user);
 
-        var userDTO = ModelConvertors.ToUserDTO(user);
+            return Ok(userDTO);
+        }
+        catch (UserNotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (Exception ex)
+        {
 
-        return Ok(userDTO);
+            return Problem(ex.Message);
+        }
     }
+
 
     /// <summary>
     /// Updates the username of a user.
@@ -454,15 +468,17 @@ public class UsersController : ControllerBase
         {
             var user = await _mediator.Send(deleteCommand);
 
-            return Ok(ModelConvertors.ToUserDTO(user));
+            var userDTO = ModelConvertors.ToUserDTO(user);
+
+            return Ok(userDTO);
         }
-        catch (UserNotFoundException)
+        catch (UserNotFoundException ex)
         {
-            return NotFound("User didn't find during deletion.");
+            return NotFound(ex.Message);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            return Problem("A problem occured during deletion.");
+            return Problem(ex.Message);
         }
     }
 }

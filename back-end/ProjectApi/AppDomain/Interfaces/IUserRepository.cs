@@ -75,7 +75,7 @@ public interface IUserRepository
     /// <summary>
     /// Updates the password of a user asynchronously and returns the updated user.
     /// </summary>
-    Task<User> UpdatePasswordAsync(string id, string newPassword);
+    Task<User> UpdatePasswordAsync(string newPassword);
 
     /// <summary>
     /// Updates personal information asynchronously.

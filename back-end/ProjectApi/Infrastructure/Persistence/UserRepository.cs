@@ -238,12 +238,21 @@ public class UserRepository : IUserRepository
     }
 
     /// <inheritdoc/>
-    public async Task<User> UpdatePasswordAsync(string id, string newPassword)
+    public async Task<User> UpdatePasswordAsync(string newPassword)
     {
-        var pendingUser = await GetUserByIdAsync(id);
-        var user = new User(pendingUser);
+        var userId = GetClaimValue("userId");
+
+        if(userId is null)
+            throw new Exception("Something went wrong.");
+
+        var user = await GetUserByIdAsync(userId);
+
+        if(user is null)
+            throw new UserNotFoundException("Update Password");
 
         user.Password = _cryptService.CryptPassword(newPassword);
+
+        _context.Update(user);
 
         await _context.SaveChangesAsync();
 
